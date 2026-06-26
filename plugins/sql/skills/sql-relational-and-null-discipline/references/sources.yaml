@@ -1,0 +1,98 @@
+sources:
+  - name: "modern-sql.com — Three-Valued Logic"
+    url: "https://modern-sql.com/concept/three-valued-logic"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "SQL uses a three-valued logic — true, false, and unknown; unknown means the result depends on a null"
+      - "WHERE/HAVING/WHEN require true conditions; it is not enough that a condition is not false (unknown is dropped)"
+      - "Check constraints follow the reverse logic — they reject false; they accept true and unknown"
+      - "Combination rules — AND is false on any false operand; OR is true on any true operand; NOT(unknown) is unknown"
+      - "Nothing equals null; not even null equals null because each null could be different"
+      - "NOT IN with a null in the list/subquery is at best unknown, so WHERE drops every row"
+
+  - name: "modern-sql.com — NULL"
+    url: "https://modern-sql.com/concept/null"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "Comparisons (<, >, =, …) to null return unknown, neither true nor false"
+      - "Null propagates through expressions — expressions/functions processing a null generally return null"
+      - "IS DISTINCT FROM provides a null-aware equals comparison; two null values are not distinct from each other"
+      - "IS [NOT] DISTINCT FROM is an optional SQL:1999/2003 feature, still not widely supported"
+
+  - name: "PostgreSQL — Comparison Functions and Operators"
+    url: "https://www.postgresql.org/docs/current/functions-comparison.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "Ordinary comparison operators yield null when either input is null; 7 = NULL and 7 <> NULL both yield null"
+      - "Do not write expression = NULL; use expression IS NULL / IS NOT NULL"
+      - "IS DISTINCT FROM equals <> for non-null inputs; both-null returns false, one-null returns true; never null"
+      - "IS [NOT] TRUE/FALSE/UNKNOWN always return true or false, never null; IS UNKNOWN ≈ IS NULL"
+
+  - name: "PostgreSQL — Aggregate Functions"
+    url: "https://www.postgresql.org/docs/current/functions-aggregate.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "count(*) computes the number of input rows; count(expression) counts rows where the value is not null"
+      - "sum/avg/min/max operate on the non-null input values"
+      - "Except for count, these return null when no rows are selected; sum of no rows returns null, not zero"
+
+  - name: "PostgreSQL — Sorting Rows (ORDER BY)"
+    url: "https://www.postgresql.org/docs/current/queries-order.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "Without sorting, rows are returned in an unspecified order that must not be relied on"
+      - "Null values sort as if larger than any non-null; NULLS FIRST is the default for DESC, NULLS LAST otherwise"
+      - "NULLS FIRST / NULLS LAST syntax to control null placement explicitly"
+
+  - name: "PostgreSQL — CREATE TABLE"
+    url: "https://www.postgresql.org/docs/current/sql-createtable.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "For a unique constraint, null values are not considered equal unless NULLS NOT DISTINCT is specified"
+      - "UNIQUE [ NULLS [ NOT ] DISTINCT ] syntax — default NULLS DISTINCT permits multiple NULLs (SQL:2023 F292)"
+
+  - name: "SQLite — NULL Handling in SQLite"
+    url: "https://www.sqlite.org/nulls.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "Cross-engine matrix — adding anything to null gives null; DISTINCT and UNION treat nulls as not distinct"
+      - "NULLs are distinct in a UNIQUE column but indistinct in SELECT DISTINCT/UNION — the puzzling duality"
+      - "Note: some engines (DB2, SQL Anywhere, Interbase) do not allow NULLs in a UNIQUE column at all"
+
+  - name: "Oracle Database SQL Language Reference — Nulls"
+    url: "https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/Nulls.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "Any arithmetic expression containing a null evaluates to null; all operators except concatenation return null on a null operand"
+      - "A condition evaluating to UNKNOWN acts almost like FALSE, but NOT UNKNOWN is UNKNOWN (not TRUE)"
+      - "Oracle treats a zero-length character value as null (the empty-string deviation); use only IS NULL / IS NOT NULL to test"
+
+  - name: "MySQL — Comparison Functions and Operators"
+    url: "https://dev.mysql.com/doc/refman/8.0/en/comparison-operators.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "<=> is the NULL-safe equal operator; returns 1 when both operands are NULL and 0 when one is NULL"
+      - "The <=> operator is equivalent to the standard SQL IS NOT DISTINCT FROM operator"
+
+  - name: "Codd 1970 — A Relational Model of Data for Large Shared Data Banks"
+    url: "https://www.seas.upenn.edu/~zives/03f/cis550/codd.pdf"
+    type: paper
+    accessed: "2026-06-26"
+    sections_used:
+      - "§1.3 A relation is a set of n-tuples; the ordering of rows is immaterial and all rows are distinct"
+
+  - name: "Bill Karwin — SQL Antipatterns (Fear of the Unknown)"
+    url: "https://pragprog.com/titles/bksqla/sql-antipatterns/"
+    type: book
+    accessed: "2026-06-26"
+    sections_used:
+      - "Fear of the Unknown — substituting a sentinel (0, -1, '', 'N/A') for NULL poisons aggregates and defeats IS NULL; use NULL properly"
