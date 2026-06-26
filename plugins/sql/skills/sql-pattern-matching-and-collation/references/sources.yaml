@@ -1,0 +1,41 @@
+sources:
+  - name: "PostgreSQL — Pattern Matching (LIKE, SIMILAR TO, POSIX)"
+    url: "https://www.postgresql.org/docs/current/functions-matching.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "9.7.1 LIKE — `_` matches any single character; `%` matches any sequence of zero or more characters"
+      - "9.7.1 LIKE — ESCAPE: a literal `%`/`_` must be preceded by the escape character; default escape is backslash, settable via ESCAPE; double it to match the escape char itself"
+      - "9.7.1 LIKE — ILIKE makes the match case-insensitive; this is not in the SQL standard but is a PostgreSQL extension; does not support nondeterministic collations (so bare LIKE is case-sensitive)"
+      - "9.7.2 SIMILAR TO — interprets the pattern using the SQL standard's definition of a regular expression; succeeds only if the pattern matches the entire string"
+      - "9.7.3 POSIX Regular Expressions — `~~`/`~~*` equal LIKE/ILIKE and `~`/`~*` family; all of these operators are PostgreSQL-specific (non-standard)"
+
+  - name: "PostgreSQL — Collation Support"
+    url: "https://www.postgresql.org/docs/current/collation.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "23.2 — collation specifies sort order and character classification behavior per-column or per-operation"
+      - "23.2.1 Concepts — ordering/character classification uses the collation of the input expression; collations are taken into account by pattern matching operators and by lower/upper/initcap"
+      - "23.2.2.4 Nondeterministic Collations — nondeterministic comparison may treat differing-byte strings as equal: case-insensitive, accent-insensitive, and differing Unicode normal forms"
+      - "23.2.3 / 23.2.3.1 — COLLATE on a single comparison flips case/accent sensitivity; ICU levels: level1 accent-insensitive, level2 accent-sensitive, level3 case-sensitive"
+
+  - name: "SQLite — Expression: LIKE, GLOB, REGEXP operators"
+    url: "https://www.sqlite.org/lang_expr.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "LIKE — `%` matches any sequence of zero or more characters; `_` matches any single character"
+      - "LIKE — case-insensitive matching by default (a deviation); but ASCII only: `'a' LIKE 'A'` is TRUE while `'æ' LIKE 'Æ'` is FALSE (case-sensitive beyond ASCII)"
+      - "LIKE — ESCAPE clause supplies a single escape character to match literal `%`/`_` (SQLite has no default escape character)"
+      - "GLOB — like LIKE but uses Unix file-globbing syntax (`*`/`?`) and is case sensitive, unlike LIKE"
+
+  - name: "MySQL 8.4 — String Comparison Functions and Operators (LIKE)"
+    url: "https://dev.mysql.com/doc/refman/8.4/en/string-comparison-functions.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "LIKE — `%` matches any number of characters (even zero); `_` matches exactly one character"
+      - "LIKE — string comparisons are not case-sensitive unless an operand uses a case-sensitive collation or is a binary string; `'abc' LIKE 'ABC'` returns 1 by default, 0 under `COLLATE ..._as_cs`/`_bin` or `BINARY`"
+      - "LIKE — per the SQL standard, LIKE matches on a per-character basis and can differ from the `=` operator"
+      - "LIKE — ESCAPE clause; default escape char is backslash unless NO_BACKSLASH_ESCAPES is enabled; `'David_' LIKE 'David|_' ESCAPE '|'` returns 1"

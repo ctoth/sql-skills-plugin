@@ -1,0 +1,73 @@
+sources:
+  - name: "PostgreSQL — INSERT"
+    url: "https://www.postgresql.org/docs/current/sql-insert.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "Synopsis: { DEFAULT VALUES | VALUES ( { expression | DEFAULT } [, ...] ) [, ...] | query } — the [, ...] makes multi-row VALUES first-class"
+      - "Multi-row VALUES inserts several rows in one statement: VALUES ('B6717', ...), ('HG120', ...)"
+      - "INSERT ... SELECT copies rows in bulk from another table/query"
+      - "DEFAULT VALUES fills all columns with their default values; DEFAULT usable per value"
+      - "RETURNING computes and returns value(s) based on each row actually inserted; primarily useful for serial/default-generated keys"
+      - "Explicit column-list form (column robustness vs positional VALUES)"
+
+  - name: "PostgreSQL — UPDATE"
+    url: "https://www.postgresql.org/docs/current/sql-update.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "UPDATE changes the specified columns in all rows that satisfy the condition; unmentioned columns retain their values (no WHERE => every row)"
+      - "Only rows for which the WHERE expression returns true are updated"
+      - "FROM clause join-update: target is joined to the from_item list; each join output row is an update operation"
+      - "The FROM and RETURNING clauses are PostgreSQL extensions (non-standard)"
+      - "Referencing other tables only within sub-selects is safer (the portable correlated-subquery form)"
+      - "RETURNING computes and returns value(s) based on each row actually updated"
+
+  - name: "PostgreSQL — DELETE"
+    url: "https://www.postgresql.org/docs/current/sql-delete.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "If the WHERE clause is absent, the effect is to delete all rows in the table — a valid but empty table"
+      - "DELETE ... USING references other tables; 'This syntax is not standard'"
+      - "'A more standard way' is the WHERE ... IN (SELECT ...) subquery form (portable anti-join)"
+      - "TRUNCATE provides a faster mechanism to remove all rows from a table"
+      - "RETURNING computes and returns value(s) based on each row actually deleted"
+
+  - name: "PostgreSQL — Returning Data From Modified Rows (RETURNING)"
+    url: "https://www.postgresql.org/docs/current/dml-returning.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "INSERT/UPDATE/DELETE/MERGE all have an optional RETURNING clause"
+      - "Use of RETURNING avoids performing an extra database query to collect the data, and is valuable when it is otherwise difficult to identify the modified rows reliably (the round-trip + race argument)"
+      - "With a serial column, RETURNING can return the ID assigned to a new row"
+      - "SQL:2023 old/new content: RETURNING name, old.price AS old_price, new.price AS new_price (data change delta table); old is NULL for INSERT, new is NULL for DELETE"
+
+  - name: "SQLite — INSERT"
+    url: "https://www.sqlite.org/lang_insert.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "The VALUES form 'creates one or more new rows in an existing table' (multi-row VALUES is standard in SQLite)"
+      - "The SELECT form inserts a new row for each row returned by the SELECT (bulk copy)"
+      - "The DEFAULT VALUES form inserts a single row populated with each column's default or NULL"
+
+  - name: "SQLite — UPDATE"
+    url: "https://www.sqlite.org/lang_update.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "If the UPDATE statement does not have a WHERE clause, all rows in the table are modified"
+      - "UPDATE-FROM is an extension to SQL, supported beginning in SQLite 3.33.0 (2020-08-14)"
+      - "UPDATE-FROM is not part of the SQL standards; each product implements it differently; SQLite strives to be PostgreSQL-compatible"
+
+  - name: "SQLite — RETURNING"
+    url: "https://www.sqlite.org/lang_returning.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "RETURNING supported since SQLite 3.35.0 (2021-03-12)"
+      - "RETURNING returns one result row for each database row deleted, inserted, or updated"
+      - "RETURNING is not standard SQL; it is an extension modelled after PostgreSQL"
+      - "Designed to provide the application with values of columns filled in automatically"
