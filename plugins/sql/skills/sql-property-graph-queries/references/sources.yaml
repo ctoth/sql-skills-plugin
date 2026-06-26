@@ -1,0 +1,69 @@
+sources:
+  - name: "ORACLE-BASE — SQL Property Graphs and SQL/PGQ in Oracle Database 23ai"
+    url: "https://oracle-base.com/articles/23/sql-property-graphs-and-sql-pgq-23"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "A property graph is a model that describes nodes (vertices) and the relationships between them (edges)"
+      - "Vertices and edges are schema objects such as tables, external tables, materialized views or synonyms"
+      - "There is no data materialized by the SQL property graph, it is just metadata — all data comes from the referenced objects (graph is a view-like overlay)"
+      - "CREATE PROPERTY GRAPH verbatim syntax — VERTEX TABLES with KEY/LABEL/PROPERTIES ALL COLUMNS; EDGE TABLES with SOURCE KEY ... REFERENCES and DESTINATION KEY ... REFERENCES"
+      - "GRAPH_TABLE verbatim query — MATCH (p1 IS person)-[c IS connection]->(p2 IS person) COLUMNS (...) in the FROM clause"
+      - "Availability: Oracle Database 23ai and later versions"
+
+  - name: "Oracle — Property Graphs in Oracle Database 23ai: The SQL/PGQ Standard"
+    url: "https://blogs.oracle.com/database/property-graphs-in-oracle-database-23ai-the-sql-pgq-standard"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "GRAPH_TABLE is a new operator in the FROM clause which executes the graph query (pattern) against a given graph and returns matches in tabular form for further processing with regular SQL"
+      - "WHERE and COLUMNS clauses inside GRAPH_TABLE use the same operators, functions and predicates as are available elsewhere in SQL"
+      - "Oracle Database 23ai is a shipping implementation of the SQL/PGQ standard (CREATE PROPERTY GRAPH + GRAPH_TABLE/MATCH/COLUMNS)"
+    note: "Direct WebFetch returned HTTP 403; content recovered via WebSearch snippet of this Oracle blog and corroborated by ORACLE-BASE for the same product."
+
+  - name: "EnterpriseDB — Representing Graphs in PostgreSQL with SQL/PGQ"
+    url: "https://www.enterprisedb.com/blog/representing-graphs-postgresql-sqlpgq"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "CREATE PROPERTY GRAPH characters — VERTEX TABLES (nodes LABEL node PROPERTIES (...)) EDGE TABLES (edges SOURCE KEY (...) REFERENCES nodes (...) DESTINATION KEY (...) REFERENCES nodes (...) LABEL relationship PROPERTIES (type))"
+      - "Friend-of-friend multi-hop GRAPH_TABLE pattern: (a)-[x WHERE type='friend']->(b)-[y WHERE type='friend']->(c)<-[z WHERE type='parent']-(d)"
+      - "Arrow direction semantics — SOURCE is RELATIONSHIP to DESTINATION; <- reverses traversal"
+      - "PostgreSQL status — still very much a work-in-progress with no release date; functional only as a patch (build from source + pgsql-hackers patches)"
+
+  - name: "gavinray — Experimenting with SQL:2023 Property-Graph Queries in Postgres 18"
+    url: "https://gavinray97.github.io/blog/postgres-sql-property-graphs"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "To date, only Oracle 23 has released support for it (SQL/PGQ) — as of mid-2025"
+      - "PostgreSQL support is experimental and not merged; demo uses patches applied to Postgres 18beta2 via a custom Docker image"
+      - "CREATE PROPERTY GRAPH recommender_graph + GRAPH_TABLE recommendation pattern (-[:BOUGHT]-> anonymous-edge shorthand) composed with an outer NOT EXISTS"
+
+  - name: "Gheerbrant, Libkin, Peterfreund, Rogova — GQL and SQL/PGQ: Theoretical Models and Expressive Power"
+    url: "https://arxiv.org/abs/2409.01102"
+    type: paper
+    accessed: "2026-06-26"
+    sections_used:
+      - "SQL/PGQ specifies how to query relational representations of property graphs in SQL, while GQL is a standalone language for graph databases"
+      - "Difference in evaluation model — PGQ's bottom-up evaluation versus GQL's linear/pipelined approach"
+      - "Both are very recent international standards for querying property graphs; SQL/PGQ is read-only pattern matching embedded in SQL"
+    note: "arXiv PDF was binary/protected; abstract recovered from the arXiv HTML abstract page."
+
+  - name: "ISO/IEC JTC1 — ISO/IEC 39075 Database Language GQL"
+    url: "https://jtc1info.org/wp-content/uploads/2024/04/2024-Article-39075-Database-Language-GQL.docx.pdf"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "GQL supports the same graph pattern matching syntax as SQL Property Graph Queries, ISO/IEC 9075-16 ... Part 16: Property Graph Queries (SQL/PGQ) — the shared sub-language informally called GPML"
+      - "GQL defines a runtime environment ... supporting insertion, updating, deletion and reading of property graphs (a standalone, mutating language unlike read-only SQL/PGQ)"
+      - "GQL (ISO/IEC 39075:2024) is a full database language with a persistent catalog — the first new ISO database language since SQL"
+    note: "Recovered via WebSearch snippet of this ISO/IEC JTC1 article."
+
+  - name: "modern-sql.com — What's new in SQL:2023"
+    url: "https://modern-sql.com/standard/2023"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "General overview of SQL:2023 features (JSON, arrays, etc.)"
+    note: "Listed in the skill plan as a source, but the rendered page did not surface SQL/PGQ (Part 16) / GRAPH_TABLE content; PGQ claims are sourced from the more specific pages above and not attributed to this URL."

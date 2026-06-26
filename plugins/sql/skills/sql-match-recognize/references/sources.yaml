@@ -1,0 +1,33 @@
+sources:
+  - name: "Trino — Row pattern matching with MATCH_RECOGNIZE"
+    url: "https://trino.io/blog/2021/05/19/row_pattern_matching.html"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "Fixed clause order: PARTITION BY, ORDER BY, MEASURES, rows-per-match, AFTER MATCH SKIP, PATTERN, SUBSET, DEFINE; PATTERN and DEFINE mandatory, rest optional"
+      - "PARTITION BY / ORDER BY structure the input similarly to window functions; row pattern matching is 'extended window functions'"
+      - "Worked V-shape example: PATTERN (START DOWN+ UP+) with DOWN AS price < PREV(price), UP AS price > PREV(price), and MEASURES START.price / LAST(DOWN.price) / LAST(UP.price)"
+      - "Quantifiers *, +, ?, {n}, {n,m}, {n,}, {,n}; greedy by default; append ? for reluctant; (pattern)? prefers one match, (pattern)?? prefers omission"
+      - "DEFINE expressions evaluated while matching is in progress (running); MEASURES expressions evaluated when the match is complete (final); RUNNING default in both, FINAL only in MEASURES"
+      - "ONE ROW PER MATCH (default) vs ALL ROWS PER MATCH controls output granularity"
+      - "AFTER MATCH SKIP PAST LAST ROW is the default; can also skip to next row or to a position based on matched pattern variables"
+      - "A pattern variable used in PATTERN but not in DEFINE matches any row (anchor)"
+      - "Motivation: before MATCH_RECOGNIZE you fed data to external tools to reason about trends; now it is done directly in the query"
+
+  - name: "modern-sql.com — MATCH_RECOGNIZE"
+    url: "https://modern-sql.com/feature/match_recognize"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "Introduced in SQL:2016 as an optional feature; components R010 (basis, match_recognize clause with min/max/sum/count/avg), R020 (patterns in OVER), R030 (all aggregates for row patterns)"
+      - "Uses simple regular expressions across multiple rows to filter them"
+      - "Use cases: finding series of consecutive events; pattern matching (trend reversal, periodic events); Top-N per Group"
+      - "Engine support/versions: DB2 (LUW) 12.1.4, DuckDB 1.5.0, H2 2.4.240, MariaDB 12.3.2, MySQL 9.7.0, Oracle DB 23.x, PostgreSQL 18, SQL Server 2025, SQLite 3.53.0, BigQuery 2026-06 — i.e. recent/optional, absent from older deployed releases"
+
+  - name: "Datenbank-Spektrum — Row Pattern Recognition in SQL (overview)"
+    url: "https://link.springer.com/article/10.1007/s13222-022-00404-3"
+    type: paper
+    accessed: "2026-06-26"
+    note: "PAYWALLED — Springer link 303-redirects to an IdP authorization wall (idp.springer.com/authorize); doi.org/10.1007/s13222-022-00404-3 redirects into the same wall. Abstract not retrievable via WebFetch. Cited only as the academic-overview backstop for row-pattern-recognition semantics (greedy/reluctant, match semantics); all concrete semantic claims in the skill are sourced verbatim to the Trino blog, which states them in plain language. No claim is attributed to text from this paper."
+    sections_used:
+      - "(inaccessible) academic overview of SQL:2016 row pattern recognition semantics, greedy/reluctant quantifiers — referenced, not quoted"

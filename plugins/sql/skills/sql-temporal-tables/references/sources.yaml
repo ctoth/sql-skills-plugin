@@ -1,0 +1,49 @@
+sources:
+  - name: "Wikipedia — SQL:2011"
+    url: "https://en.wikipedia.org/wiki/SQL:2011"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "System-versioned tables (elsewhere called transaction time tables) use the PERIOD FOR SYSTEM_TIME annotation; with the WITH SYSTEM VERSIONING modifier system time periods are maintained automatically"
+      - "Queried with AS OF SYSTEM TIME and VERSIONS BETWEEN SYSTEM TIME ... AND ... clauses"
+      - "Application time period tables (elsewhere called valid time tables) use the PERIOD FOR annotation"
+      - "Update and deletion of application time rows with automatic time period splitting (FOR PORTION OF)"
+      - "Temporal primary keys with optional non-overlapping constraints via the WITHOUT OVERLAPS clause"
+      - "Period predicates CONTAINS, OVERLAPS, EQUALS, PRECEDES, SUCCEEDS, IMMEDIATELY PRECEDES, IMMEDIATELY SUCCEEDS"
+      - "Application time and system versioning can be used together to provide bitemporal tables"
+      - "Vendor support: strong compliance in IBM DB2 v10, SQL Server 2016, MariaDB 10.3+, SAP HANA; Oracle approximates via Flashback; PostgreSQL requires an extension"
+
+  - name: "modern-sql.com — SQL standard versions"
+    url: "https://modern-sql.com/standard"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "SQL:2011 — ISO released a free technical report on 'SQL Support for Time-Related Information' covering temporal tables"
+      - "Note: the /standard/2011 sub-page returned HTTP 404 on access; this top-level page confirms SQL:2011 as the temporal edition"
+
+  - name: "MariaDB — System-Versioned Tables"
+    url: "https://mariadb.com/docs/server/reference/sql-structure/temporal-tables/system-versioned-tables"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "CREATE TABLE t (x INT) WITH SYSTEM VERSIONING — minimal system-versioned table"
+      - "Explicit period columns: TIMESTAMP(6) GENERATED ALWAYS AS ROW START / ROW END + PERIOD FOR SYSTEM_TIME(start, end)"
+      - "ALTER TABLE t ADD / DROP SYSTEM VERSIONING"
+      - "FOR SYSTEM_TIME AS OF TIMESTAMP '...' — table state at one instant"
+      - "FOR SYSTEM_TIME BETWEEN ... AND ... — visible between two points (inclusive)"
+      - "FOR SYSTEM_TIME FROM ... TO ... — start inclusive, end exclusive"
+      - "FOR SYSTEM_TIME ALL — all historical and current rows"
+      - "ROW_START / ROW_END pseudo-columns; DELETE HISTORY FROM t [BEFORE SYSTEM_TIME '...'] to prune"
+
+  - name: "Microsoft Learn — Temporal Tables (SQL Server)"
+    url: "https://learn.microsoft.com/en-us/sql/relational-databases/tables/temporal-tables"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "Built-in support for information about data at any point in time, not only the current value; the system manages the period of validity for each row"
+      - "Use cases: auditing all data changes and data forensics; reconstructing state as of any time in the past; slowly changing dimension; recovering from accidental changes"
+      - "Implemented as a pair of tables — current and history; the system automatically stores the previous row version on every UPDATE/DELETE"
+      - "DDL: ValidFrom/ValidTo DATETIME2 GENERATED ALWAYS AS ROW START/END, PERIOD FOR SYSTEM_TIME, WITH (SYSTEM_VERSIONING = ON (HISTORY_TABLE = ...))"
+      - "Insert sets ValidFrom = transaction begin time (UTC), ValidTo = 9999-12-31 (open); update/delete closes the old row into history; times use the transaction begin time"
+      - "FOR SYSTEM_TIME has five subclauses; qualifying-row predicates: AS OF (vf<=t AND vt>t); FROM..TO (vf<e AND vt>s, end-exclusive); BETWEEN (vf<=e AND vt>s, end-inclusive); CONTAINED IN (vf>=s AND vt<=e); ALL (union of current + history)"
+      - "HIDDEN period columns omitted from SELECT * and auto-populated on INSERT"
