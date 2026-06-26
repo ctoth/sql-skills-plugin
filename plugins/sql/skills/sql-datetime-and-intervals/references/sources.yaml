@@ -1,0 +1,40 @@
+sources:
+  - name: "PostgreSQL — Date/Time Types"
+    url: "https://www.postgresql.org/docs/current/datatype-datetime.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "timestamp with time zone converts input to UTC; the value is stored internally as UTC and the originally stated zone is not retained; all timezone-aware values are stored in UTC"
+      - "On output a timestamp with time zone is converted from UTC to the current timezone zone and displayed as local time"
+      - "timestamp without time zone silently ignores any time zone indication; the value is not adjusted for time zone (naive wall-clock)"
+      - "Recommendation: use date/time types that contain both date and time when using time zones; do not use time with time zone"
+      - "Table of date/time types — DATE (day resolution, no time), TIME (no date), TIMESTAMP [WITH TIME ZONE], INTERVAL duration with wide range, microsecond resolution"
+      - "Typed literal syntax: type [ (p) ] 'value'; examples DATE '...', TIMESTAMP WITH TIME ZONE '...+02', INTERVAL '1' YEAR"
+
+  - name: "PostgreSQL — Date/Time Functions and Operators"
+    url: "https://www.postgresql.org/docs/current/functions-datetime.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "EXTRACT(field FROM source) retrieves subfields such as year or hour; source is timestamp/date/time/interval; returns numeric"
+      - "CURRENT_DATE/CURRENT_TIMESTAMP/LOCALTIMESTAMP are SQL-standard and return the start time of the current transaction; values do not change during the transaction"
+      - "now() is a traditional PostgreSQL (non-standard) equivalent to transaction_timestamp()/CURRENT_TIMESTAMP"
+      - "Adding/subtracting an interval to a timestamp handles the months, days, and microseconds fields in turn (basis of the month-length ambiguity)"
+      - "date_trunc is conceptually similar to numeric trunc and zeroes less-significant fields; it is a PostgreSQL-specific function, not the standard EXTRACT"
+
+  - name: "SQLite — Date And Time Functions"
+    url: "https://www.sqlite.org/lang_datefunc.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "SQLite has no dedicated date/time datatype; values are stored as ISO-8601 text, a Julian day number as REAL, or a Unix timestamp as INTEGER"
+      - "Seven scalar date/time functions: date(), time(), datetime(), julianday(), unixepoch(), strftime(format, ...), timediff() — the SQLite (non-standard) spelling of EXTRACT/date_trunc/casts"
+
+  - name: "MySQL — The DATE, DATETIME, and TIMESTAMP Types"
+    url: "https://dev.mysql.com/doc/refman/8.0/en/datetime.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "MySQL converts TIMESTAMP values from the current time zone to UTC for storage and back on retrieval; this does not occur for DATETIME (so MySQL TIMESTAMP is the instant type, DATETIME is naive)"
+      - "DATETIME range '1000-01-01' to '9999-12-31'; TIMESTAMP range '1970-01-01 00:00:01' UTC to '2038-01-19 03:14:07' UTC (the 2038 problem)"
+      - "Storing a TIMESTAMP then changing the session time zone returns a different value on retrieval"
