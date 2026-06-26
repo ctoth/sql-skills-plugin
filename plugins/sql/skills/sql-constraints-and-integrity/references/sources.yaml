@@ -1,0 +1,38 @@
+sources:
+  - name: "PostgreSQL — Constraints (Check, Not-Null, Unique, Primary Keys, Foreign Keys)"
+    url: "https://www.postgresql.org/docs/current/ddl-constraints.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "§5.5.1 — a check constraint is satisfied if the check expression evaluates to true or the null value; null operands make CHECK accept the row (the centerpiece pitfall)"
+      - "§5.5.2 — a not-null constraint specifies a column must not assume null; functionally equivalent to CHECK (col IS NOT NULL) but more efficient"
+      - "§5.5.3 — by default two null values are not considered equal, so a UNIQUE column permits multiple NULL rows; NULLS NOT DISTINCT changes this; default null treatment is implementation-defined"
+      - "§5.5.4 — PRIMARY KEY requires values be both unique and not null, forces NOT NULL and a unique index; a table can have at most one primary key, any number of UNIQUE constraints"
+      - "§5.5.5 — FOREIGN KEY maintains referential integrity; default is ON DELETE NO ACTION (usually errors); RESTRICT prevents and cannot be deferred; CASCADE deletes children; SET NULL / SET DEFAULT set the referencing columns; ON UPDATE analogous; NO ACTION can be deferred to end of transaction (basis for circular-reference DEFERRABLE use)"
+
+  - name: "SQLite — Foreign Key Support"
+    url: "https://www.sqlite.org/foreignkeys.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "§2 — foreign key constraints are disabled by default for backwards compatibility and must be enabled separately for each database connection"
+      - "§2 — must be enabled at runtime via PRAGMA foreign_keys = ON; when off, FK definitions are parsed but constraints are not enforced"
+      - "§2 — PRAGMA foreign_keys returns 0 when off, 1 when on; the setting is per-connection"
+
+  - name: "SQLite — CREATE TABLE"
+    url: "https://www.sqlite.org/lang_createtable.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "Column-constraint grammar — PRIMARY KEY, NOT NULL, UNIQUE, CHECK, DEFAULT, COLLATE, foreign-key-clause, GENERATED ALWAYS AS"
+      - "An INTEGER (exactly) PRIMARY KEY column becomes an alias for the rowid; INT/BIGINT do not"
+      - "PRIMARY KEY does NOT imply NOT NULL in SQLite — NULL is allowed unless INTEGER PRIMARY KEY, WITHOUT ROWID/STRICT table, or the column is declared NOT NULL"
+      - "For UNIQUE (and PK uniqueness) NULL values are considered distinct from all other values, including other NULLs"
+
+  - name: "Peter Eisentraut — SQL:2023 is finished: here is what is new (F292)"
+    url: "https://peter.eisentraut.org/blog/2023/04/04/sql-2023-is-finished-here-is-whats-new"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "F292 UNIQUE null treatment — NULLS DISTINCT allows multiple nulls; NULLS NOT DISTINCT makes more than one a uniqueness violation"
+      - "F292 was standardized in SQL:2023; the default is implementation-defined so existing engines keep their behavior"

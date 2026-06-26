@@ -1,0 +1,44 @@
+sources:
+  - name: "PostgreSQL — Numeric Types"
+    url: "https://www.postgresql.org/docs/current/datatype-numeric.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "numeric is especially recommended for monetary amounts; calculations with numeric yield exact results (addition, subtraction, multiplication)"
+      - "real and double precision are inexact, variable-precision types; some values are stored as approximations, so storing and retrieving may show slight discrepancies"
+      - "If you require exact storage and calculations (such as for monetary amounts), use the numeric type instead"
+      - "Integer ranges — smallint -32768..+32767; integer -2147483648..+2147483647; bigint -9223372036854775808..+9223372036854775807"
+      - "Overflow — if digits left of the decimal point exceed (precision - scale), an error is raised; NUMERIC(3,1) rounds to 1 decimal and stores -99.9..99.9"
+      - "Serial types are implemented via sequences and may have holes/gaps; an allocated value is used up even if the row is never inserted"
+
+  - name: "PostgreSQL — Data Types (categories overview)"
+    url: "https://www.postgresql.org/docs/current/datatype.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "character varying [(n)] / varchar — variable-length character string; character [(n)] / char — fixed-length; text — variable-length"
+      - "boolean / bool — logical Boolean (true/false)"
+      - "bytea — binary data (byte array); PostgreSQL has no BLOB keyword"
+      - "numeric [(p,s)] / decimal — exact numeric of selectable precision; double precision / float — 8-byte float; real / float4 — 4-byte float"
+
+  - name: "PostgreSQL — Character Types"
+    url: "https://www.postgresql.org/docs/current/datatype-character.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "varchar(n)/char(n) store strings up to n characters; an attempt to store a longer string results in an error (excess all-spaces are truncated)"
+      - "character(n) values are physically padded with spaces to width n and stored/displayed that way; character varying stores the shorter string as-is"
+      - "There is no performance difference among the three types; in most situations text or character varying should be used instead"
+
+  - name: "SQLite — Datatypes In SQLite"
+    url: "https://www.sqlite.org/datatype3.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "SQLite uses dynamic typing; the datatype of a value is associated with the value itself, not with its container"
+      - "Type affinity of a column is the recommended type, not required; any column can still store any type of data"
+      - "NUMERIC affinity may contain all five storage classes; inserted text converts to INTEGER or REAL in order of preference (no exact-decimal class)"
+      - "INTEGER affinity behaves the same as NUMERIC except in a CAST expression"
+      - "SQLite has no separate Boolean storage class; booleans are stored as integers 0 (false) and 1 (true)"
+      - "SQLite has no storage class set aside for dates/times"
+      - "Affinity determination — INT->INTEGER; CHAR/CLOB/TEXT->TEXT; BLOB or no type->BLOB; REAL/FLOA/DOUB->REAL; otherwise NUMERIC"
