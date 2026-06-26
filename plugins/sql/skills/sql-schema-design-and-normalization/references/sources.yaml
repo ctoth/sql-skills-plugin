@@ -1,0 +1,57 @@
+sources:
+  - name: "Wikipedia — Database Normalization"
+    url: "https://en.wikipedia.org/wiki/Database_normalization"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "Normalization is the process of structuring a relational database in accordance with normal forms to reduce redundancy and improve data integrity"
+      - "Objective — to free the collection of relations from undesirable insertion, update and deletion dependencies"
+      - "Insertion anomaly — there are circumstances in which certain facts cannot be recorded at all"
+      - "Update anomaly — the same information expressed on multiple rows, so updates may produce logical inconsistencies"
+      - "Deletion anomaly — deleting data for one fact necessitates deleting data for a completely different fact"
+      - "1NF — each field contains a single value; a field may not contain a set of values or a nested record"
+      - "2NF — every non-prime attribute has a full functional dependency on each candidate key (the whole key)"
+      - "3NF — every non-trivial FD begins with a superkey or ends with a prime attribute (only candidate keys)"
+      - "BCNF — every non-trivial functional dependency begins with a superkey (a stricter form of 3NF)"
+
+  - name: "Wikipedia — First Normal Form"
+    url: "https://en.wikipedia.org/wiki/First_normal_form"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "1NF — each field is atomic, containing a single value rather than a set of values or a nested table"
+      - "Values in the domains on which each relation is defined are required to be atomic with respect to the DBMS"
+      - "Normalization to 1NF eliminates nested relations by breaking them into separate relations associated using foreign keys (the junction-table fix)"
+      - "1NF requires all attribute domains to be simple domains — atomic data, no relation-valued attributes"
+
+  - name: "Wikipedia — Boyce–Codd Normal Form"
+    url: "https://en.wikipedia.org/wiki/Boyce%E2%80%93Codd_normal_form"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "BCNF (3.5NF) is a slightly stricter version of the third normal form"
+      - "R is in BCNF iff for every FD X → Y, either X → Y is trivial (Y ⊆ X) or X is a superkey for R"
+      - "Candidate keys are the minimal superkeys for a relation"
+      - "BCNF implies 3NF; not all 3NF relations are in BCNF; BCNF removes all redundancies based on functional dependencies"
+
+  - name: "Codd 1970 — A Relational Model of Data for Large Shared Data Banks"
+    url: "https://www.seas.upenn.edu/~zives/03f/cis550/codd.pdf"
+    type: paper
+    accessed: "2026-06-26"
+    sections_used:
+      - "The relational model — a relation is a set of n-tuples; ordering of rows is immaterial and rows are distinct"
+      - "Normalization introduced as the discipline for deriving relations free of undesirable dependencies (corroborated via Wikipedia — Database Normalization, the PDF being a scanned original)"
+
+  - name: "Bill Karwin — SQL Antipatterns"
+    url: "https://pragprog.com/titles/bksqla/sql-antipatterns/"
+    type: book
+    accessed: "2026-06-26"
+    sections_used:
+      - "Jaywalking — storing comma-separated lists in a column; fix with an intersection (junction) table"
+      - "Naive Trees — adjacency-list-only hierarchies; four models: adjacency list, path enumeration, nested sets, closure table"
+      - "Entity-Attribute-Value (EAV) — attribute-value rows instead of typed columns; cannot enforce integrity, types, or efficient queries; alternatives include table inheritance or semistructured (JSON) data"
+      - "Polymorphic Associations — one FK referencing multiple tables via a type column; cannot carry referential integrity; fix by reversing the reference or using intersection tables / a supertable"
+      - "Multi-Column Attributes — repeated tag1/tag2/tag3 columns reintroduce anomalies; use a junction table"
+      - "ID Required / Keyless Entry — keyless tables undermine integrity; the natural vs surrogate key choice"
+    corroborated_by:
+      - "http://wtfdev.blogspot.com/2011/05/sql-antipatterns-cliff-notes-1-of-3.html (chapter-level problem/solution summary)"

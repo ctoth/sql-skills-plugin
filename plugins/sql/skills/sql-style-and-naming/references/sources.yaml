@@ -1,0 +1,47 @@
+sources:
+  - name: "PostgreSQL — Lexical Structure"
+    url: "https://www.postgresql.org/docs/current/sql-syntax-lexical.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "String constants are bounded by single quotes ('); 'This is a string'; note this is NOT the same as a double-quote character"
+      - "To include a single quote within a string, write two adjacent single quotes: 'Dianne''s horse'"
+      - "A delimited/quoted identifier is double-quotes (\"); a delimited identifier is always an identifier, never a key word; \"select\" names a column/table called select"
+      - "Key words and unquoted identifiers are case-insensitive; quoting makes an identifier case-sensitive; unquoted names are always folded to lower case (FOO, foo, \"foo\" are the same; \"Foo\" differs)"
+      - "PostgreSQL's lower-case folding is incompatible with the SQL standard, which says unquoted names should be folded to upper case (foo == \"FOO\" per standard)"
+      - "A convention often used is to write key words in upper case and names in lower case: UPDATE my_table SET a = 5;"
+
+  - name: "SQL Style Guide (Simon Holywell)"
+    url: "https://www.sqlstyle.guide/"
+    type: guide
+    accessed: "2026-06-26"
+    sections_used:
+      - "Use underscores where you would naturally include a space (first name -> first_name); always use lowercase except proper nouns (snake_case)"
+      - "Ensure the name is unique and does not exist as a reserved keyword"
+      - "Names must begin with a letter and may not end with an underscore; only letters, numbers, underscores; max 30 bytes"
+      - "Always use uppercase for the reserved keywords like SELECT and WHERE"
+      - "The 'river': spaces line up the code so root keywords end on the same character boundary, easy for the reader's eye to scan"
+      - "Always include spaces before and after equals, after commas, and surrounding apostrophes"
+
+  - name: "MySQL — String Literals"
+    url: "https://dev.mysql.com/doc/refman/8.0/en/string-literals.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "A string is a sequence enclosed within either single quote (') or double quote (\") characters (MySQL default accepts \"...\" as a string)"
+      - "With ANSI_QUOTES enabled, string literals can be quoted only within single quotation marks; a string in double quotes is interpreted as an identifier"
+
+  - name: "MySQL — Server SQL Modes (ANSI_QUOTES)"
+    url: "https://dev.mysql.com/doc/refman/8.0/en/sql-mode.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "ANSI_QUOTES: treat \" as an identifier quote character (like the backtick) and not as a string quote character"
+      - "With ANSI_QUOTES enabled you cannot use double quotation marks to quote literal strings because they are interpreted as identifiers; backtick still quotes identifiers"
+
+  - name: "modern-sql.com — Troublesome words in SQL (reserved-word list)"
+    url: "https://modern-sql.com/reserved-words-empirical-list"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "You can still use reserved words as identifiers by putting them under double quotes (\")"

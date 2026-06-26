@@ -1,0 +1,60 @@
+sources:
+  - name: "Red Gate / Simple Talk — The SQL of Gaps and Islands in Sequences"
+    url: "https://www.red-gate.com/simple-talk/databases/sql-server/t-sql-programming-sql-server/the-sql-of-gaps-and-islands-in-sequences/"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "Definition — detecting unbroken runs of sequential values (islands) and the missing values between them (gaps)"
+      - "Islands are unbroken sequences delimited by gaps; gaps are the missing values between islands"
+      - "Islands via the row_number difference: rn = SeqNo - ROW_NUMBER() OVER (PARTITION BY ID ORDER BY SeqNo), then GROUP BY rn with MIN/MAX"
+      - "Consecutive values in the same island produce the same difference, so GROUP BY that difference to find island boundaries"
+      - "Gaps via pairing each row with its successor (row_number self-join; LEAD is the modern equivalent) where next value - current value > 1"
+
+  - name: "PostgreSQL — Window Functions"
+    url: "https://www.postgresql.org/docs/current/functions-window.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "row_number — Returns the number of the current row within its partition, counting from 1 (the gapless +1 counter the island trick needs)"
+      - "rank — Returns the rank of the current row, with gaps (why RANK breaks the difference trick on ties)"
+      - "dense_rank — Returns the rank of the current row, without gaps; effectively counts peer groups (the per-category islands variant)"
+      - "lag — Returns value evaluated at the row offset rows before the current row; offset defaults to 1 and default to NULL (first-row NULL in sessionization)"
+      - "lead — Returns value evaluated at the row offset rows after the current row; default NULL past the last row (gap detection, open trailing edge)"
+      - "Window functions execute logically after WHERE/GROUP BY/HAVING, so they cannot be filtered in WHERE — wrap in a subquery"
+
+  - name: "use-the-index-luke.com — Sorting and Grouping"
+    url: "https://use-the-index-luke.com/sql/sorting-grouping"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "An index provides an ordered representation of the indexed data; it stores the data presorted just like the order by clause"
+      - "We can use indexes to avoid the sort operation to satisfy an order by clause"
+      - "An indexed order by is executed in a pipelined manner — returns first results without processing all input"
+      - "Sorting is a very resource intensive operation that cannot be pipelined — index support matters for the window ORDER BY that drives every recipe"
+
+  - name: "modern-sql.com — MATCH_RECOGNIZE"
+    url: "https://modern-sql.com/feature/match_recognize"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "MATCH_RECOGNIZE uses simple regular expressions across multiple rows to filter them"
+      - "Useful for finding series of consecutive events and pattern matching (trend reversal, periodic events)"
+      - "Row pattern matching introduced by SQL:2016 as an optional feature"
+      - "Database support is recent: BigQuery, Db2 12.1, DuckDB 1.5, MariaDB 12.3, MySQL 9.7, Oracle 23, PostgreSQL 18, SQL Server 2025, SQLite 3.53 — not broadly portable yet"
+
+  - name: "randyzwitch.com — Sessionizing Log Data Using SQL"
+    url: "https://randyzwitch.com/sessionizing-log-data-sql/"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "A session is a run of one user's events where no gap between consecutive events exceeds a timeout (30 minutes is the web-analytics standard)"
+      - "Flag a new session with LAG when the idle gap exceeds the threshold (or the row is the user's first event)"
+      - "A running SUM of the 0/1 flag is the session id: every 1 increments it, every 0 leaves it unchanged so consecutive events share an id"
+      - "The cumulative sum needs the ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW frame to handle tied timestamps"
+
+  - name: "DZone — Event Analytics: How to Define User Sessions With SQL"
+    url: "https://dzone.com/articles/event-analytics-how-to-define-user-sessions-with-s"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "Corroborates the LAG-flag + running-SUM sessionization pattern for clickstream data and the gap-threshold definition of a session"
