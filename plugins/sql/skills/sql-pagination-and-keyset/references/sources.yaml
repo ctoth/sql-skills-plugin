@@ -1,0 +1,62 @@
+sources:
+  - name: "Markus Winand — We need tool support for keyset pagination (no-offset)"
+    url: "https://use-the-index-luke.com/no-offset"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "OFFSET makes the DBMS skip N results, but it must still fetch those rows from disk and order them before sending the next ones (scan-and-discard)"
+      - "Big offsets impose a lot of work on the database (O(offset))"
+      - "An insert between fetching two pages yields duplicates; other anomalies are possible too"
+      - "The offset provides only a number of rows to drop — no more context — so it cannot stay stable under concurrent writes; using a row count to skip is simply wrong"
+
+  - name: "Markus Winand — Paging Through Results (the seek method)"
+    url: "https://use-the-index-luke.com/sql/partial-results/fetch-next-page"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "The seek method uses the values of the previous page as a delimiter, not a row number — the last value is the lower bound"
+      - "Canonical SQL: CREATE INDEX (sale_date, sale_id); WHERE (sale_date, sale_id) < (?, ?) ORDER BY sale_date DESC, sale_id DESC FETCH FIRST 10 ROWS ONLY"
+      - "The database can use the SALE_DATE < ? condition for index access and truly skip previous pages; results stay stable when rows are inserted"
+      - "The little-known 'row values' syntax combines multiple values into a logical unit; it is part of the SQL standard but only a few databases support it"
+      - "Approximated variant for engines lacking row values: WHERE sale_date <= ? AND NOT (sale_date = ? AND sale_id >= ?)"
+
+  - name: "PostgreSQL — Row and Array Comparisons (Row Constructor Comparison)"
+    url: "https://www.postgresql.org/docs/current/functions-comparisons.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "For <, <=, >, >= the row elements are compared left-to-right, stopping as soon as an unequal or null pair is found (lexicographic)"
+      - "If either element of the deciding pair is null, the row comparison is unknown (null); otherwise that pair determines the result"
+      - "ROW(1,2,NULL) < ROW(1,3,0) yields true, not null, because the third pair is never considered"
+      - "Two rows are equal if all members are non-null and equal; unequal if any are non-null and unequal; otherwise unknown"
+
+  - name: "PostgreSQL — VALUES Lists"
+    url: "https://www.postgresql.org/docs/current/sql-values.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "VALUES computes a row value or set of row values specified by value expressions"
+      - "When more than one row is specified, all rows must have the same number of elements"
+      - "Most commonly generates a constant table within a larger command but can be used on its own (e.g. in INSERT)"
+      - "VALUES can be used wherever a sub-SELECT might be written, e.g. a FROM-clause derived table; syntactically allowed anywhere SELECT is"
+
+  - name: "PostgreSQL — SELECT (LIMIT / OFFSET / FETCH FIRST / WITH TIES)"
+    url: "https://www.postgresql.org/docs/current/sql-select.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "Standard syntax: OFFSET start { ROW | ROWS }; FETCH { FIRST | NEXT } [count] { ROW | ROWS } { ONLY | WITH TIES } (SQL:2008)"
+      - "PostgreSQL ad-hoc syntax: LIMIT { count | ALL } / OFFSET start"
+      - "WITH TIES returns additional rows tying for last place per ORDER BY; ORDER BY is mandatory in that case"
+      - "Use an ORDER BY that constrains rows into a unique order, otherwise you get an unpredictable subset — tenth through twentieth in what ordering?"
+      - "Rows skipped over by OFFSET still get locked (the server pays for them)"
+
+  - name: "Anton Zhiyanov — LIMIT vs. FETCH in SQL"
+    url: "https://antonz.org/sql-fetch/"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "There is no LIMIT clause in the SQL standard; FETCH FIRST N ROWS ONLY does exactly what LIMIT N does"
+      - "NEXT is a synonym for FIRST; ROW and ROWS are synonyms"
+      - "WITH TIES also returns rows sharing the last row's ORDER BY value"
+      - "FETCH is supported by PostgreSQL 8.4+, Oracle 12c+, MS SQL 2012+, DB2 9+; only Oracle supports PERCENT; MySQL and SQLite do not support FETCH at all"

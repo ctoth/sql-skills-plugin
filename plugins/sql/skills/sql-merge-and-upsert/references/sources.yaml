@@ -1,0 +1,37 @@
+sources:
+  - name: "PostgreSQL — MERGE"
+    url: "https://www.postgresql.org/docs/current/sql-merge.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "Synopsis — MERGE INTO target USING data_source ON join_condition; WHEN MATCHED THEN UPDATE/DELETE/DO NOTHING; WHEN NOT MATCHED [BY TARGET] THEN INSERT/DO NOTHING; WHEN NOT MATCHED BY SOURCE"
+      - "Supported Versions strip lists 15 as the earliest — MERGE introduced in PostgreSQL 15"
+      - "Notes — consider INSERT ... ON CONFLICT as an alternative that can UPDATE if a concurrent INSERT occurs; the two are not interchangeable"
+      - "Notes — if a target row is modified more than once, a uniqueness violation or cardinality violation will occur (MERGE is not a guaranteed no-error upsert under concurrency)"
+
+  - name: "SQLite — UPSERT"
+    url: "https://www.sqlite.org/lang_upsert.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "An UPSERT is an ordinary INSERT followed by one or more ON CONFLICT clauses — ON CONFLICT(col) DO UPDATE SET ... / DO NOTHING"
+      - "Bare column in DO UPDATE = original unchanged stored value; the 'excluded.' qualifier = the value that would have been inserted had the constraint not failed"
+      - "UPSERT processing happens only for uniqueness constraints — an explicit UNIQUE or PRIMARY KEY constraint, or a unique index (constraint required to define the conflict)"
+
+  - name: "MySQL 8.4 Reference Manual — INSERT ... ON DUPLICATE KEY UPDATE Statement"
+    url: "https://dev.mysql.com/doc/refman/8.4/en/insert-on-duplicate.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "§15.2.7.2 — if an inserted row would cause a duplicate value in a UNIQUE index or PRIMARY KEY, an UPDATE of the old row occurs (fires on any unique key, no explicit conflict target)"
+      - "VALUES(col) to reference the new row is deprecated and subject to removal; use the row alias 'AS new' and new.col instead (MySQL 8.0.19+)"
+      - "With multiple unique indexes the INSERT is equivalent to UPDATE ... WHERE a=1 OR b=2 LIMIT 1; only one row is updated — avoid ON DUPLICATE KEY UPDATE on tables with multiple unique indexes (wrong-key data loss)"
+
+  - name: "Wikipedia — Merge (SQL)"
+    url: "https://en.wikipedia.org/wiki/Merge_(SQL)"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "MERGE officially introduced in SQL:2003 and expanded in SQL:2008; WHEN MATCHED THEN UPDATE / WHEN NOT MATCHED THEN INSERT arms"
+      - "Standard MERGE supported by PostgreSQL, Oracle, IBM Db2, Teradata, MS SQL, and others; PostgreSQL (9.5+) and SQLite (3.24+) use INSERT ON CONFLICT; MySQL uses INSERT ... ON DUPLICATE KEY UPDATE"
+      - "'Upsert' is a portmanteau of update and insert — insert a record if it does not exist, otherwise update the existing record"

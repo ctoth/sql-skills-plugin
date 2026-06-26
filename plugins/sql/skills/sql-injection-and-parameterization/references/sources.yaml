@@ -1,0 +1,38 @@
+sources:
+  - name: "OWASP — SQL Injection (attack)"
+    url: "https://owasp.org/www-community/attacks/SQL_Injection"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "Overview/Description — injection is insertion of a SQL query via input data; occurs when untrusted data is used to dynamically construct a SQL query"
+      - "Threat Modeling — injection lets attackers spoof identity, tamper with/destroy data, fully disclose all data, or become DB administrators"
+      - "Description (Confidentiality/Authentication/Integrity) — loss of confidentiality of sensitive data; authentication bypass; ability to change or delete data"
+      - "Example 2 — the classic ' OR '1'='1 payload rewrites ... WHERE owner = 'wiley' AND itemname = 'name' OR 'a'='a'"
+
+  - name: "OWASP — SQL Injection Prevention Cheat Sheet"
+    url: "https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "Defense Option 1: Prepared Statements — parameterized queries force the developer to define all SQL code first and pass in each parameter later; an attacker cannot change the intent of a query even if SQL is inserted"
+      - "Primary Defenses ordering — 1) prepared statements, 2) stored procedures, 3) allow-list input validation, 4) escaping (escaping is last)"
+      - "Defense Option 4: STRONGLY DISCOURAGED: Escaping — fragile compared to other defenses; CANNOT guarantee it prevents all SQL injections in all situations"
+      - "Defense Option 3: Allow-list Input Validation — parts that can't use bind variables (table names, column names, ASC/DESC sort indicators) require input validation or query redesign"
+
+  - name: "PostgreSQL — PREPARE"
+    url: "https://www.postgresql.org/docs/current/sql-prepare.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "PREPARE creates a prepared statement — a server-side object"
+      - "Prepared statements take parameters: values substituted into the statement when executed; refer to parameters by position using $1, $2, etc."
+      - "EXECUTE specifies the actual values for the parameters at execution time"
+      - "Syntax PREPARE name [ ( data_type [, ...] ) ] AS statement; example PREPARE fooplan (int, text, bool, numeric) AS INSERT INTO foo VALUES($1,$2,$3,$4); EXECUTE fooplan(1,'Hunter Valley','t',200.00)"
+      - "Parameter data types optional; when unspecified/unknown, inferred from first-reference context"
+
+  - name: "Bill Karwin — SQL Antipatterns (SQL Injection)"
+    url: "https://pragprog.com/titles/bksqla/sql-antipatterns/"
+    type: book
+    accessed: "2026-06-26"
+    sections_used:
+      - "SQL Injection antipattern — interpolating untrusted input into SQL text; the remedy is parameterized queries / bind variables, not escaping"
