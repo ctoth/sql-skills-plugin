@@ -1,0 +1,52 @@
+sources:
+  - name: "PostgreSQL — Table Expressions (LATERAL Subqueries)"
+    url: "https://www.postgresql.org/docs/current/queries-table-expressions.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "7.2.1.5 LATERAL Subqueries — without LATERAL each subquery is evaluated independently and cannot cross-reference any other FROM item"
+      - "Per-row evaluation — for each row of the FROM item providing the cross-referenced columns, the LATERAL item is evaluated using that row's values"
+      - "Table functions in FROM can be preceded by LATERAL, but for functions the keyword is optional; arguments may reference preceding FROM items either way"
+      - "It is often handy to LEFT JOIN to a LATERAL subquery so source rows appear even if the subquery produces no rows (ON true idiom)"
+
+  - name: "PostgreSQL — SELECT"
+    url: "https://www.postgresql.org/docs/current/sql-select.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "LATERAL can precede a sub-SELECT FROM item, letting it refer to columns of FROM items that appear before it in the FROM list (left-to-right visibility)"
+      - "Before a function-call FROM item LATERAL is a noise word — the function expression can refer to earlier FROM items in any case"
+      - "Column source tables must be INNER or LEFT joined to the LATERAL item; X RIGHT JOIN LATERAL Y is syntactically valid but Y may not reference X"
+
+  - name: "MySQL — Lateral Derived Tables"
+    url: "https://dev.mysql.com/doc/refman/8.0/en/lateral-derived-tables.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "A derived table cannot normally refer to columns of preceding tables in the same FROM clause; as of MySQL 8.0.14 a derived table may be declared LATERAL to permit such references"
+      - "The dependent derived table is illegal in SQL-92 because derived tables cannot depend on other tables in the same FROM clause, and fails without LATERAL"
+      - "Version gate — lateral derived tables are available from MySQL 8.0.14"
+
+  - name: "Wikibooks — Retrieve Top N Rows per Group"
+    url: "https://en.wikibooks.org/wiki/Structured_Query_Language/Retrieve_Top_N_Rows_per_Group"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "Problem definition — accessing the first or top n rows for every unique value of a given column (cheapest per group, newest 10 log entries per user)"
+      - "JOIN LATERAL + FETCH FIRST n ROWS recipe — join each outer row with the top rows of the child within the same group"
+      - "Window-function alternative — ROW_NUMBER() OVER (PARTITION BY ... ORDER BY ...) then filter on the rank"
+
+  - name: "PostgreSQL — Sorting Rows (ORDER BY)"
+    url: "https://www.postgresql.org/docs/current/queries-order.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "Without sorting, rows are returned in an unspecified order that must not be relied on — FETCH FIRST n is only deterministic on a total order (tie-break on a unique column)"
+
+  - name: "SQL Boy — Understanding SQL LATERAL Joins (and CROSS APPLY)"
+    url: "https://www.hisqlboy.com/blog/understanding-sql-lateral-joins"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "LATERAL keyword (PostgreSQL/MySQL) and CROSS APPLY (SQL Server/Oracle) name the same operation"
+      - "CROSS APPLY and OUTER APPLY are the closely related SQL Server syntax — OUTER APPLY corresponds to LEFT JOIN LATERAL"

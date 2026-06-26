@@ -1,0 +1,45 @@
+sources:
+  - name: "PostgreSQL — WITH Queries (Common Table Expressions)"
+    url: "https://www.postgresql.org/docs/current/queries-with.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "7.8.2 Recursive Queries — general form: non-recursive term, then UNION (or UNION ALL), then a recursive term; only the recursive term may reference the query's own output"
+      - "7.8.2 Recursive Queries — the working-table / intermediate-table evaluation algorithm; loop while the working table is not empty"
+      - "7.8.2 Recursive Queries — UNION (but not UNION ALL) discards duplicate rows and rows duplicating any previous result row"
+      - "7.8.2 Recursive Queries — series example: sum the integers from 1 through 100 with VALUES(1) UNION ALL SELECT n+1 WHERE n<100"
+      - "7.8.2.1 Search Order — the SEARCH clause (DEPTH/BREADTH FIRST BY ... SET ordercol) adds an ordering column"
+      - "7.8.2.2 Cycle Detection — recursive part must eventually return no tuples or the query loops indefinitely"
+      - "7.8.2.2 Cycle Detection — standard method is to compute an array of already-visited values (manual path-array guard)"
+      - "7.8.2.2 Cycle Detection — the CYCLE clause: track columns, set a detected-flag column, USING a path column; both implicitly added"
+      - "7.8.3 Common Table Expression Materialization — single-reference side-effect-free CTE folds into parent unless MATERIALIZED; NOT MATERIALIZED forces inlining (PG 12+)"
+
+  - name: "SQLite — The WITH Clause"
+    url: "https://www.sqlite.org/lang_with.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "3. Recursive Common Table Expressions — a recursive CTE walks a tree or graph; body is a compound select of the form initial-select UNION ALL recursive-select"
+      - "3. Recursive Common Table Expressions — the queue algorithm: run initial-select into a queue; while non-empty, extract a row, insert it, run recursive-select adding results to the queue"
+      - "3. Recursive Common Table Expressions — a SELECT is recursive if its FROM references the CTE exactly once; non-recursive SELECTs must precede recursive ones; recursive SELECTs may not use aggregate or window functions"
+      - "3.1 Recursive Query Examples — integer sequence via VALUES(1) UNION ALL SELECT x+1 WHERE x<N, and the LIMIT-bounded variant"
+      - "3.3 Queries Against A Graph — UNION instead of UNION ALL prevents an infinite loop on a cyclic graph; UNION adds a row only if no identical row was previously queued"
+      - "3.4 Controlling Depth-First Versus Breadth-First Search Using ORDER BY — ORDER BY on the recursive-select controls traversal; omitting it gives FIFO/breadth-first; LIMIT bounds the recursive table and stops recursion"
+
+  - name: "modern-sql.com — WITH (Common Table Expressions)"
+    url: "https://modern-sql.com/feature/with"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "Introduction — SQL:1999 added WITH to define 'statement scoped views'; improves statement structure without polluting the global namespace"
+      - "Syntax — WITH is not a standalone command; it must be followed by SELECT"
+      - "Note — the recursive form of WITH is covered in a separate article (recursive portability claims lean on PG/SQLite/Eisentraut)"
+
+  - name: "Peter Eisentraut — SQL:2023 is finished: here is what's new"
+    url: "https://peter.eisentraut.org/blog/2023/04/04/sql-2023-is-finished-here-is-whats-new"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "Enhanced cycle mark values (T133) — the CYCLE clause is a lesser-known recursive-query feature; SQL:2023 allows a boolean cycle mark (older standard required a character string because there was no boolean type)"
+      - "Property Graph Queries — new Part 16 (SQL/PGQ) lets table data be queried as a graph (heavier graph answer, outside recursive CTEs)"
+      - "Framing — the core relational SQL language is fairly complete; SQL:2023 is usability enhancement and gentle modernization"

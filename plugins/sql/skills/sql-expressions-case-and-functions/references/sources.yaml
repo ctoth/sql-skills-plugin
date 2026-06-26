@@ -1,0 +1,38 @@
+sources:
+  - name: "PostgreSQL — Conditional Expressions"
+    url: "https://www.postgresql.org/docs/current/functions-conditional.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "9.18.1 CASE — simple form (CASE expr WHEN value THEN result) and searched form (CASE WHEN condition THEN result); generic if/else conditional"
+      - "9.18.1 CASE — a CASE expression does not evaluate any subexpressions that are not needed to determine the result (short-circuit); no fall-through"
+      - "9.18.1 CASE — if the ELSE clause is omitted and no condition is true, the result is null (implicit ELSE NULL)"
+      - "9.18.2 COALESCE — returns the first of its arguments that is not null; null only if all are null; short-circuits like CASE"
+      - "9.18.3 NULLIF — returns a null value if value1 equals value2; otherwise returns value1 (divide-by-zero guard x / NULLIF(y,0))"
+      - "9.18.4 GREATEST and LEAST — select the largest/smallest value from a list of expressions; row-wise, not aggregate"
+      - "9.18.4 GREATEST/LEAST NULL deviation — NULL values in the argument list are ignored; result NULL only if all are NULL; this is a deviation from the SQL standard, which says result is NULL if any argument is NULL"
+
+  - name: "PostgreSQL — String Functions and Operators"
+    url: "https://www.postgresql.org/docs/current/functions-string.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "Concatenation operator || — concatenates two strings ('Post' || 'greSQL' → PostgreSQL); standard operator (vs SQL Server +); the separate concat() function ignores NULL arguments (non-standard convenience)"
+      - "SUBSTRING(string FROM start FOR count) — standard keyword form; vendor alias SUBSTR(string, start, count)"
+      - "TRIM([LEADING|TRAILING|BOTH] characters FROM string) — standard form (TRIM(BOTH 'xyz' FROM 'yxTomxx') → Tom); comma form TRIM(s, chars) is non-standard"
+      - "POSITION(substring IN string) — standard form returns first index or 0; vendor STRPOS(string, substring) reverses argument order"
+      - "OVERLAY(string PLACING newsubstring FROM start FOR count) — standard string-splice"
+      - "CHAR_LENGTH / CHARACTER_LENGTH — number of characters; vendor alias LENGTH/LEN"
+      - "UPPER / LOWER — case conversion per database locale (both standard)"
+      - "LPAD(string, length, fill) / RPAD(string, length, fill) — pad/truncate to length"
+      - "Vendor alternative forms table — SUBSTR, LENGTH, STRPOS (reversed args), LEFT, RIGHT contrasted with standard keyword forms"
+
+  - name: "modern-sql.com — What's New in SQL:2023"
+    url: "https://modern-sql.com/standard/2023"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "GREATEST and LEAST standardized in SQL:2023 — feature T054 (long implemented, newly standard); per-engine NULL handling still diverges"
+      - "String padding functions LPAD/RPAD — feature T055 (standardized SQL:2023)"
+      - "Multi-character TRIM function — feature T056 (standardized SQL:2023)"
+      - "ANY_VALUE — feature T626 (new reserved word; aggregate returning an arbitrary group value; depth belongs to aggregation skill)"
