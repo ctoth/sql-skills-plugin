@@ -1,0 +1,61 @@
+sources:
+  - name: "PostgreSQL — Aggregate Functions"
+    url: "https://www.postgresql.org/docs/current/functions-aggregate.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "count(*) computes the number of input rows; count(expression) counts rows where the value is not null"
+      - "avg/sum/min/max operate on the non-null input values"
+      - "Except for count, aggregates return null when no rows are selected; sum of no rows returns null, not zero; array_agg returns null not an empty array"
+      - "string_agg concatenates the non-null input values, each after the first preceded by the delimiter"
+      - "array_agg collects all the input values, including nulls, into an array"
+      - "Table 9.64 ordered-set aggregates (mode, percentile_cont, percentile_disc) use WITHIN GROUP (ORDER BY ...); aggregated input introduced by ORDER BY"
+      - "Table 9.66 Grouping Operations — GROUPING() returns a bit mask; bit is 0 if the expression is included in the grouping set, 1 if not included"
+
+  - name: "PostgreSQL — Value Expressions (Aggregate Expressions §4.2.7)"
+    url: "https://www.postgresql.org/docs/current/sql-expressions.html#SYNTAX-AGGREGATES"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "DISTINCT form invokes the aggregate once for each distinct value (or distinct set of values) found in the input rows"
+      - "If FILTER is specified, only the input rows for which the filter_clause evaluates to true are fed to the aggregate; other rows are discarded"
+      - "Ordered-set aggregates require an order_by_clause, written inside WITHIN GROUP (...)"
+
+  - name: "modern-sql.com — The FILTER clause"
+    url: "https://modern-sql.com/feature/filter"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "The filter clause extends aggregate functions (sum, avg, count, …) by an additional where clause"
+      - "SQL:2003 introduced the filter clause as part of the optional feature 'Advanced OLAP operations' (T612)"
+      - "SUM(<expr>) FILTER(WHERE <cond>) is equivalent to SUM(CASE WHEN <cond> THEN <expr> END); the implicit ELSE NULL works because aggregates skip nulls"
+      - "Engine support table — native FILTER on PostgreSQL, SQLite, and recent MySQL/MariaDB/Oracle/SQL Server/Db2/DuckDB/H2/BigQuery"
+      - "Recommendation — the CASE expression alternative is very widely supported; prefer it over non-standard alternatives for portability"
+
+  - name: "PostgreSQL — GROUPING SETS, CUBE, and ROLLUP (§7.2.4 Table Expressions)"
+    url: "https://www.postgresql.org/docs/current/queries-table-expressions.html#QUERIES-GROUPING-SETS"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "Grouping sets — data is grouped separately by each specified grouping set, aggregates computed per group, results returned together"
+      - "An empty grouping set aggregates all rows to a single group, output even if no input rows were present"
+      - "ROLLUP (e1, e2, ...) represents all prefixes including the empty list; used for hierarchical subtotals plus grand total"
+      - "CUBE (e1, e2, ...) represents the list and all of its possible subsets (the power set)"
+      - "Grouping columns are replaced by null in result rows for grouping sets in which they do not appear; use Table 9.66 to distinguish which grouping a row came from"
+
+  - name: "PostgreSQL — Table Expressions (GROUP BY and HAVING)"
+    url: "https://www.postgresql.org/docs/current/queries-table-expressions.html#QUERIES-GROUP"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "GROUP BY collapses matching rows into one group row; SELECT-list columns must be grouped or aggregated"
+      - "WHERE filters rows before grouping (no aggregates); HAVING filters groups after aggregation (aggregates allowed)"
+
+  - name: "modern-sql.com — What's new in SQL:2016 (LISTAGG)"
+    url: "https://modern-sql.com/blog/2017-06/whats-new-in-sql-2016"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "LISTAGG is a new ordered-set function resembling group_concat/string_agg; transforms a group of rows into a delimited string"
+      - "Minimal syntax LISTAGG(<expr>, <separator>) WITHIN GROUP(ORDER BY …); optional ON OVERFLOW clause (default ON OVERFLOW ERROR)"
+      - "Engine support — LISTAGG on Oracle (full) and SQL Server (partial); PostgreSQL/MySQL/MariaDB/SQLite/DuckDB/Db2/H2/BigQuery lack LISTAGG and use string_agg / GROUP_CONCAT instead"

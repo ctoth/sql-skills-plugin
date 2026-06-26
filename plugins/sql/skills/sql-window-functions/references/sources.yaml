@@ -1,0 +1,69 @@
+sources:
+  - name: "PostgreSQL — Window Functions (tutorial)"
+    url: "https://www.postgresql.org/docs/current/tutorial-window.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "Window functions do not collapse rows; rows retain their separate identities (vs aggregate GROUP BY)"
+      - "PARTITION BY divides rows into partitions; the function is computed across rows in the same partition as the current row"
+      - "Window functions are permitted only in SELECT and ORDER BY; forbidden in WHERE/GROUP BY/HAVING because they execute after those clauses"
+      - "To filter on a window result, use a sub-select (the top-N-per-group example with row_number)"
+      - "Window functions execute after non-window aggregates; an aggregate may appear inside a window's arguments but not vice versa"
+
+  - name: "PostgreSQL — Window Functions (function reference)"
+    url: "https://www.postgresql.org/docs/current/functions-window.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "row_number returns the row number within the partition, counting from 1"
+      - "rank returns the rank with gaps; dense_rank returns the rank without gaps (counts peer groups)"
+      - "ntile divides the partition into the given number of buckets as equally as possible"
+      - "lag/lead return value at offset rows before/after the current row; offset defaults to 1 and default to NULL"
+      - "first_value/last_value/nth_value evaluate at the first/last/n'th row OF THE WINDOW FRAME"
+      - "first_value/last_value/nth_value consider only rows within the frame (default = partition start through current row's last peer); 'likely to give unhelpful results for last_value'; redefine the frame to fix"
+
+  - name: "PostgreSQL — Window Function Calls (syntax / frame clause)"
+    url: "https://www.postgresql.org/docs/current/sql-expressions.html#SYNTAX-WINDOW-FUNCTIONS"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "Frame grammar — { RANGE | ROWS | GROUPS } frame_start [BETWEEN ... AND frame_end] [frame_exclusion]; bounds UNBOUNDED PRECEDING / offset PRECEDING / CURRENT ROW / offset FOLLOWING / UNBOUNDED FOLLOWING"
+      - "THE DEFAULT FRAME — RANGE UNBOUNDED PRECEDING = RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW; with ORDER BY, all rows from partition start up through the current row's last ORDER BY peer; without ORDER BY, the whole partition"
+      - "ROWS counts physical rows before/after the current row; GROUPS counts peer groups (requires ORDER BY); RANGE requires exactly one ORDER BY column and uses value differences"
+      - "EXCLUDE CURRENT ROW / EXCLUDE GROUP / EXCLUDE TIES / EXCLUDE NO OTHERS (default)"
+      - "Named WINDOW — OVER wname references the named window exactly; OVER (wname ...) copies/modifies and is rejected if the named window includes a frame clause"
+
+  - name: "SQLite — Window Functions"
+    url: "https://www.sqlite.org/windowfunctions.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "Window function support added in 3.25.0 (2018); EXCLUDE clause, GROUPS frame type, window chaining, and RANGE offset bounds added in 3.28.0 (2019)"
+      - "Default frame-spec is RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW EXCLUDE NO OTHERS (identical to PostgreSQL)"
+      - "Three frame types ROWS/GROUPS/RANGE; four EXCLUDE forms"
+      - "11 built-in window functions: row_number, rank, dense_rank, percent_rank, cume_dist, ntile, lag, lead, first_value, last_value, nth_value"
+
+  - name: "modern-sql.com — QUALIFY clause (caniuse)"
+    url: "https://modern-sql.com/caniuse/qualify"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "Neither the where nor the having clause allow window functions — but the qualify clause does"
+      - "Without QUALIFY, move the window into a derived table's SELECT and filter in the outer WHERE"
+      - "QUALIFY is non-standard — supported by DuckDB/H2 (and Snowflake/BigQuery/Teradata), NOT by PostgreSQL/MySQL/MariaDB/SQL Server/Oracle"
+    note: "modern-sql.com/feature/over (in the skill plan) returned HTTP 404 on 2026-06-26; substituted this live caniuse page for the vendor-neutral window-in-WHERE rule and portability"
+
+  - name: "modern-sql.com — OVER(... ROWS BETWEEN ...) (caniuse)"
+    url: "https://modern-sql.com/caniuse/over_rows_between"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "ROWS framing limits the window to rows between the specified range relative to the current row; meaningful framing requires an ORDER BY in OVER"
+      - "Portability matrix — PostgreSQL 9.0+, SQLite, MySQL 8.0.11+, MariaDB 10.2+, SQL Server 2012+, Oracle 11gR1+"
+
+  - name: "PostgreSQL — Sorting Rows (ORDER BY)"
+    url: "https://www.postgresql.org/docs/current/queries-order.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "Without an explicit ORDER BY the result row order is unspecified — a window's internal ORDER BY does not order the final output"

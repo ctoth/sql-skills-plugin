@@ -1,0 +1,41 @@
+sources:
+  - name: "PostgreSQL — Combining Queries (UNION, INTERSECT, EXCEPT)"
+    url: "https://www.postgresql.org/docs/current/queries-union.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "UNION appends query2 to query1 and eliminates duplicate rows the same way as DISTINCT, unless UNION ALL is used (the dedup-cost trap)"
+      - "INTERSECT returns rows in both query1 and query2; duplicates eliminated unless INTERSECT ALL is used"
+      - "EXCEPT returns rows in query1 but not query2 (the difference); duplicates eliminated unless EXCEPT ALL is used"
+      - "Queries must be union compatible — same number of columns and corresponding columns of compatible data types (alignment is by position)"
+      - "ORDER BY/LIMIT without parentheses apply to the output of the set operation, not one input; surround a branch in parentheses to scope a clause to it"
+      - "Precedence — UNION and EXCEPT associate left-to-right, but INTERSECT binds more tightly; query1 UNION query2 INTERSECT query3 means query1 UNION (query2 INTERSECT query3)"
+
+  - name: "SQLite — Compound Select Statements"
+    url: "https://www.sqlite.org/lang_select.html#compound_select_statements"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "All constituent SELECTs in a compound SELECT must return the same number of result columns"
+      - "UNION ALL returns all rows from both sides; UNION works the same but removes duplicates; INTERSECT/EXCEPT always remove duplicates before returning"
+      - "ALL keyword attaches only to UNION in the grammar — SQLite has no INTERSECT ALL / EXCEPT ALL (deviation from standard multiset semantics)"
+      - "For determining duplicate rows in compound SELECT operators, NULL values are considered equal to other NULL values and distinct from all non-NULL values (NULLs not distinct — opposite of =)"
+      - "ORDER BY and LIMIT may only occur at the end of the entire compound SELECT (only the right-most SELECT may carry ORDER BY, applying across the whole compound)"
+      - "Three or more SELECTs group left-to-right ((A op B) op C) — SQLite gives INTERSECT no special precedence, a deviation from standard SQL/PostgreSQL"
+
+  - name: "PostgreSQL — VALUES"
+    url: "https://www.postgresql.org/docs/current/sql-values.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "VALUES computes a row value or set of row values; most commonly generates a constant table within a larger command, but can be used on its own"
+      - "Multi-row VALUES — when more than one row is specified, all rows must have the same number of elements; column types combine using the same rules as UNION"
+      - "VALUES is syntactically allowed anywhere SELECT is, and can be used where a sub-SELECT might be written, e.g. in a FROM clause (a derived table)"
+      - "Default column names are column1, column2, etc. in PostgreSQL but differ across systems — supply names via AS t(col, ...)"
+
+  - name: "PostgreSQL — Aggregate/multiset reference for INTERSECT ALL & EXCEPT ALL semantics"
+    url: "https://www.postgresql.org/docs/current/queries-union.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "INTERSECT ALL keeps min(m,n) copies of a row; EXCEPT ALL keeps max(m-n,0) copies — the multiset (bag) forms vs the default set forms that collapse duplicates"
