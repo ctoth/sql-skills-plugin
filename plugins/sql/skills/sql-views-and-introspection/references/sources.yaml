@@ -1,0 +1,40 @@
+sources:
+  - name: "PostgreSQL — CREATE VIEW"
+    url: "https://www.postgresql.org/docs/current/sql-createview.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "CREATE VIEW defines a view of a query; the view is not physically materialized — the query runs every time the view is referenced"
+      - "Simple views are automatically updatable (INSERT/UPDATE/DELETE/MERGE); the four conditions — exactly one FROM entry; no WITH/DISTINCT/GROUP BY/HAVING/LIMIT/OFFSET at top level; no set operations; no aggregates/window/set-returning functions in the select list"
+      - "A more complex view that does not satisfy all these conditions is read-only by default"
+      - "WITH CHECK OPTION — INSERT/UPDATE/MERGE are checked to ensure new rows are visible through the view; if not, the update is rejected"
+      - "LOCAL — new rows checked only against this view's conditions, not underlying base views (unless they also specify CHECK OPTION)"
+      - "CASCADED — new rows checked against this view and all underlying base views; CASCADED is assumed when neither LOCAL nor CASCADED is given"
+
+  - name: "PostgreSQL — The Information Schema"
+    url: "https://www.postgresql.org/docs/current/information-schema.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "The information schema is defined in the SQL standard and can therefore be expected to be portable and remain stable — unlike the system catalogs, which are specific to PostgreSQL and modeled after implementation concerns"
+      - "The information schema views do not contain information about PostgreSQL-specific features; for those you must query the system catalogs"
+      - "Core views — tables, columns, views, table_constraints, key_column_usage, referential_constraints, check_constraints (66 views total)"
+
+  - name: "Wikipedia — Information schema"
+    url: "https://en.wikipedia.org/wiki/Information_schema"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "The information schema (information_schema) is an ANSI-standard set of read-only views describing tables, views, columns, and procedures in a database (standard since SQL-92)"
+      - "Implemented by MySQL, PostgreSQL, Microsoft SQL Server, and MariaDB among others"
+      - "SQLite and Oracle are listed under RDBMSs that do not support information_schema; Oracle does not implement it as of 2015"
+
+  - name: "SQLite — The Schema Table"
+    url: "https://www.sqlite.org/schematab.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "Every SQLite database contains a single schema table storing the schema — sqlite_schema(type, name, tbl_name, rootpage, sql)"
+      - "type is 'table', 'index', 'view', or 'trigger'; sql stores the SQL text describing the object"
+      - "sqlite_master is a historical-compatibility alias for sqlite_schema that works anywhere; sqlite_temp_schema/sqlite_temp_master apply to the TEMP database"
+      - "SQLite has no information_schema; column-level detail comes from PRAGMA table_info(...)"

@@ -1,0 +1,187 @@
+---
+name: sql-generated-and-identity-columns
+description: Guides the two standard SQL ways to let the database derive a column value for you — `GENERATED { ALWAYS | BY DEFAULT } AS IDENTITY` for surrogate keys instead of vendor `SERIAL`/`AUTO_INCREMENT`/`IDENTITY(1,1)`, and `GENERATED ALWAYS AS (expr) STORED|VIRTUAL` computed columns instead of recomputing a derived value in every query or maintaining it by hand in application code. Teaches the load-bearing distinctions — `ALWAYS` (rejects explicit inserts unless `OVERRIDING SYSTEM VALUE`) vs `BY DEFAULT` (serial-like, lets a supplied value win); `STORED` (disk, computed on write) vs `VIRTUAL` (compute on read); that a generated column can be read but never written directly; and that a generation expression must be deterministic, same-row, and cannot reference another generated column. Auto-invokes when writing or editing auto-increment / surrogate-key columns, `SERIAL`/`AUTO_INCREMENT`/`IDENTITY(1,1)`, computed/derived columns, `GENERATED` clauses in `CREATE TABLE`, or on "auto-incrementing id" / "computed column" / "store a total/full-name/age" requests. Builds on the foundation `sql-relational-and-null-discipline`.
+allowed-tools: Read, Glob, Grep
+compatibility: "Claude Code, Codex CLI, Gemini CLI"
+---
+
+# SQL Generated and Identity Columns
+
+> "The data types `smallserial`, `serial` and `bigserial` are not true types, but merely a notational convenience for creating unique identifier columns ... Another way is to use the SQL-standard identity column feature."
+> — [PostgreSQL — Serial Types](https://www.postgresql.org/docs/current/datatype-numeric.html)
+
+> "A generated column is a special column that is always computed from other columns. Thus, it is for columns what a view is for tables."
+> — [PostgreSQL — Generated Columns](https://www.postgresql.org/docs/current/ddl-generated-columns.html)
+
+Two features share the `GENERATED` keyword and one core idea: **let the engine derive the value so nothing downstream has to.** Identity columns derive a surrogate key from a sequence; generated columns derive a value from other columns in the same row. Both replace error-prone vendor shortcuts or hand-maintained app logic with a declaration the database enforces on every write. This skill builds on the foundation `sql-relational-and-null-discipline` (set semantics and three-valued logic — a `VIRTUAL` column's expression is evaluated under exactly those NULL rules) and routes vendor spellings to `sql-standard-vs-dialect-map`.
+
+---
+
+## 1. Surrogate Keys: `GENERATED AS IDENTITY`, Not `SERIAL`/`AUTO_INCREMENT`
+
+The portable, standard way to get an auto-incrementing key is the identity column. PostgreSQL is blunt that the vendor alternative is a convenience, not a type: `serial`/`bigserial` "are not true types, but merely a notational convenience for creating unique identifier columns (similar to the `AUTO_INCREMENT` property supported by some other databases)," and the docs point you at the standard: "Another way is to use the SQL-standard identity column feature" ([PostgreSQL — Serial Types](https://www.postgresql.org/docs/current/datatype-numeric.html)). `SERIAL` is just sugar for a hidden `CREATE SEQUENCE` plus a `DEFAULT nextval(...)`; it carries vendor-specific baggage and doesn't port.
+
+```sql
+-- WRONG — SERIAL is PostgreSQL-specific sugar; AUTO_INCREMENT/IDENTITY(1,1) are other dialects
+CREATE TABLE people (
+    id   SERIAL PRIMARY KEY,        -- non-standard; hidden sequence + DEFAULT nextval()
+    name text NOT NULL
+);
+
+-- RIGHT — the SQL-standard identity column, portable in intent
+CREATE TABLE people (
+    id   bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    name text   NOT NULL
+);
+```
+
+Use `GENERATED ... AS IDENTITY` ([PostgreSQL — Identity Columns](https://www.postgresql.org/docs/current/ddl-identity-columns.html)). PK/`NOT NULL`/`UNIQUE` rules on the key belong to `sql-constraints-and-integrity`; integer width (`int` vs `bigint`) belongs to `sql-data-types-and-numerics`; mapping `SERIAL`/`AUTO_INCREMENT`/`IDENTITY(1,1)` across engines belongs to `sql-standard-vs-dialect-map`.
+
+---
+
+## 2. `ALWAYS` vs `BY DEFAULT` — Who Wins When the App Supplies an `id`
+
+This is the most consequential choice, and it is about **what happens when an `INSERT` supplies an explicit value** for the identity column:
+
+> "if `ALWAYS` is selected, a user-specified value is only accepted if the `INSERT` statement specifies `OVERRIDING SYSTEM VALUE`. If `BY DEFAULT` is selected, then the user-specified value takes precedence." — [PostgreSQL — Identity Columns](https://www.postgresql.org/docs/current/ddl-identity-columns.html)
+
+- **`GENERATED ALWAYS AS IDENTITY`** (recommended default): the engine owns the value. An accidental app-supplied `id` is **rejected with an error**, not silently accepted. To force one — bulk loads, data migration, replication — the writer must opt in explicitly with `OVERRIDING SYSTEM VALUE`.
+- **`GENERATED BY DEFAULT AS IDENTITY`**: serial-like. A supplied value wins; the sequence is used only when no value is given. Convenient for restoring dumps, but it lets app code set keys — and a supplied value does **not** advance the sequence, so later auto-generated values can collide.
+
+```sql
+-- With GENERATED ALWAYS: this INSERT ERRORS (value not accepted)...
+INSERT INTO people (id, name) VALUES (42, 'Ada');
+-- ...unless you explicitly override:
+INSERT INTO people (id, name) OVERRIDING SYSTEM VALUE VALUES (42, 'Ada');
+
+-- Either way, the normal path lets the engine assign the key:
+INSERT INTO people (name) VALUES ('Ada');               -- omit the column
+INSERT INTO people (id, name) VALUES (DEFAULT, 'Ada');  -- or request the sequence value
+```
+
+Prefer `ALWAYS` so the surrogate key cannot be poisoned by hand; reach for `BY DEFAULT` only when a tool genuinely needs to insert explicit key values.
+
+---
+
+## 3. Computed Columns: `GENERATED ALWAYS AS (expr)`
+
+A computed (generated) column derives its value from other columns in the same row — "a special column that is always computed from other columns. Thus, it is for columns what a view is for tables" ([PostgreSQL — Generated Columns](https://www.postgresql.org/docs/current/ddl-generated-columns.html)). The value is maintained by the engine on every write; you declare the rule once.
+
+```sql
+-- RIGHT — derive once, in the schema; every reader sees a consistent value
+CREATE TABLE people (
+    id        bigint  GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    height_cm numeric,
+    height_in numeric GENERATED ALWAYS AS (height_cm / 2.54) STORED
+);
+```
+
+Generated columns are a standardized optional feature — "ISO/IEC 9075-2:2023 ... optional feature T175" ([modern-sql.com — Generated Columns](https://modern-sql.com/caniuse/generated-always-as)). The expression must be **deterministic and reference only constant literals and columns within the same row** — it "may not use subqueries, aggregate functions, window functions, or table-valued functions" ([SQLite — Generated Columns](https://www.sqlite.org/gencol.html)). So a column can hold `price * qty` or `lower(email)`, but not "the sum of this customer's orders" — that derivation lives in a view or query.
+
+---
+
+## 4. `STORED` vs `VIRTUAL` — Disk Now or CPU Later
+
+The two kinds differ only in *when* the value is computed, because a deterministic expression yields the same answer whenever you evaluate it:
+
+> "A stored generated column is computed when it is written (inserted or updated) and occupies storage as if it were a normal column. A virtual generated column occupies no storage and is computed when it is read." — [PostgreSQL — Generated Columns](https://www.postgresql.org/docs/current/ddl-generated-columns.html)
+
+SQLite states the tradeoff crisply: "STORED columns take up space in the database file, whereas VIRTUAL columns use more CPU cycles when being read" ([SQLite — Generated Columns](https://www.sqlite.org/gencol.html)). The mental model: a `VIRTUAL` column "is similar to a view" and a `STORED` column "is similar to a materialized view (except that it is always updated automatically)" ([PostgreSQL — Generated Columns](https://www.postgresql.org/docs/current/ddl-generated-columns.html)).
+
+```sql
+-- STORED — pay disk; good when read often, expensive to compute, or you need to INDEX it
+total numeric GENERATED ALWAYS AS (price * qty) STORED
+
+-- VIRTUAL — pay CPU on read; good when cheap to compute and rarely read, or to save space
+full_name text GENERATED ALWAYS AS (first_name || ' ' || last_name) VIRTUAL
+```
+
+Choose `STORED` when the value is read far more than written, is costly to compute, or must be indexed; choose `VIRTUAL` when it's cheap and you want to save space. Indexing is often the deciding factor — a `STORED` column "does require storage space and can be indexed," whereas an index on a derived value generally needs the value materialized ([MySQL — Generated Columns](https://dev.mysql.com/doc/refman/8.0/en/create-table-generated-columns.html)). (Concatenation NULL behavior here follows three-valued logic — `first_name || NULL` is NULL; see the foundation.)
+
+---
+
+## 5. You Cannot Write a Generated Column Directly
+
+A generated column is output-only. An `INSERT`/`UPDATE` that tries to supply a value for it is an error, not a silent no-op:
+
+> "A generated column cannot be written to directly. In `INSERT` or `UPDATE` commands, a value cannot be specified for a generated column, but the keyword `DEFAULT` may be specified." — [PostgreSQL — Generated Columns](https://www.postgresql.org/docs/current/ddl-generated-columns.html)
+
+SQLite agrees: "Generated columns can be read, but their values can not be directly written. The only way to change the value of a generated column is to modify the values of the other columns used to calculate" it ([SQLite — Generated Columns](https://www.sqlite.org/gencol.html)).
+
+```sql
+-- WRONG — supplying total fails; total is derived, not stored input
+INSERT INTO line_items (price, qty, total) VALUES (10, 3, 30);
+
+-- RIGHT — write only the inputs; the engine computes total
+INSERT INTO line_items (price, qty) VALUES (10, 3);
+-- (or pass the keyword DEFAULT in the generated column's position)
+```
+
+Likewise, "a generation expression cannot reference another generated column" ([PostgreSQL — Generated Columns](https://www.postgresql.org/docs/current/ddl-generated-columns.html)) — chain through the base columns, not through a second generated column.
+
+---
+
+## 6. Push Derivation Into the Schema, Not Into Every Write Path
+
+The reason to use a generated column instead of an app-maintained field is **a single source of truth the engine keeps consistent**. A generated column is "always computed" and a stored one is "always updated automatically" ([PostgreSQL — Generated Columns](https://www.postgresql.org/docs/current/ddl-generated-columns.html)); because the expression is deterministic, "in principle, it doesn't matter when it is evaluated" ([modern-sql.com — Generated Columns](https://modern-sql.com/caniuse/generated-always-as)). The schema, not the next caller, owns the formula.
+
+```sql
+-- WRONG — a plain column the application must remember to recompute on every write.
+-- Miss one code path (a bulk update, a second service, a manual fix) and it drifts.
+ALTER TABLE orders ADD COLUMN total numeric;   -- app sets total = price * qty ... sometimes
+
+-- RIGHT — the engine recomputes on every write; impossible to forget, impossible to desync
+ALTER TABLE orders ADD COLUMN total numeric GENERATED ALWAYS AS (price * qty) STORED;
+```
+
+The same logic favors an identity column over app-generated keys: one writer can't accidentally hand out a duplicate or stale id when the database owns the sequence.
+
+---
+
+## 7. Portability Snapshot
+
+The standard surfaces are `GENERATED { ALWAYS | BY DEFAULT } AS IDENTITY` and `GENERATED ALWAYS AS (expr) [STORED|VIRTUAL]` (feature T175, [modern-sql.com](https://modern-sql.com/caniuse/generated-always-as)). Support and defaults diverge:
+
+| Capability | PostgreSQL | SQLite | MySQL |
+|---|---|---|---|
+| `GENERATED AS IDENTITY` (standard) | yes | no (use `INTEGER PRIMARY KEY` rowid) | no (use `AUTO_INCREMENT`) |
+| Computed `GENERATED ALWAYS AS (expr)` | yes | yes | yes |
+| `STORED` computed columns | yes | yes | yes |
+| `VIRTUAL` computed columns | no (STORED only) | yes (**default**) | yes |
+| Default when keyword omitted | n/a (`STORED` required) | `VIRTUAL` | `VIRTUAL` |
+
+PostgreSQL supports only `STORED` generated columns. SQLite and MySQL support both, and in **both, `VIRTUAL` is the default** when neither keyword is written — "If the trailing `VIRTUAL` or `STORED` keyword is omitted, then `VIRTUAL` is the default" ([SQLite](https://www.sqlite.org/gencol.html)); "The default is `VIRTUAL` if neither keyword is specified" ([MySQL — Generated Columns](https://dev.mysql.com/doc/refman/8.0/en/create-table-generated-columns.html)). Always write `STORED`/`VIRTUAL` explicitly so the same DDL means the same thing everywhere. For surrogate keys, only PostgreSQL has the standard identity syntax; `SERIAL`, `AUTO_INCREMENT`, `IDENTITY(1,1)`, and the SQLite rowid all route to **`sql-standard-vs-dialect-map`**.
+
+---
+
+## 8. Who Suffers When Derivation Is Done by Hand
+
+These features fail loudly at write time or never — the pain is in the version *without* them:
+
+- The **analyst** reconciling a report where the order `total` column disagrees with `price * qty` for a few thousand rows. A second service wrote orders without running the app's "recompute total" code, and the derived field drifted (§6). A `GENERATED ALWAYS AS (...) STORED` column could not have desynced — the engine maintains it on every write.
+- The **backend engineer** whose `INSERT` suddenly errors in production after someone changed a column to `GENERATED ALWAYS AS IDENTITY`: their ORM was supplying an explicit `id`, which `ALWAYS` rejects unless the statement says `OVERRIDING SYSTEM VALUE` (§2). The fix is to stop sending the key, not to weaken the column.
+- The **DBA** migrating a `SERIAL` PostgreSQL schema to another engine and discovering `SERIAL` was never a real type — just a hidden sequence — so the keys, ownership, and `nextval` defaults don't carry over (§1). Had the schema used standard identity columns, the surprise would have been smaller and documented.
+- The **next maintainer** who writes `INSERT INTO line_items (price, qty, total) ...` against a table where `total` is generated, and has to learn the hard way that a generated column "cannot be written to directly" (§5).
+
+A derived value owned by the schema is a promise the database keeps for everyone who writes to the table — including the writers nobody remembered.
+
+---
+
+## 9. Routing to Related Skills
+
+- `sql-relational-and-null-discipline` — foundation: set semantics and three-valued logic; a `VIRTUAL`/computed expression evaluates NULLs under exactly those rules.
+- `sql-constraints-and-integrity` — `PRIMARY KEY`/`UNIQUE`/`NOT NULL` on identity and generated columns, and the rule that generated columns can't be a SQLite PRIMARY KEY.
+- `sql-data-types-and-numerics` — choosing the integer width for an identity key (`int` vs `bigint`) and the numeric type of a computed column.
+- `sql-standard-vs-dialect-map` — dialect spellings of `SERIAL`/`AUTO_INCREMENT`/`IDENTITY(1,1)`, the SQLite rowid, and per-engine `STORED`/`VIRTUAL` defaults.
+
+---
+
+## 10. Reference Files
+
+High-frequency identity/generated-column anti-patterns in LLM-generated SQL, each with wrong/right code and a primary-source citation:
+
+`${CLAUDE_SKILL_DIR}/references/common-mistakes.md`
+
+Source provenance for every claim in this skill:
+
+`${CLAUDE_SKILL_DIR}/references/sources.yaml`

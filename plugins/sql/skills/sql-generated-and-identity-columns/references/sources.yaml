@@ -1,0 +1,58 @@
+sources:
+  - name: "PostgreSQL — Identity Columns"
+    url: "https://www.postgresql.org/docs/current/ddl-identity-columns.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "GENERATED { ALWAYS | BY DEFAULT } AS IDENTITY syntax in CREATE TABLE"
+      - "ALWAYS accepts a user-specified value only if INSERT specifies OVERRIDING SYSTEM VALUE"
+      - "BY DEFAULT: a user-specified value takes precedence over the sequence value"
+      - "DEFAULT in place of a value explicitly requests the sequence-generated value"
+
+  - name: "PostgreSQL — Numeric Types (Serial Types)"
+    url: "https://www.postgresql.org/docs/current/datatype-numeric.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "8.1.4 — smallserial/serial/bigserial are not true types, merely a notational convenience (similar to AUTO_INCREMENT)"
+      - "Recommendation: another way is to use the SQL-standard identity column feature (Section 5.3)"
+      - "SERIAL expands to a hidden CREATE SEQUENCE + DEFAULT nextval() + sequence ownership"
+
+  - name: "PostgreSQL — Generated Columns"
+    url: "https://www.postgresql.org/docs/current/ddl-generated-columns.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "5.4 — GENERATED ALWAYS AS (expression) syntax; a generated column is always computed from other columns"
+      - "Stored vs virtual: stored computed on write and occupies storage; virtual occupies no storage and is computed on read"
+      - "Analogy: virtual is like a view; stored is like a materialized view that is always updated automatically"
+      - "A generation expression cannot reference another generated column"
+      - "A generated column cannot be written to directly; INSERT/UPDATE may only specify DEFAULT for it"
+
+  - name: "SQLite — Generated Columns"
+    url: "https://www.sqlite.org/gencol.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "Section 2 — if the trailing VIRTUAL or STORED keyword is omitted, VIRTUAL is the default; only AS and the parenthesized expression are required"
+      - "Section 2.1 — VIRTUAL computed on read, STORED computed on write; STORED takes disk space, VIRTUAL uses more CPU on read"
+      - "Section 1 — generated columns can be read but not directly written; change inputs instead"
+      - "Section 2.3 — expression must reference only constant literals and same-row columns, scalar deterministic functions; no subqueries/aggregates/window/table-valued functions; no DEFAULT; every table needs at least one non-generated column"
+
+  - name: "MySQL — CREATE TABLE and Generated Columns"
+    url: "https://dev.mysql.com/doc/refman/8.0/en/create-table-generated-columns.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "VIRTUAL evaluated on read (no storage); STORED evaluated and stored on write (takes space, can be indexed)"
+      - "The default is VIRTUAL if neither keyword is specified"
+      - "AS may be preceded by GENERATED ALWAYS to make the generated nature explicit"
+
+  - name: "modern-sql.com — Generated Columns (caniuse)"
+    url: "https://modern-sql.com/caniuse/generated-always-as"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "Generated columns are ISO/IEC 9075-2:2023 optional feature T175"
+      - "Because a generation expression must be deterministic, in principle it does not matter when it is evaluated (stored vs virtual is a when-to-compute choice)"
+      - "Compatibility chart: PostgreSQL STORED-only; MySQL/Oracle/SQL Server/DuckDB/SQLite accept the syntax; identity columns listed as the distinct GENERATED [ALWAYS|BY DEFAULT] AS IDENTITY feature"

@@ -1,0 +1,59 @@
+sources:
+  - name: "modern-sql.com — What's new in SQL:2016"
+    url: "https://modern-sql.com/blog/2017-06/whats-new-in-sql-2016"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "SQL/JSON introduced in SQL:2016 — constructors JSON_OBJECT/JSON_ARRAY/JSON_OBJECTAGG/JSON_ARRAYAGG"
+      - "Accessors: JSON_EXISTS (tests whether a path exists), JSON_VALUE (extracts a scalar — everything except object and array), JSON_QUERY (extracts a part and returns it as a JSON string), JSON_TABLE (transforms JSON into relational rows)"
+      - "IS [NOT] JSON [value|array|object|scalar] validation predicate"
+      - "The standard does not define a native JSON type like XML; it uses strings to store JSON data (no SQL:2016 JSON type)"
+      - "ON ERROR / ON EMPTY clauses for functions interpreting JSON strings"
+      - "SQL/JSON path language — $ context, . member, [] element, ?() filter with @ current context; examples $.name, $[0], $.* ?(@.type()==\"number\")"
+      - "Lax (default) suppresses structural errors and unwraps arrays / wraps scalars; strict triggers error handling for all structural errors"
+      - "JSON_VALUE returns scalars only; JSON_QUERY can return any JSON type and multiple matches via WITH [CONDITIONAL|UNCONDITIONAL] [ARRAY] WRAPPER"
+
+  - name: "PostgreSQL — JSON Functions and Operators"
+    url: "https://www.postgresql.org/docs/current/functions-json.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "Standard SQL/JSON query functions JSON_EXISTS(), JSON_QUERY(), JSON_VALUE() (Table 9.54); added in PostgreSQL 17"
+      - "JSON_TABLE queries JSON data and presents results as a relational view accessible as a regular SQL table (Section 9.16.4); PostgreSQL 17"
+      - "JSON_TABLE COLUMNS clause defines the view schema; column kinds: FOR ORDINALITY, type [FORMAT JSON] [PATH ...], type EXISTS [PATH ...]"
+      - "NESTED PATH is recursive and unnests a hierarchy in one invocation; child rows are joined against the parent COLUMNS row; siblings combined via UNION"
+      - "Only use JSON_VALUE if the value is a single scalar; multiple values is an error; use JSON_QUERY for an object or array; JSON_VALUE default returns text, JSON_QUERY default returns jsonb"
+      - "Scalar strings from JSON_VALUE always have quotes removed (equivalent to OMIT QUOTES in JSON_QUERY); JSON_VALUE returns SQL NULL for JSON null, JSON_QUERY returns JSON null as-is"
+      - "Vendor operators (Table 9.47): -> and #> return the json/jsonb type; ->> and #>> return text"
+      - "Strict and lax modes (Section 9.16.2.2): lax (default) suppresses structural errors producing no match; strict raises an error; accessing a non-existent member/element is a structural error"
+      - "IS [NOT] JSON [VALUE|SCALAR|ARRAY|OBJECT] [WITH|WITHOUT] UNIQUE KEYS — tests parseability and (WITH UNIQUE KEYS) duplicate keys"
+      - "ON ERROR / ON EMPTY defaults: JSON_EXISTS defaults to FALSE; JSON_QUERY/JSON_VALUE default to SQL NULL; JSON_TABLE top-level EMPTY ON ERROR returns an empty table"
+
+  - name: "MySQL 8.4 Reference Manual — The JSON Data Type"
+    url: "https://dev.mysql.com/doc/refman/8.4/en/json.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "Native JSON data type (RFC 8259): automatic validation — invalid documents produce an error; optimized internal storage format for quick read access"
+      - "JSON_ARRAY() builds a JSON array from a list of values; JSON_OBJECT() builds a JSON object from key-value pairs"
+      - "col->path is a synonym for JSON_EXTRACT(column, path); ->> equals JSON_UNQUOTE(JSON_EXTRACT(...)) and removes the surrounding quotes that -> retains"
+      - "JSON_EXTRACT returns the value at a path (a string value comes back quoted)"
+      - "JSON path syntax: leading $, .member, [N] index, [M to N] range, [*] / .[*] wildcards, last keyword"
+
+  - name: "SQLite — The JSON1 Extension"
+    url: "https://www.sqlite.org/json1.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "SQLite stores JSON as ordinary text; internal binary JSONB blob form added in 3.45.0 (internal use only)"
+      - "-> and ->> operators added in 3.38.0 (2022-02-22): -> always returns a JSON representation, ->> always returns an SQL representation"
+      - "json_extract MySQL incompatibility: MySQL's json_extract always returns JSON; SQLite's returns JSON only with 2+ PATH args or when the single path references an array or object"
+      - "json_object() / json_array() constructors; json_each() walks immediate children, json_tree() walks recursively (SQLite's JSON_TABLE equivalent)"
+      - "SQLite uses json_/jsonb_ prefixed names; no standard JSON_VALUE/JSON_QUERY/JSON_TABLE spellings"
+
+  - name: "Bill Karwin — SQL Antipatterns (EAV / Entity-Attribute-Value)"
+    url: "https://pragprog.com/titles/bksqla/sql-antipatterns/"
+    type: book
+    accessed: "2026-06-26"
+    sections_used:
+      - "Storing domain columns in a schema-less blob reinvents the Entity-Attribute-Value antipattern — losing foreign keys, CHECK, NOT NULL, indexes, and planner statistics"
