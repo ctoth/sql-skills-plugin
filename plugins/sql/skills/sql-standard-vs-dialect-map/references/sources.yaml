@@ -1,0 +1,225 @@
+sources:
+  - name: "modern-sql.com — The SQL Standard"
+    url: "https://modern-sql.com/standard"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "ISO/IEC 9075 defines mandatory Core SQL plus many optional features; conformance is partial and every vendor adds extensions"
+      - "Per-feature technical reports and browsable BNF grammars per standard version (SQL:2023/2019/2016/2011) — the citable per-feature pages used by sibling skills"
+
+  - name: "PostgreSQL — SQL Conformance"
+    url: "https://www.postgresql.org/docs/current/features.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "PostgreSQL does not implement every standard feature, and some PostgreSQL features are not in the standard"
+
+  - name: "PostgreSQL — SELECT (LIMIT / FETCH / OFFSET)"
+    url: "https://www.postgresql.org/docs/current/sql-select.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "OFFSET … FETCH FIRST n ROWS ONLY [WITH TIES] is the SQL-standard pagination clause; LIMIT/OFFSET is the non-standard equivalent"
+
+  - name: "antonz.org — SQL FETCH FIRST vs LIMIT"
+    url: "https://antonz.org/sql-fetch/"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "MySQL and SQLite do not support FETCH at all; FETCH FIRST is the standard but LIMIT is the cross-engine lowest common denominator"
+
+  - name: "PostgreSQL — Identity Columns"
+    url: "https://www.postgresql.org/docs/current/ddl-identity-columns.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "GENERATED { ALWAYS | BY DEFAULT } AS IDENTITY is the standard auto-key (PG 10+); SERIAL is the legacy PG-specific spelling"
+
+  - name: "SQLite — CREATE TABLE (rowid / INTEGER PRIMARY KEY)"
+    url: "https://www.sqlite.org/lang_createtable.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "INTEGER PRIMARY KEY is an alias for the rowid — SQLite's auto-increment substitute; no GENERATED AS IDENTITY"
+
+  - name: "PostgreSQL — INSERT (ON CONFLICT)"
+    url: "https://www.postgresql.org/docs/current/sql-insert.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "INSERT … ON CONFLICT (…) DO UPDATE with the excluded.col new-value alias (PG 9.5+); MERGE added in PG 15"
+
+  - name: "MySQL — INSERT ON DUPLICATE KEY UPDATE"
+    url: "https://dev.mysql.com/doc/refman/8.0/en/insert-on-duplicate.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "INSERT … ON DUPLICATE KEY UPDATE is MySQL's upsert; new-value alias new.col (8.0.19+) or VALUES(col); no ON CONFLICT/MERGE"
+
+  - name: "PostgreSQL — String Functions (concatenation)"
+    url: "https://www.postgresql.org/docs/current/functions-string.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "|| is the standard string concatenation; CONCAT() is the portable function form"
+
+  - name: "MySQL — String Literals & ANSI_QUOTES / PIPES_AS_CONCAT"
+    url: "https://dev.mysql.com/doc/refman/8.0/en/string-literals.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "By default \"abc\" is a string literal (not an identifier) and || is logical OR; ANSI_QUOTES makes \"abc\" an identifier, PIPES_AS_CONCAT makes || concatenation"
+
+  - name: "MySQL — Comparison Functions and Operators (<=>)"
+    url: "https://dev.mysql.com/doc/refman/8.0/en/comparison-operators.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "<=> is the NULL-safe equal operator, equivalent to the standard SQL IS NOT DISTINCT FROM"
+
+  - name: "PostgreSQL — Comparison Functions and Operators (IS DISTINCT FROM)"
+    url: "https://www.postgresql.org/docs/current/functions-comparison.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "IS [NOT] DISTINCT FROM is the standard null-aware equality; returns true/false never null"
+
+  - name: "Oracle — Set Operators (UNION ALL / INTERSECT / MINUS)"
+    url: "https://docs.oracle.com/en/database/oracle/oracle-database/19/sqlrf/The-UNION-ALL-INTERSECT-MINUS-Operators.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "Oracle spells set difference MINUS, not EXCEPT; no [ALL] multiset variants"
+
+  - name: "SQLite — Compound SELECT (set operations precedence)"
+    url: "https://www.sqlite.org/lang_select.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "INTERSECT/EXCEPT always dedup and have no precedence over UNION — compound operators evaluate left-to-right; no INTERSECT ALL / EXCEPT ALL"
+
+  - name: "PostgreSQL — Aggregate Functions (string_agg)"
+    url: "https://www.postgresql.org/docs/current/functions-aggregate.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "string_agg is PG's string aggregation; the standard is LISTAGG … WITHIN GROUP; SQLite group_concat, MySQL GROUP_CONCAT"
+
+  - name: "SQLite — The sqlite_schema table"
+    url: "https://www.sqlite.org/schematab.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "SQLite has no INFORMATION_SCHEMA; introspect via sqlite_schema/sqlite_master and PRAGMA table_info"
+
+  - name: "PostgreSQL — JSON Functions and Operators"
+    url: "https://www.postgresql.org/docs/current/functions-json.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "-> returns JSON, ->> returns text (vendor operators); standard JSON_VALUE/JSON_QUERY/JSON_TABLE added in PG 17"
+
+  - name: "SQLite — JSON Functions (json1)"
+    url: "https://www.sqlite.org/json1.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "json_extract / json_each / json_tree are SQLite's JSON access; -> and ->> operators added in 3.38.0; no standard JSON_VALUE"
+
+  - name: "MySQL — Lateral Derived Tables"
+    url: "https://dev.mysql.com/doc/refman/8.0/en/lateral-derived-tables.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "JOIN LATERAL supported from MySQL 8.0.14; SQL Server spells lateral CROSS/OUTER APPLY; SQLite has neither"
+
+  - name: "PostgreSQL — Sorting Rows (NULLS FIRST/LAST)"
+    url: "https://www.postgresql.org/docs/current/queries-order.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "NULLS FIRST/LAST control null sort position; MySQL lacks the syntax and needs the col IS NULL trick"
+
+  - name: "PostgreSQL — Boolean Type"
+    url: "https://www.postgresql.org/docs/current/datatype-boolean.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "PostgreSQL has a true three-valued BOOLEAN; MySQL maps BOOLEAN to TINYINT(1), SQL Server uses BIT, SQLite stores integer 0/1"
+
+  - name: "PostgreSQL — Date/Time Functions (CURRENT_TIMESTAMP)"
+    url: "https://www.postgresql.org/docs/current/functions-datetime.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "CURRENT_TIMESTAMP/CURRENT_DATE are the standard special registers (portable); NOW()/GETDATE()/SYSDATE/datetime('now') are vendor spellings; date math via INTERVAL vs DATEADD vs strftime"
+
+  - name: "SQLite — Date And Time Functions"
+    url: "https://www.sqlite.org/lang_datefunc.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "SQLite has no dedicated date/time type; values stored as TEXT/REAL/INTEGER and interpreted with date()/datetime()/strftime()"
+
+  - name: "PostgreSQL — Transaction Isolation"
+    url: "https://www.postgresql.org/docs/current/transaction-iso.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "PostgreSQL default isolation is READ COMMITTED; the four standard level names are accepted but defaults differ per engine"
+
+  - name: "SQLite — Isolation In SQLite"
+    url: "https://www.sqlite.org/isolation.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "SQLite transactions are SERIALIZABLE by default (single-writer)"
+
+  - name: "MySQL — Implicit Commit & InnoDB Isolation"
+    url: "https://dev.mysql.com/doc/refman/8.0/en/implicit-commit.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "InnoDB default isolation is REPEATABLE READ; DDL statements cause an implicit commit and cannot be rolled back"
+
+  - name: "MySQL — JOIN syntax (no FULL JOIN)"
+    url: "https://dev.mysql.com/doc/refman/8.0/en/join.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "MySQL has no FULL [OUTER] JOIN — emulate with LEFT … UNION … RIGHT"
+
+  - name: "SQLite — Release 3.39.0 (RIGHT and FULL OUTER JOIN)"
+    url: "https://www.sqlite.org/releaselog/3_39_0.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "RIGHT and FULL OUTER JOIN added in SQLite 3.39.0 (2022)"
+
+  - name: "modern-sql.com — MATCH_RECOGNIZE (feature R010)"
+    url: "https://modern-sql.com/feature/match_recognize"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "Row pattern matching is an optional SQL:2016 feature (R010); established in Oracle 12cR1+/Trino/Snowflake/DB2; absent from almost all deployed PG/MySQL/SQLite versions"
+
+  - name: "Wikipedia — SQL:2011 (temporal tables)"
+    url: "https://en.wikipedia.org/wiki/SQL:2011"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "System-versioned temporal tables: MariaDB 10.3+, SQL Server 2016+, DB2, SAP HANA; Oracle approximates via Flashback; PostgreSQL/MySQL/SQLite have no native support"
+
+  - name: "ORACLE-BASE — SQL Property Graphs and SQL/PGQ (23ai)"
+    url: "https://oracle-base.com/articles/23/sql-property-graphs-and-sql-pgq-23"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "SQL/PGQ (SQL:2023) ships GA only in Oracle Database 23ai; other engines fall back to recursive CTEs"
+
+  - name: "OWASP — SQL Injection Prevention Cheat Sheet"
+    url: "https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "Parameter placeholder spelling (? / $1 / :name / %s) is a driver paramstyle property, not a SQL-dialect feature"
