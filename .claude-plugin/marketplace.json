@@ -1,0 +1,16 @@
+{
+  "name": "sql-skills-marketplace",
+  "owner": {
+    "name": "Q"
+  },
+  "metadata": {
+    "description": "Agent skills for writing correct, portable, modern standard SQL (ISO/IEC 9075)"
+  },
+  "plugins": [
+    {
+      "name": "sql",
+      "source": "./plugins/sql",
+      "description": "Standard-SQL code-quality skills — NULL/relational discipline, joins, window functions, CTEs, JSON, constraints, indexing, parameterization, and portable modern features"
+    }
+  ]
+}

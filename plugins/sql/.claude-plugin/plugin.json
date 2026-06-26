@@ -1,0 +1,8 @@
+{
+  "name": "sql",
+  "description": "Standard-SQL code-quality skills — relational & NULL discipline, joins, aggregation, window functions, CTEs & recursion, JSON, MERGE/upsert, keyset pagination, constraints & schema design, indexing & sargability, parameterization & access control, transactions, and modern SQL:2011/2016/2023 features. Vendor-neutral; portability mapped per feature.",
+  "version": "0.1.0",
+  "author": {
+    "name": "Q"
+  }
+}
