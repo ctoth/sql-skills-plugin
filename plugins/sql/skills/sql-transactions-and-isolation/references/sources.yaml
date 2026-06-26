@@ -1,0 +1,64 @@
+sources:
+  - name: "PostgreSQL — Transactions (A Brief Tour / tutorial)"
+    url: "https://www.postgresql.org/docs/current/tutorial-transactions.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "A transaction bundles multiple steps into a single, all-or-nothing operation; on failure none of the steps affect the database"
+      - "A transaction is atomic: from the point of view of other transactions it either happens completely or not at all"
+      - "A transaction is set up by surrounding the SQL commands with BEGIN and COMMIT"
+      - "ROLLBACK instead of COMMIT cancels all updates so far"
+      - "The bank transfer motivation — Bob must not be credited without Alice being debited, and vice versa"
+      - "Savepoints selectively discard parts of a transaction; ROLLBACK TO keeps changes earlier than the savepoint"
+      - "SAVEPOINT / ROLLBACK TO worked example (Alice debit, Bob credit undone, Wally credited)"
+
+  - name: "PostgreSQL — SET TRANSACTION"
+    url: "https://www.postgresql.org/docs/current/sql-set-transaction.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "ISOLATION LEVEL { SERIALIZABLE | REPEATABLE READ | READ COMMITTED | READ UNCOMMITTED } — the four standard level names"
+      - "Access mode determines read/write vs read-only; read/write is the default"
+      - "DEFERRABLE has no effect unless also SERIALIZABLE and READ ONLY; then the transaction may block when acquiring its snapshot, then run without serializable overhead or serialization-failure risk"
+      - "In PostgreSQL READ UNCOMMITTED is treated as READ COMMITTED"
+      - "In PostgreSQL the default is ordinarily READ COMMITTED"
+
+  - name: "PostgreSQL — Transaction Isolation"
+    url: "https://www.postgresql.org/docs/current/transaction-iso.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "Dirty read — a transaction reads data written by a concurrent uncommitted transaction"
+      - "Non-repeatable read — re-reading data and finding it modified by another committed transaction"
+      - "Phantom read — re-running a query and finding the set of matching rows changed by a recently-committed transaction"
+      - "Serialization anomaly — a committed group of transactions inconsistent with all serial orderings"
+      - "The SQL standard defines four isolation levels; the other three are defined in terms of phenomena that must not occur"
+      - "Read Committed is the default isolation level in PostgreSQL"
+
+  - name: "SQLite — BEGIN TRANSACTION"
+    url: "https://www.sqlite.org/lang_transaction.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "Autocommit — any command that accesses the database automatically starts a transaction if none is in effect; committed when the last statement finishes"
+      - "BEGIN DEFERRED (default, lazy lock), BEGIN IMMEDIATE (acquire write lock now, may fail SQLITE_BUSY), BEGIN EXCLUSIVE"
+      - "Transactions persist until the next COMMIT or ROLLBACK"
+      - "Nested transactions use SAVEPOINT and RELEASE; ROLLBACK TO SAVEPOINT applies only to savepoint transactions"
+
+  - name: "SQLite — Isolation In SQLite"
+    url: "https://www.sqlite.org/isolation.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "Except for shared-cache connections with PRAGMA read_uncommitted, all transactions in SQLite show serializable isolation"
+      - "Transactions in SQLite are SERIALIZABLE (Summary)"
+
+  - name: "MySQL — Statements That Cause an Implicit Commit"
+    url: "https://dev.mysql.com/doc/refman/8.0/en/implicit-commit.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "DDL statements implicitly end any active transaction, as if a COMMIT had been done before executing the statement"
+      - "Most such statements also cause an implicit commit after executing; each runs in its own special transaction"
+      - "DDL list — ALTER TABLE, CREATE TABLE, CREATE INDEX, DROP TABLE, RENAME TABLE, TRUNCATE TABLE, etc."
+      - "TEMPORARY-table exception — no implicit commit, but the statement still cannot be rolled back, violating transactional atomicity"

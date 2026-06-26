@@ -1,0 +1,67 @@
+sources:
+  - name: "PostgreSQL — GRANT"
+    url: "https://www.postgresql.org/docs/current/sql-grant.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "GRANT gives specific privileges on a database object to one or more roles; privileges are added to those already granted (grants are additive)"
+      - "Object privilege types: SELECT, INSERT, UPDATE, DELETE, TRUNCATE, REFERENCES, TRIGGER, CREATE, CONNECT, TEMPORARY, EXECUTE, USAGE, SET, ALTER SYSTEM, MAINTAIN"
+      - "ALL PRIVILEGES grants all privileges for the object type; the PRIVILEGES keyword is optional in PostgreSQL but required by strict SQL"
+      - "WITH GRANT OPTION lets the recipient grant the privilege to others; grant options cannot be granted to PUBLIC"
+      - "PUBLIC is an implicitly defined group that always includes all roles, including those created later"
+      - "GRANT role_name TO role_specification grants membership in a role to other roles; membership cannot be granted to PUBLIC"
+      - "GRANTED BY clause is present only for SQL compatibility"
+
+  - name: "PostgreSQL — Privileges (§5.8)"
+    url: "https://www.postgresql.org/docs/current/ddl-priv.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "On creation an object is assigned an owner; initially only the owner (or a superuser) can do anything with it — privileges must be granted to other roles (default-deny)"
+      - "The right to modify or destroy an object is inherent in being the object's owner, and cannot be granted or revoked in itself"
+      - "An owner can revoke their own ordinary privileges, but owners always hold all grant options and can re-grant their own privileges"
+      - "Default PUBLIC privileges: none on tables/columns/sequences/schemas; CONNECT and TEMPORARY on databases; EXECUTE on functions and procedures; USAGE on languages and data types"
+      - "WITH GRANT OPTION: revoking it cascades — all who received the privilege from that recipient (directly or through a chain) lose it"
+      - "Ordinarily only the object's owner (or a superuser) can grant or revoke privileges on an object"
+
+  - name: "PostgreSQL — Database Roles (chapter)"
+    url: "https://www.postgresql.org/docs/current/user-manag.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "A role can be thought of as either a database user or a group of database users"
+      - "The concept of roles subsumes the concepts of users and groups; since 8.1 there are only roles"
+
+  - name: "PostgreSQL — Database Roles (§21.1)"
+    url: "https://www.postgresql.org/docs/current/database-roles.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "Database roles are conceptually completely separate from operating system users"
+      - "Create a role with CREATE ROLE name; usually add options such as LOGIN"
+
+  - name: "PostgreSQL — Role Attributes (§21.2)"
+    url: "https://www.postgresql.org/docs/current/role-attributes.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "Only roles that have the LOGIN attribute can be used as the initial role name for a database connection"
+      - "A database superuser bypasses all permission checks, except the right to log in"
+      - "A role must be explicitly given permission to create databases (CREATEDB) and to create roles (CREATEROLE), except superusers"
+
+  - name: "PostgreSQL — Role Membership (§21.3)"
+    url: "https://www.postgresql.org/docs/current/role-membership.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "Grouping users eases privilege management — privileges can be granted to or revoked from a group as a whole"
+      - "Create a role representing the group, then GRANT group_role TO individual user roles"
+      - "Members use group privileges via SET ROLE (SET option) or automatically (INHERIT option, PostgreSQL's default)"
+
+  - name: "SQLite — Omitted Features"
+    url: "https://www.sqlite.org/omitted.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "GRANT and REVOKE are not implemented because they would be meaningless for an embedded database engine"
+      - "Since SQLite reads and writes an ordinary disk file, the only access permissions are the normal file access permissions of the underlying operating system"

@@ -1,0 +1,104 @@
+sources:
+  - name: "Use The Index, Luke! — Anatomy of an Index"
+    url: "https://use-the-index-luke.com/sql/anatomy"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "An index combines two data structures: a doubly linked list and a search tree"
+
+  - name: "Use The Index, Luke! — The Leaf Nodes"
+    url: "https://use-the-index-luke.com/sql/anatomy/the-leaf-nodes"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "Databases use doubly linked lists to connect the index leaf nodes; reads forwards or backwards as needed"
+      - "Each index entry consists of the indexed columns (the key) and refers to the table row via ROWID/RID"
+
+  - name: "Use The Index, Luke! — The B-Tree"
+    url: "https://use-the-index-luke.com/sql/anatomy/the-tree"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "A balanced search tree on top of the leaf nodes; logarithmic growth of tree depth"
+      - "Tree depth grows very slowly; real-world indexes with millions of rows have depth four or five"
+      - "The first power of indexing — finding a leaf node works almost instantly even on a huge data set"
+
+  - name: "SQLite — The Query Optimizer Overview"
+    url: "https://www.sqlite.org/queryplanner.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "Full table scan reads every row; on 7 million rows it reads megabytes to find one number"
+      - "Binary search on an index is proportional to logN, not N — about 1 million times faster on 10M rows"
+      - "Multi-column index: leftmost column orders, the second breaks ties, and so on"
+      - "Covering index — all columns the query uses are in the index, so the table is never consulted"
+
+  - name: "Use The Index, Luke! — Case-Insensitive Search (functions defeat indexes)"
+    url: "https://use-the-index-luke.com/sql/where-clause/functions/case-insensitive-search"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "An index on LAST_NAME is unusable when the search is on UPPER(LAST_NAME); the function is a black box"
+      - "The fix is a function-based index whose exact expression appears in the SQL statement"
+
+  - name: "Use The Index, Luke! — User-Defined Functions"
+    url: "https://use-the-index-luke.com/sql/where-clause/functions/user-defined-functions"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "Function-based indexing is generic — can index expressions like A + B, not just UPPER"
+      - "Only deterministic functions can be indexed; PG requires IMMUTABLE, Oracle DETERMINISTIC; Db2 cannot"
+
+  - name: "Use The Index, Luke! — Indexing LIKE Filters"
+    url: "https://use-the-index-luke.com/sql/where-clause/searching-for-ranges/like-performance-tuning"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "Avoid LIKE expressions with leading wildcards (e.g. '%TERM')"
+      - "Only the part before the first wildcard serves as an access predicate"
+      - "A LIKE expression starting with a wildcard cannot serve as an access predicate; full table scan"
+
+  - name: "Use The Index, Luke! — Concatenated Keys"
+    url: "https://use-the-index-luke.com/sql/where-clause/the-equals-operator/concatenated-keys"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "Column order of a concatenated index has great impact on usability; choose carefully"
+      - "An index is usable when searching with the leading (leftmost) columns"
+      - "A two-column index does not support searching on the second column alone (telephone directory analogy)"
+
+  - name: "Use The Index, Luke! — Greater, Less and BETWEEN (access vs filter predicates)"
+    url: "https://use-the-index-luke.com/sql/where-clause/searching-for-ranges/greater-less-between-tuning-sql-access-filter-predicates"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "Rule of thumb: index for equality first—then for ranges"
+      - "Access predicates define the scanned index range; index filter predicates do not narrow it"
+      - "A range on an early column makes the ordering of later columns useless during tree traversal"
+
+  - name: "Use The Index, Luke! — Index-Only Scan / Covering Index"
+    url: "https://use-the-index-luke.com/sql/clustering/index-only-scan-covering-index"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "The index-only scan is one of the most powerful tuning methods of all"
+      - "To cover a query an index must contain all columns from the SQL statement; the table is not accessed"
+      - "The advantage depends on the number of accessed rows; check the plan before extending the where clause"
+
+  - name: "Use The Index, Luke! — Sorting and Grouping"
+    url: "https://use-the-index-luke.com/sql/sorting-grouping"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "An index stores data presorted, just like the order by clause — avoids the sort effort"
+      - "Pipelined order by returns the first results without processing all input data — the third power of indexing"
+      - "The same techniques apply to group by clauses"
+
+  - name: "Use The Index, Luke! — The Insert Statement (write cost of indexes)"
+    url: "https://use-the-index-luke.com/sql/dml/insert"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "Number of indexes is the most dominant factor for insert performance; more indexes, slower writes"
+      - "Each new row must be added to every index on the table; index maintenance is the most expensive part"
+      - "The number of indexes is a multiplier for insert cost; avoid redundant indexes (also helps update/delete)"

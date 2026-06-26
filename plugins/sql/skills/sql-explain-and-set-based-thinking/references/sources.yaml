@@ -1,0 +1,55 @@
+sources:
+  - name: "PostgreSQL — Using EXPLAIN"
+    url: "https://www.postgresql.org/docs/current/using-explain.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "A query plan is a tree of plan nodes; bottom-level nodes are scan nodes returning raw rows (seq scan, index scan, bitmap index scan)"
+      - "EXPLAIN output has one line per node showing node type plus the planner's cost estimates"
+      - "A query with no WHERE must scan all rows, so the planner chooses a sequential scan; index scans fetch rows in index order, common for single-row fetches"
+      - "On a one-disk-page table you nearly always get a sequential scan whether or not indexes exist"
+      - "The parenthesized numbers are estimated start-up cost, estimated total cost, estimated rows emitted, and estimated row width"
+      - "Costs are in arbitrary units; the cost of an upper-level node includes the cost of all child nodes"
+      - "The rows value is the number of rows emitted by the node (after WHERE filtering), not the number scanned"
+      - "EXPLAIN ANALYZE actually executes the query and displays true row counts and true run time per node alongside the estimates"
+      - "Actual time is in milliseconds while cost is in arbitrary units, so they are unlikely to match up"
+      - "loops reports the total executions of a node; actual time and rows shown are per-execution averages (inner scan runs once per outer row)"
+      - "The thing most important to look for is whether estimated row counts are reasonably close to reality; dead-on estimates are quite unusual in practice"
+      - "Row estimates can change after each ANALYZE because statistics are taken from a randomized sample of the table"
+      - "EXPLAIN results should not be extrapolated to a much different situation; a toy-sized table cannot be assumed to apply to large tables, and cost estimates are not linear"
+
+  - name: "SQLite — The EXPLAIN QUERY PLAN Command"
+    url: "https://www.sqlite.org/eqp.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "EXPLAIN QUERY PLAN gives a high-level description of the strategy SQLite uses, most significantly how the query uses database indices"
+      - "SCAN means a full-table scan; SEARCH means only a subset of the table rows are visited"
+      - "When an index is usable, the SCAN/SEARCH record names the index and (for SEARCH) how the subset is identified, e.g. USING INDEX / USING COVERING INDEX"
+      - "A query plan is represented as a tree; the shell renders it as an ASCII-art graph for readability"
+
+  - name: "Use The Index, Luke — Testing Scalability"
+    url: "https://use-the-index-luke.com/sql/testing-scalability"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "A query fast enough under test conditions does not mean it is fast enough in production, especially in dev environments with a fraction of production data"
+      - "At a hundred times the data volume the faster query needs more than twice as long, while the slower query's response time increased by a factor of 20 to over a second"
+      - "Response time grows with data volume for both queries; the divergence between a good and bad plan widens with scale"
+
+  - name: "MySQL — EXPLAIN Output Format"
+    url: "https://dev.mysql.com/doc/refman/8.0/en/explain-output.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "The EXPLAIN statement provides information about how MySQL executes statements"
+      - "FORMAT=JSON gives a structured representation of the plan; for InnoDB the rows column is an estimate and may not always be exact"
+
+  - name: "Bill Karwin — SQL Antipatterns (Spaghetti Query)"
+    url: "https://pragprog.com/titles/bksqla/sql-antipatterns/"
+    type: book
+    accessed: "2026-06-26"
+    sections_used:
+      - "Spaghetti Query — cramming an entire problem into one giant unreadable query causes accidental cross-products and mis-planning; split into readable steps instead"
+      - "Row-by-row application loops (N+1 / RBAR) are a performance antipattern; operate on sets, not one row at a time"
+</content>
