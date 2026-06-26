@@ -1,0 +1,34 @@
+sources:
+  - name: "modern-sql.com — Three-Valued Logic"
+    url: "https://modern-sql.com/concept/three-valued-logic"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "X NOT IN (NULL, …) ⇔ NOT(X IN(NULL, …)) ⇔ NOT(X = ANY(NULL, …)) — the expansion"
+      - "= ANY is only false (negation true) if all comparisons are false; impossible with a NULL comparison, which yields unknown"
+      - "The result of X NOT IN (NULL, …) is either false or unknown; never true"
+      - "Consider using NOT EXISTS instead of NOT IN, or add a WHERE that removes null values from the subquery"
+      - "EXISTS never returns unknown"
+
+  - name: "PostgreSQL — Subquery Expressions"
+    url: "https://www.postgresql.org/docs/current/functions-subquery.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "EXISTS is true if the subquery returns at least one row, false if none; the output list is unimportant — use SELECT 1"
+      - "IN with NULL: if no equal right-hand values and at least one right-hand row yields null, IN is null, not false"
+      - "NOT IN with NULL: if no equal right-hand values and at least one right-hand row yields null, NOT IN is null, not true"
+      - "SOME is a synonym for ANY; IN is equivalent to = ANY; NOT IN is equivalent to <> ALL"
+      - "ANY is true if any true result is obtained; ALL is true if all rows yield true (incl. zero rows)"
+      - "A scalar subquery cannot return more than one row; if it returns zero rows the result is taken to be null"
+
+  - name: "SQLite — Expressions (EXISTS, IN/NOT IN, scalar subquery)"
+    url: "https://www.sqlite.org/lang_expr.html#the_exists_operator"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "EXISTS evaluates to 1 if the SELECT returns one or more rows, 0 if none; column count and values have no effect"
+      - "Rows containing NULL values are not handled any differently from rows without NULL values (EXISTS is NULL-immune)"
+      - "IN/NOT IN over an empty set: IN is false, NOT IN is true, regardless of the left operand (even if NULL)"
+      - "When the right operand contains NULL and the left is not found, IN is NULL and NOT IN is NULL"
+      - "A scalar subquery's value is the first row of the result (SQLite does not error on >1 row); NULL if no rows"

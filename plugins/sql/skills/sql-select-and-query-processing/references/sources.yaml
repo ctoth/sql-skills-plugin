@@ -1,0 +1,46 @@
+sources:
+  - name: "PostgreSQL — SELECT"
+    url: "https://www.postgresql.org/docs/current/sql-select.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "Description — the general processing of SELECT as a numbered pipeline: FROM, WHERE, GROUP BY/aggregates, HAVING, SELECT output expressions, DISTINCT, UNION/INTERSECT/EXCEPT, ORDER BY, LIMIT/OFFSET, FOR UPDATE"
+      - "SELECT List — an output column's name can be used in ORDER BY and GROUP BY but not in WHERE or HAVING; there you must write out the expression"
+      - "GROUP BY Clause — output columns are nominally computed in the next step but can also be referenced (by name or ordinal) in GROUP BY (a PostgreSQL extension)"
+      - "ORDER BY Clause — each expression can be the name or ordinal number of an output column, or an arbitrary expression on input columns; the ordinal refers to left-to-right output position"
+      - "DISTINCT Clause — SELECT DISTINCT removes duplicate whole rows; SELECT ALL is the default; DISTINCT ON keeps the first row per set and is unpredictable without ORDER BY (non-standard extension)"
+
+  - name: "PostgreSQL — Sorting Rows (ORDER BY)"
+    url: "https://www.postgresql.org/docs/current/queries-order.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "A sort_expression can be the column label or number of an output column (e.g. ORDER BY sum / ORDER BY 1)"
+      - "Ambiguity between an output column name and an input column resolves to the output column"
+      - "An output column name must stand alone — it cannot be used inside a larger expression (ORDER BY sum + c is wrong)"
+      - "NULLS FIRST/LAST controls null placement; nulls sort as if larger than non-null by default — NULLS FIRST default for DESC, NULLS LAST otherwise"
+      - "ASC is the default; 'smaller' is defined by the < operator"
+
+  - name: "PostgreSQL — Query Language Overview (7.1)"
+    url: "https://www.postgresql.org/docs/current/queries-overview.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "Overview — the macro structure of SELECT (select list, table expression, sort specification); defers evaluation-order detail to the SELECT reference and later sections"
+
+  - name: "SQLite — SELECT"
+    url: "https://www.sqlite.org/lang_select.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "Simple Select Processing — data returned is determined as a series of steps: FROM-clause input, WHERE filtering, result-row/GROUP BY generation, DISTINCT removal, ORDER BY, LIMIT"
+      - "ORDER BY clause — a constant integer K is an alias for the K-th result column; an identifier matching an output-column alias is considered an alias for that column"
+      - "Generation of the set of result rows — the result expression list; '*' is substituted with all columns in the input data"
+      - "DISTINCT vs ALL — SELECT ALL returns all rows; if neither ALL nor DISTINCT is present the behavior is as if ALL were specified"
+
+  - name: "Bill Karwin — SQL Antipatterns (Implicit Columns)"
+    url: "https://pragprog.com/titles/bksqla/sql-antipatterns/"
+    type: book
+    accessed: "2026-06-26"
+    sections_used:
+      - "Implicit Columns — SELECT * causes schema-change fragility, positional/ordinal breakage, over-fetch, and broken INSERT ... SELECT *; list columns explicitly"

@@ -1,0 +1,50 @@
+sources:
+  - name: "PostgreSQL — Table Expressions (Joined Tables)"
+    url: "https://www.postgresql.org/docs/current/queries-table-expressions.html#QUERIES-JOIN"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "CROSS JOIN — a Cartesian product; with N and M rows the joined table has N * M rows"
+      - "INNER JOIN — for each row R1 of T1, a row for each row in T2 that satisfies the join condition with R1"
+      - "LEFT OUTER JOIN — inner join, then unmatched T1 rows null-extended on T2 columns; always at least one row per T1 row"
+      - "RIGHT OUTER JOIN — converse of LEFT; always a row for each row in T2"
+      - "FULL OUTER JOIN — inner join, then unmatched rows from BOTH T1 and T2 null-extended"
+      - "ON — the most general join condition; a Boolean expression like WHERE; pairs match when ON evaluates to true"
+      - "USING (a, b) — shorthand for ON T1.a = T2.a AND T1.b = T2.b; suppresses redundant duplicate columns"
+      - "NATURAL — shorthand for USING on ALL column names common to both tables; with no common names behaves like CROSS JOIN"
+      - "A restriction in ON is processed before the join; a restriction in WHERE is processed after the join — matters a lot with outer joins"
+
+  - name: "SQLite — SELECT (join-operator, join-constraint)"
+    url: "https://www.sqlite.org/lang_select.html"
+    type: specification
+    accessed: "2026-06-26"
+    sections_used:
+      - "Supported join operators: NATURAL, LEFT, RIGHT, FULL, INNER, CROSS, OUTER (RIGHT/FULL OUTER added in 3.39.0, 2022)"
+      - "Join constraints: USING ( column-name, ... ) and ON expr — same forms as standard SQL"
+      - "NOTE: descriptive prose for NATURAL/USING semantics did not survive fetch-to-markdown truncation; definitional wording is taken from the PostgreSQL source and SQLite shares the behavior"
+
+  - name: "Markus Winand — SQL JOIN (Use The Index, Luke)"
+    url: "https://use-the-index-luke.com/sql/join"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "The join operation transforms data from a normalized model into a denormalized form for a specific processing purpose"
+      - "Joining is particularly sensitive to disk seek latencies because it combines scattered data fragments; proper indexing is the best solution"
+      - "The correct index depends on which of the three join algorithms is used (nested loops, hash join, sort-merge join)"
+
+  - name: "Markus Winand — Nested Loops Join (Use The Index, Luke)"
+    url: "https://use-the-index-luke.com/sql/join/nested-loops-join"
+    type: article
+    accessed: "2026-06-26"
+    sections_used:
+      - "A nested loops join works like two nested queries: a driving query, then a second query for each row to fetch the matching data from the other table"
+      - "The nested loops join delivers good performance if the driving query returns a small result set"
+
+  - name: "sql-relational-and-null-discipline (foundation skill)"
+    url: "../../sql-relational-and-null-discipline/SKILL.md"
+    type: cross-reference
+    accessed: "2026-06-26"
+    sections_used:
+      - "Three-valued logic — WHERE/ON keep only TRUE; UNKNOWN is dropped (underpins the ON-vs-WHERE outer-join trap)"
+      - "NULL = NULL is UNKNOWN — why an equi-join never matches NULL keys (§7)"
+      - "IS NOT DISTINCT FROM — null-safe equality, returns true/false never UNKNOWN; safe in a join condition"
