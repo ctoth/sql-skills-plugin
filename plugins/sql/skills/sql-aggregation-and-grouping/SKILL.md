@@ -1,8 +1,8 @@
 ---
 name: sql-aggregation-and-grouping
-description: Guides aggregation correctness — every column in the SELECT list of a grouped query must be either named in GROUP BY or wrapped in an aggregate (the functional-dependency rule), because a non-grouped, non-aggregated column has no single value per group. Bans the "ambiguous groups" antipattern that errors on standard-conformant engines but silently returns an arbitrary row's value on MySQL with ONLY_FULL_GROUP_BY disabled. Teaches WHERE (filters rows before grouping, no aggregates) vs HAVING (filters groups after, aggregates allowed), the standard SQL:2003 `FILTER (WHERE ...)` clause for conditional aggregation instead of fragile CASE-inside-aggregate, COUNT(*)/COUNT(col)/COUNT(DISTINCT) and aggregate NULL handling, GROUPING SETS/ROLLUP/CUBE plus GROUPING() instead of hand-UNIONed subtotal levels, and ordered-set aggregates (LISTAGG/ARRAY_AGG/percentile, WITHIN GROUP). Auto-invokes when writing or editing GROUP BY/HAVING, aggregate functions (SUM/COUNT/AVG/MIN/MAX), FILTER, LISTAGG/STRING_AGG/GROUP_CONCAT/ARRAY_AGG, ROLLUP/CUBE/GROUPING SETS, percentile/WITHIN GROUP, or any multi-level subtotal report, and on "only_full_group_by" / "must appear in the GROUP BY clause" / "subtotal" / "rollup" requests.
+description: >-
+  Guides aggregation correctness — every column in the SELECT list of a grouped query must be either named in GROUP BY or wrapped in an aggregate (the functional-dependency rule), because a non-grouped, non-aggregated column has no single value per group. Bans the "ambiguous groups" antipattern that errors on standard-conformant engines but silently returns an arbitrary row's value on MySQL with ONLY_FULL_GROUP_BY disabled. Auto-invokes when writing or editing GROUP BY/HAVING, aggregate functions (SUM/COUNT/AVG/MIN/MAX), FILTER, LISTAGG/STRING_AGG/GROUP_CONCAT/ARRAY_AGG, ROLLUP/CUBE/GROUPING SETS, percentile/WITHIN GROUP, or any multi-level subtotal report, and on "only_full_group_by" / "must appear in the GROUP BY clause" / "subtotal" / "rollup" requests.
 allowed-tools: Read, Glob, Grep
-compatibility: "Claude Code, Codex CLI, Gemini CLI"
 ---
 
 # SQL Aggregation and Grouping
@@ -215,8 +215,8 @@ The aggregate written to the functional-dependency rule, the `FILTER`/`CASE` tha
 
 High-frequency aggregation/grouping anti-patterns in LLM-generated SQL, each with wrong/right code and a primary-source citation:
 
-`${CLAUDE_SKILL_DIR}/references/common-mistakes.md`
+[references/common-mistakes.md](references/common-mistakes.md)
 
 Source provenance for every claim in this skill:
 
-`${CLAUDE_SKILL_DIR}/references/sources.yaml`
+[references/sources.yaml](references/sources.yaml)

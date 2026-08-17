@@ -1,8 +1,8 @@
 ---
 name: sql-data-types-and-numerics
-description: Guides standard-SQL type selection so the storage matches the data's meaning — exact `NUMERIC`/`DECIMAL(p,s)` for money and counts (never `FLOAT`/`REAL`/`DOUBLE`, whose binary floating point cannot store 0.1 exactly and whose rounding error compounds when summed), `SMALLINT`/`INTEGER`/`BIGINT` chosen by the value range (the `INTEGER` ceiling is +2,147,483,647), `CHARACTER VARYING` sized to a real domain limit instead of a cargo-culted `VARCHAR(255)`, fixed-width `CHARACTER(n)` only for genuinely fixed codes (it blank-pads), a true `BOOLEAN`, and `BLOB`/`CLOB` for large objects. Covers precision/scale and overflow semantics, integer overflow, and SQLite's dynamic-typing deviation where a declared type is only advisory and any column accepts any value. Auto-invokes when writing or editing column type declarations, `CREATE TABLE`/`ALTER TABLE` type choices, `CAST` targets, money/currency/price fields, high-precision or large-range numbers, identifier/key column widths, or string-length and boolean columns. Routes dialect spellings (BIT, TINYINT(1), bytea) to sql-standard-vs-dialect-map.
+description: >-
+  Guides standard-SQL type selection so the storage matches the data's meaning — exact `NUMERIC`/`DECIMAL(p,s)` for money and counts (never `FLOAT`/`REAL`/`DOUBLE`, whose binary floating point cannot store 0.1 exactly and whose rounding error compounds when summed), `SMALLINT`/`INTEGER`/`BIGINT` chosen by the value range (the `INTEGER` ceiling is +2,147,483,647), `CHARACTER VARYING` sized to a real domain limit instead of a cargo-culted `VARCHAR(255)`, fixed-width `CHARACTER(n)` only for. Auto-invokes when writing or editing column type declarations, `CREATE TABLE`/`ALTER TABLE` type choices, `CAST` targets, money/currency/price fields, high-precision or large-range numbers, identifier/key column widths, or string-length and boolean columns. Routes dialect spellings (BIT, TINYINT(1), bytea) to sql-standard-vs-dialect-map.
 allowed-tools: Read, Glob, Grep
-compatibility: "Claude Code, Codex CLI, Gemini CLI"
 ---
 
 # SQL Data Types and Numerics
@@ -195,8 +195,8 @@ Choosing the type that matches the data's meaning is empathy in the schema: the 
 
 High-frequency data-type and numeric anti-patterns in LLM-generated SQL, each with wrong/right code and a primary-source citation:
 
-`${CLAUDE_SKILL_DIR}/references/common-mistakes.md`
+[references/common-mistakes.md](references/common-mistakes.md)
 
 Source provenance for every claim in this skill:
 
-`${CLAUDE_SKILL_DIR}/references/sources.yaml`
+[references/sources.yaml](references/sources.yaml)

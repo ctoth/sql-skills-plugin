@@ -1,4 +1,14 @@
 # Common `MATCH_RECOGNIZE` Mistakes
+## Contents
+
+- [1. Using MATCHRECOGNIZE on an engine that lacks it](#1-using-matchrecognize-on-an-engine-that-lacks-it)
+- [2. Wrong clause order](#2-wrong-clause-order)
+- [3. Forgetting ORDER BY — or assuming partition order](#3-forgetting-order-by-or-assuming-partition-order)
+- [4. Confusing RUNNING and FINAL in MEASURES](#4-confusing-running-and-final-in-measures)
+- [5. Greedy quantifier swallowing the next match](#5-greedy-quantifier-swallowing-the-next-match)
+- [6. Wrong AFTER MATCH SKIP — missing or duplicating matches](#6-wrong-after-match-skip-missing-or-duplicating-matches)
+- [7. Using an undefined variable by accident (typo anchors everything)](#7-using-an-undefined-variable-by-accident-typo-anchors-everything)
+
 
 Anti-patterns in LLM-generated row-pattern-recognition SQL, each with wrong/right code and a
 primary-source citation. The skill (`sql-match-recognize`) states the rules; this file holds the

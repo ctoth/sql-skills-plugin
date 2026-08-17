@@ -2,7 +2,6 @@
 name: sql-set-operations
 description: Guides SQL set operations and the default-to-UNION cost trap — UNION sorts and de-duplicates its whole combined result (expensive) while UNION ALL just appends, so use UNION ALL whenever duplicates are impossible or wanted. Covers INTERSECT/EXCEPT (native set intersection and difference, so they aren't reinvented with joins or NOT EXISTS) and their [ALL] multiset forms, union-compatibility (columns align by position not name, equal count, compatible types), where ORDER BY/FETCH are legal (only on the final compound query — parentheses isolate a branch), the precedence rule (INTERSECT binds tighter than UNION/EXCEPT in standard SQL), that set ops treat NULLs as NOT distinct (two NULLs collapse — the opposite of `=`), and VALUES as an inline table constructor. Auto-invokes when writing or editing UNION/UNION ALL/INTERSECT/EXCEPT, compound SELECTs, VALUES row-set constructors, or on "combine two queries" / "rows in A but not B" / "why are my duplicates gone" / "MINUS" requests.
 allowed-tools: Read, Glob, Grep
-compatibility: "Claude Code, Codex CLI, Gemini CLI"
 ---
 
 # SQL Set Operations
@@ -206,8 +205,8 @@ The `UNION ALL` you wrote when duplicates were impossible, the explicit column l
 
 High-frequency set-operation anti-patterns in LLM-generated SQL, each with wrong/right code and a primary-source citation:
 
-`${CLAUDE_SKILL_DIR}/references/common-mistakes.md`
+[references/common-mistakes.md](references/common-mistakes.md)
 
 Source provenance for every claim in this skill:
 
-`${CLAUDE_SKILL_DIR}/references/sources.yaml`
+[references/sources.yaml](references/sources.yaml)

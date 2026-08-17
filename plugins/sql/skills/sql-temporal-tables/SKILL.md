@@ -1,8 +1,8 @@
 ---
 name: sql-temporal-tables
-description: Guides SQL:2011 temporal tables — system-versioned tables (`PERIOD FOR SYSTEM_TIME` + `WITH SYSTEM VERSIONING`) that make the engine auto-record a full history so you query past states with `FOR SYSTEM_TIME AS OF / FROM..TO / BETWEEN / ALL` instead of hand-rolling trigger-based history tables, application-time period tables (`PERIOD FOR <name>`, `UPDATE/DELETE ... FOR PORTION OF`, `WITHOUT OVERLAPS`) for valid-time, and the system-time vs valid-time vs bitemporal distinction. LOW PORTABILITY — supported in MariaDB 10.3+, SQL Server 2016+, IBM DB2, SAP HANA, and (via Flashback) Oracle, but NOT in PostgreSQL (needs an extension), MySQL, or SQLite (need manual modeling); even among supporters the DDL diverges, so confirm engine support before recommending. Auto-invokes when writing or editing audit-history / "as-of" / point-in-time queries, system- or valid-time period tables, slowly-changing-dimension history, temporal primary keys, or "track every change" / "what did this row look like last March" requests. Owns the standard DDL and query syntax only — versioning/storage mechanics, snapshot semantics, and retention/GC horizon belong to the sibling mvcc-time-travel-queries.
+description: >-
+  Guides SQL:2011 temporal tables — system-versioned tables (`PERIOD FOR SYSTEM_TIME` + `WITH SYSTEM VERSIONING`) that make the engine auto-record a full history so you query past states with `FOR SYSTEM_TIME AS OF / FROM..TO / BETWEEN / ALL` instead of hand-rolling trigger-based history tables, application-time period tables (`PERIOD FOR name`, `UPDATE/DELETE ... FOR PORTION OF`, `WITHOUT OVERLAPS`) for valid-time, and the system-time vs valid-time vs bitemporal distinction. Auto-invokes when writing or editing audit-history / "as-of" / point-in-time queries, system- or valid-time period tables, slowly-changing-dimension history, temporal primary keys, or "track every change" / "what did this row look like last March" requests. Owns the standard DDL and query syntax only — versioning/storage mechanics, snapshot semantics, and retention/GC horizon belong to the sibling mvcc-time-travel-queries.
 allowed-tools: Read, Glob, Grep
-compatibility: "Claude Code, Codex CLI, Gemini CLI"
 ---
 
 # SQL Temporal Tables (SQL:2011)
@@ -181,8 +181,8 @@ Rule of thumb: *what clause do I write* → here. *Why did my as-of query error 
 
 High-frequency temporal-table anti-patterns in LLM-generated SQL, each with wrong/right code and a primary-source citation:
 
-`${CLAUDE_SKILL_DIR}/references/common-mistakes.md`
+[references/common-mistakes.md](references/common-mistakes.md)
 
 Source provenance for every claim in this skill:
 
-`${CLAUDE_SKILL_DIR}/references/sources.yaml`
+[references/sources.yaml](references/sources.yaml)

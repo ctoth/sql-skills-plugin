@@ -1,4 +1,18 @@
 # Common SQL Relational & NULL Mistakes
+## Contents
+
+- [1. Comparing to NULL with = instead of IS NULL](#1-comparing-to-null-with-instead-of-is-null)
+- [2. <> / != silently dropping NULL rows](#2-silently-dropping-null-rows)
+- [3. NOT IN (subquery) that collapses to zero rows on one NULL](#3-not-in-subquery-that-collapses-to-zero-rows-on-one-null)
+- [4. Expecting CHECK to reject a NULL](#4-expecting-check-to-reject-a-null)
+- [5. NULL silently nullifying an arithmetic or concatenation result](#5-null-silently-nullifying-an-arithmetic-or-concatenation-result)
+- [6. COUNT(col) used where COUNT() was meant](#6-countcol-used-where-count-was-meant)
+- [7. Assuming AVG/SUM treat NULL as zero](#7-assuming-avgsum-treat-null-as-zero)
+- [8. Relying on result order without ORDER BY](#8-relying-on-result-order-without-order-by)
+- [9. Expecting a default UNIQUE column to allow only one NULL](#9-expecting-a-default-unique-column-to-allow-only-one-null)
+- [10. Engine-dependent NULL sort position left implicit](#10-engine-dependent-null-sort-position-left-implicit)
+- [11. Avoiding NULL with a sentinel value](#11-avoiding-null-with-a-sentinel-value)
+
 
 Anti-patterns in LLM-generated SQL around set semantics and three-valued logic, each with wrong/right
 code and a primary-source citation. The policy root (`sql-relational-and-null-discipline`) states the

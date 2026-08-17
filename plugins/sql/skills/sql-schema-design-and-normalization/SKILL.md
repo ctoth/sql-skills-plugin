@@ -2,7 +2,6 @@
 name: sql-schema-design-and-normalization
 description: Guides portable relational schema design — normalize to remove the insertion, update, and deletion anomalies (the 1NF→BCNF ladder), choose natural vs surrogate keys deliberately, model many-to-many with a junction table, and denormalize only with a stated reason. Bans the structural antipatterns that no constraint can later rescue — comma-separated value lists ("Jaywalking", a First Normal Form violation), Entity-Attribute-Value (EAV) key-value rows instead of columns, adjacency-only "Naive Trees" that cannot query a subtree, and polymorphic/promiscuous foreign keys that carry no referential integrity. Auto-invokes when designing tables or schemas, writing CREATE TABLE for a new model, modeling a hierarchy/tree or a many-to-many relationship, storing a list or "flexible attributes" in a column, choosing a primary key, or on "is this schema/data model good", "review my schema", or "how should I store X" requests. Pure design theory — engine-independent and fully portable.
 allowed-tools: Read, Glob, Grep
-compatibility: "Claude Code, Codex CLI, Gemini CLI"
 ---
 
 # SQL Schema Design and Normalization
@@ -293,8 +292,8 @@ A normalized schema is empathy in structure: the junction table, the typed colum
 
 High-frequency schema-design anti-patterns in LLM-generated SQL, each with wrong/right code and a primary-source citation:
 
-`${CLAUDE_SKILL_DIR}/references/common-mistakes.md`
+[references/common-mistakes.md](references/common-mistakes.md)
 
 Source provenance for every claim in this skill:
 
-`${CLAUDE_SKILL_DIR}/references/sources.yaml`
+[references/sources.yaml](references/sources.yaml)

@@ -1,4 +1,15 @@
 # Common SQL Schema-Design Mistakes
+## Contents
+
+- [1. Storing a list in a column (Jaywalking — a 1NF violation)](#1-storing-a-list-in-a-column-jaywalking-a-1nf-violation)
+- [2. Modeling many-to-many with repeated columns or a list](#2-modeling-many-to-many-with-repeated-columns-or-a-list)
+- [3. EAV — attributes as rows instead of typed columns](#3-eav-attributes-as-rows-instead-of-typed-columns)
+- [4. Adjacency-only tree that can't query a subtree (Naive Trees)](#4-adjacency-only-tree-that-cant-query-a-subtree-naive-trees)
+- [5. Polymorphic / promiscuous foreign key](#5-polymorphic-promiscuous-foreign-key)
+- [6. Surrogate id with no UNIQUE on the natural key](#6-surrogate-id-with-no-unique-on-the-natural-key)
+- [7. Redundant columns that create an update anomaly](#7-redundant-columns-that-create-an-update-anomaly)
+- [8. Denormalizing with no stated reason](#8-denormalizing-with-no-stated-reason)
+
 
 Structural anti-patterns in LLM-generated SQL schemas, each with wrong/right code and a primary-source
 citation. The skill (`sql-schema-design-and-normalization`) states the design theory; this file holds the

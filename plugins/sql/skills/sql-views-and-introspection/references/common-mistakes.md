@@ -1,4 +1,15 @@
 # Common SQL View & Introspection Mistakes
+## Contents
+
+- [1. Introspecting via pgcatalog instead of INFORMATIONSCHEMA](#1-introspecting-via-pgcatalog-instead-of-informationschema)
+- [2. SHOW TABLES as if it were portable / a result set](#2-show-tables-as-if-it-were-portable-a-result-set)
+- [3. Assuming INFORMATIONSCHEMA exists on SQLite](#3-assuming-informationschema-exists-on-sqlite)
+- [4. Filtered/security view without WITH CHECK OPTION](#4-filteredsecurity-view-without-with-check-option)
+- [5. Using LOCAL where layered views need CASCADED](#5-using-local-where-layered-views-need-cascaded)
+- [6. Expecting to write through a join/aggregate view](#6-expecting-to-write-through-a-joinaggregate-view)
+- [7. Reaching for sqlitemaster / vendor catalogs by reflex](#7-reaching-for-sqlitemaster-vendor-catalogs-by-reflex)
+- [8. Treating a plain view as a stored/cached snapshot](#8-treating-a-plain-view-as-a-storedcached-snapshot)
+
 
 Anti-patterns in LLM-generated SQL around views and schema introspection, each with
 wrong/right code and a primary-source citation. The skill (`sql-views-and-introspection`)

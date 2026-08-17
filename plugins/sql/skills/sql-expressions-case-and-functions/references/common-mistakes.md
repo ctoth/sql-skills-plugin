@@ -1,4 +1,19 @@
 # Common SQL Expression Mistakes
+## Contents
+
+- [1. CASE with no ELSE silently returning NULL](#1-case-with-no-else-silently-returning-null)
+- [2. Simple CASE ... WHEN NULL that never matches](#2-simple-case-when-null-that-never-matches)
+- [3. Vendor null-substitution functions instead of COALESCE](#3-vendor-null-substitution-functions-instead-of-coalesce)
+- [4. Unguarded division that raises divide-by-zero](#4-unguarded-division-that-raises-divide-by-zero)
+- [5. Concatenation silently nullified by one NULL operand](#5-concatenation-silently-nullified-by-one-null-operand)
+- [6. Using + for string concatenation](#6-using-for-string-concatenation)
+- [7. Vendor string functions with reversed/positional arguments](#7-vendor-string-functions-with-reversedpositional-arguments)
+- [8. Non-standard TRIM(s, chars) comma form](#8-non-standard-trims-chars-comma-form)
+- [9. :: or CONVERT instead of standard CAST](#9-or-convert-instead-of-standard-cast)
+- [10. Relying on implicit coercion across number/string boundaries](#10-relying-on-implicit-coercion-across-numberstring-boundaries)
+- [11. Relying on GREATEST/LEAST NULL handling](#11-relying-on-greatestleast-null-handling)
+- [12. Confusing GREATEST/LEAST (row-wise) with MAX/MIN (aggregate)](#12-confusing-greatestleast-row-wise-with-maxmin-aggregate)
+
 
 Anti-patterns in LLM-generated SQL around `CASE`, `COALESCE`/`NULLIF`/`GREATEST`/`LEAST`, string
 functions, concatenation, and `CAST`, each with wrong/right code and a primary-source citation. The

@@ -1,8 +1,8 @@
 ---
 name: sql-merge-and-upsert
-description: Guides atomic upsert — never a race-prone "SELECT then INSERT-or-UPDATE" in application code. Teaches the standard `MERGE` statement (`USING ... ON ...` with `WHEN MATCHED THEN UPDATE/DELETE` and `WHEN NOT MATCHED THEN INSERT`) and maps the real-world alternatives — `INSERT ... ON CONFLICT (col) DO UPDATE/DO NOTHING` in PostgreSQL/SQLite (with `excluded.col`) and `INSERT ... ON DUPLICATE KEY UPDATE` in MySQL/MariaDB (with the `new.col` row alias) — since `MERGE` is unevenly adopted (PostgreSQL only since v15; absent in MySQL and SQLite). Establishes that every upsert REQUIRES a UNIQUE or PRIMARY KEY constraint to define the "conflict," and flags the `MERGE` concurrency footgun — it can still raise a unique-violation under concurrent inserts and is not a substitute for a unique constraint plus retry. Auto-invokes when writing or editing `MERGE`, `INSERT ... ON CONFLICT` / `ON DUPLICATE KEY UPDATE`, any upsert / "insert-or-update" / "create-or-update" logic, or check-then-act read-modify-write code that selects a row and then decides to insert or update.
+description: >-
+  Guides atomic upsert — never a race-prone "SELECT then INSERT-or-UPDATE" in application code. Teaches the standard `MERGE` statement (`USING ... ON ...` with `WHEN MATCHED THEN UPDATE/DELETE` and `WHEN NOT MATCHED THEN INSERT`) and maps the real-world alternatives — `INSERT ... ON CONFLICT (col) DO UPDATE/DO NOTHING` in PostgreSQL/SQLite (with `excluded.col`) and `INSERT ... ON DUPLICATE KEY UPDATE` in MySQL/MariaDB (with the `new.col` row alias) — since `MERGE` is unevenly adopted (PostgreSQL only since v15. Auto-invokes when writing or editing `MERGE`, `INSERT ... ON CONFLICT` / `ON DUPLICATE KEY UPDATE`, any upsert / "insert-or-update" / "create-or-update" logic, or check-then-act read-modify-write code that selects a row and then decides to insert or update.
 allowed-tools: Read, Glob, Grep
-compatibility: "Claude Code, Codex CLI, Gemini CLI"
 ---
 
 # SQL Merge and Upsert
@@ -196,8 +196,8 @@ The atomic statement, the right unique key, and `excluded.`/`new.` used delibera
 
 High-frequency upsert anti-patterns in LLM-generated SQL, each with wrong/right code and a primary-source citation:
 
-`${CLAUDE_SKILL_DIR}/references/common-mistakes.md`
+[references/common-mistakes.md](references/common-mistakes.md)
 
 Source provenance for every claim in this skill:
 
-`${CLAUDE_SKILL_DIR}/references/sources.yaml`
+[references/sources.yaml](references/sources.yaml)

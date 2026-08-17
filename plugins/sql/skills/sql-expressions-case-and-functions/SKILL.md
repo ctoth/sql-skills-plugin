@@ -2,7 +2,6 @@
 name: sql-expressions-case-and-functions
 description: Guides portable scalar expressions in SQL — use standard `CASE`, `COALESCE`, `NULLIF`, `||` concatenation, and the keyword string functions (`SUBSTRING(... FROM ... FOR ...)`, `TRIM([LEADING|TRAILING|BOTH] c FROM s)`, `POSITION(sub IN s)`, `OVERLAY`, `CHAR_LENGTH`, `UPPER`/`LOWER`), plus `CAST(x AS type)` for conversion, instead of vendor spellings (`IFNULL`/`ISNULL`/`NVL`/`IIF`, `SUBSTR`/`INSTR`/`LEFT`/`RIGHT`/`LENGTH`, `+` for concat, `::`/`CONVERT`). Warns that `||` and arithmetic return NULL if any operand is NULL (the silent-blank concat trap; Oracle deviates by treating NULL as `''`), that a `CASE` with no `ELSE` defaults to NULL and short-circuits with no fall-through, that `NULLIF(a,b)` yields NULL when equal (the `x / NULLIF(y,0)` divide-by-zero guard), and that `GREATEST`/`LEAST` (standardized in SQL:2023) disagree across engines on NULL. Auto-invokes when writing or editing `CASE`, `COALESCE`/`NULLIF`/`GREATEST`/`LEAST`, string functions, string concatenation, or type conversions/`CAST`.
 allowed-tools: Read, Glob, Grep
-compatibility: "Claude Code, Codex CLI, Gemini CLI"
 ---
 
 # SQL Expressions: CASE and Functions
@@ -212,8 +211,8 @@ Writing the standard spelling and coalescing nullable operands is empathy in cod
 
 High-frequency expression anti-patterns in LLM-generated SQL, each with wrong/right code and a primary-source citation:
 
-`${CLAUDE_SKILL_DIR}/references/common-mistakes.md`
+[references/common-mistakes.md](references/common-mistakes.md)
 
 Source provenance for every claim in this skill:
 
-`${CLAUDE_SKILL_DIR}/references/sources.yaml`
+[references/sources.yaml](references/sources.yaml)

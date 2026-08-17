@@ -1,8 +1,8 @@
 ---
 name: sql-generated-and-identity-columns
-description: Guides the two standard SQL ways to let the database derive a column value for you — `GENERATED { ALWAYS | BY DEFAULT } AS IDENTITY` for surrogate keys instead of vendor `SERIAL`/`AUTO_INCREMENT`/`IDENTITY(1,1)`, and `GENERATED ALWAYS AS (expr) STORED|VIRTUAL` computed columns instead of recomputing a derived value in every query or maintaining it by hand in application code. Teaches the load-bearing distinctions — `ALWAYS` (rejects explicit inserts unless `OVERRIDING SYSTEM VALUE`) vs `BY DEFAULT` (serial-like, lets a supplied value win); `STORED` (disk, computed on write) vs `VIRTUAL` (compute on read); that a generated column can be read but never written directly; and that a generation expression must be deterministic, same-row, and cannot reference another generated column. Auto-invokes when writing or editing auto-increment / surrogate-key columns, `SERIAL`/`AUTO_INCREMENT`/`IDENTITY(1,1)`, computed/derived columns, `GENERATED` clauses in `CREATE TABLE`, or on "auto-incrementing id" / "computed column" / "store a total/full-name/age" requests. Builds on the foundation `sql-relational-and-null-discipline`.
+description: >-
+  Guides the two standard SQL ways to let the database derive a column value for you — `GENERATED { ALWAYS | BY DEFAULT } AS IDENTITY` for surrogate keys instead of vendor `SERIAL`/`AUTO_INCREMENT`/`IDENTITY(1,1)`, and `GENERATED ALWAYS AS (expr) STORED|VIRTUAL` computed columns instead of recomputing a derived value in every query or maintaining it by hand in application code. Auto-invokes when writing or editing auto-increment / surrogate-key columns, `SERIAL`/`AUTO_INCREMENT`/`IDENTITY(1,1)`, computed/derived columns, `GENERATED` clauses in `CREATE TABLE`, or on "auto-incrementing id" / "computed column" / "store a total/full-name/age" requests. Builds on the foundation `sql-relational-and-null-discipline`.
 allowed-tools: Read, Glob, Grep
-compatibility: "Claude Code, Codex CLI, Gemini CLI"
 ---
 
 # SQL Generated and Identity Columns
@@ -180,8 +180,8 @@ A derived value owned by the schema is a promise the database keeps for everyone
 
 High-frequency identity/generated-column anti-patterns in LLM-generated SQL, each with wrong/right code and a primary-source citation:
 
-`${CLAUDE_SKILL_DIR}/references/common-mistakes.md`
+[references/common-mistakes.md](references/common-mistakes.md)
 
 Source provenance for every claim in this skill:
 
-`${CLAUDE_SKILL_DIR}/references/sources.yaml`
+[references/sources.yaml](references/sources.yaml)

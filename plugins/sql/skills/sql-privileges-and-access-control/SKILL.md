@@ -1,8 +1,8 @@
 ---
 name: sql-privileges-and-access-control
-description: Guides the standard SQL access-control model — `GRANT` adds privileges, `REVOKE` removes them, roles are the grant targets (a role is a user or a group), and access is default-deny so every privilege must be explicitly granted. Drives toward least privilege — the application connects as a dedicated login role holding ONLY the privileges it needs (`SELECT/INSERT/UPDATE/DELETE` on specific tables), never as a superuser (which bypasses all permission checks) and never with `GRANT ALL` broadly. Covers roles and role hierarchies (`GRANT role TO role`), `WITH GRANT OPTION` and its cascade risk, why ownership is not the same as grants (an owner's right to modify or destroy an object is inherent and cannot be revoked), and the `PUBLIC` pseudo-role pitfalls. Flags that SQLite has NO privilege model at all — access is the OS file permissions on the database file. Auto-invokes when writing or editing `GRANT`/`REVOKE`/`CREATE ROLE`/`CREATE USER`, designing database user/role setup, deciding which credentials an application connects with, or on "least privilege" / "who can access this" / "set up a database user" requests.
+description: >-
+  Guides the standard SQL access-control model — `GRANT` adds privileges, `REVOKE` removes them, roles are the grant targets (a role is a user or a group), and access is default-deny so every privilege must be explicitly granted. Drives toward least privilege — the application connects as a dedicated login role holding ONLY the privileges it needs (`SELECT/INSERT/UPDATE/DELETE` on specific tables), never as a superuser (which bypasses all permission checks) and never with `GRANT ALL` broadly. Auto-invokes when writing or editing `GRANT`/`REVOKE`/`CREATE ROLE`/`CREATE USER`, designing database user/role setup, deciding which credentials an application connects with, or on "least privilege" / "who can access this" / "set up a database user" requests.
 allowed-tools: Read, Glob, Grep
-compatibility: "Claude Code, Codex CLI, Gemini CLI"
 ---
 
 # SQL Privileges and Access Control
@@ -172,8 +172,8 @@ Least privilege is empathy in infrastructure: the privilege you decline to grant
 
 High-frequency access-control anti-patterns in LLM-generated SQL, each with wrong/right code and a primary-source citation:
 
-`${CLAUDE_SKILL_DIR}/references/common-mistakes.md`
+[references/common-mistakes.md](references/common-mistakes.md)
 
 Source provenance for every claim in this skill:
 
-`${CLAUDE_SKILL_DIR}/references/sources.yaml`
+[references/sources.yaml](references/sources.yaml)

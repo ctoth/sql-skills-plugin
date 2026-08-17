@@ -1,4 +1,16 @@
 # Common SQL/JSON Mistakes
+## Contents
+
+- [1. JSONQUERY (or ->) used to extract a scalar — returns a QUOTED string](#1-jsonquery-or---used-to-extract-a-scalar-returns-a-quoted-string)
+- [2. JSONVALUE used to extract an object or array](#2-jsonvalue-used-to-extract-an-object-or-array)
+- [3. Fixed-index extraction instead of JSONTABLE](#3-fixed-index-extraction-instead-of-jsontable)
+- [4. Relying on lax mode + default ON EMPTY — a typo'd path returns NULL forever](#4-relying-on-lax-mode-default-on-empty-a-typod-path-returns-null-forever)
+- [5. Hand-building JSON with string concatenation](#5-hand-building-json-with-string-concatenation)
+- [6. JSONARRAYAGG without ORDER BY — nondeterministic array order](#6-jsonarrayagg-without-order-by-nondeterministic-array-order)
+- [7. Trusting JSON in a text column without IS JSON](#7-trusting-json-in-a-text-column-without-is-json)
+- [8. Storing domain columns in a JSON blob (the modern EAV antipattern)](#8-storing-domain-columns-in-a-json-blob-the-modern-eav-antipattern)
+- [9. Assuming the vendor operators are portable](#9-assuming-the-vendor-operators-are-portable)
+
 
 Anti-patterns in LLM-generated SQL around JSON, each with wrong/right code and a primary-source
 citation. The skill (`sql-json`) states the rules; this file holds the high-frequency failure modes.

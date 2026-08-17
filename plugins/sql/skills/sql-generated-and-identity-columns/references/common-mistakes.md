@@ -1,4 +1,15 @@
 # Common Generated & Identity Column Mistakes
+## Contents
+
+- [1. Reaching for SERIAL/AUTOINCREMENT instead of a standard identity column](#1-reaching-for-serialautoincrement-instead-of-a-standard-identity-column)
+- [2. Supplying an explicit id into a GENERATED ALWAYS AS IDENTITY column](#2-supplying-an-explicit-id-into-a-generated-always-as-identity-column)
+- [3. Choosing BY DEFAULT when ALWAYS was wanted (unprotected key)](#3-choosing-by-default-when-always-was-wanted-unprotected-key)
+- [4. Storing a derived value in a plain column the app maintains by hand](#4-storing-a-derived-value-in-a-plain-column-the-app-maintains-by-hand)
+- [5. Trying to INSERT/UPDATE a value into a generated column](#5-trying-to-insertupdate-a-value-into-a-generated-column)
+- [6. Omitting STORED/VIRTUAL and assuming the result is portable](#6-omitting-storedvirtual-and-assuming-the-result-is-portable)
+- [7. A generation expression that references another generated column](#7-a-generation-expression-that-references-another-generated-column)
+- [8. Putting non-deterministic or cross-row logic in a generated column](#8-putting-non-deterministic-or-cross-row-logic-in-a-generated-column)
+
 
 Anti-patterns in LLM-generated SQL around identity columns and computed (generated) columns, each with
 wrong/right code and a primary-source citation. The skill (`sql-generated-and-identity-columns`) states

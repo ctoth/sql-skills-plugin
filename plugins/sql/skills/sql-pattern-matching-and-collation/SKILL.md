@@ -1,8 +1,8 @@
 ---
 name: sql-pattern-matching-and-collation
-description: Guides correct, portable text matching in SQL — LIKE with its `%` (any sequence) and `_` (any single character) wildcards, the ESCAPE clause for literal `%`/`_`, and the central trap that LIKE's case sensitivity is decided by the active COLLATION and therefore silently differs across engines (case-SENSITIVE in standard SQL and PostgreSQL, case-INSENSITIVE under the common MySQL/SQL Server default collations, case-insensitive for ASCII only in SQLite) so the identical query returns different rows on different databases. Teaches the explicit fix — COLLATE per-operation or LOWER() on both sides — plus SIMILAR TO as the only SQL-standard regular-expression operator versus the non-standard vendor regex (`~`/`~*`, REGEXP/RLIKE), ILIKE as a non-standard PostgreSQL extension, and COLLATE for deterministic ordering and accent sensitivity. Auto-invokes when writing or editing a LIKE/ILIKE/SIMILAR TO/REGEXP/`~`/GLOB predicate, a COLLATE clause, case-insensitive or accent-insensitive search, or on "case-insensitive search", "find regardless of accents", "LIKE doesn't match" / "matched different rows on MySQL vs Postgres" requests.
+description: >-
+  Guides correct, portable text matching in SQL — LIKE with its `%` (any sequence) and `_` (any single character) wildcards, the ESCAPE clause for literal `%`/`_`, and the central trap that LIKE's case sensitivity is decided by the active COLLATION and therefore silently differs across engines (case-SENSITIVE in standard SQL and PostgreSQL, case-INSENSITIVE under the common MySQL/SQL Server default collations, case-insensitive for ASCII only in SQLite) so the identical query returns different. Auto-invokes when writing or editing a LIKE/ILIKE/SIMILAR TO/REGEXP/`~`/GLOB predicate, a COLLATE clause, case-insensitive or accent-insensitive search, or on "case-insensitive search", "find regardless of accents", "LIKE doesn't match" / "matched different rows on MySQL vs Postgres" requests.
 allowed-tools: Read, Glob, Grep
-compatibility: "Claude Code, Codex CLI, Gemini CLI"
 ---
 
 # SQL Pattern Matching and Collation
@@ -192,8 +192,8 @@ Explicit matching is empathy in code: the `LOWER()` on both sides, the stated `C
 
 High-frequency pattern-matching and collation anti-patterns in LLM-generated SQL, each with wrong/right code and a primary-source citation:
 
-`${CLAUDE_SKILL_DIR}/references/common-mistakes.md`
+[references/common-mistakes.md](references/common-mistakes.md)
 
 Source provenance for every claim in this skill:
 
-`${CLAUDE_SKILL_DIR}/references/sources.yaml`
+[references/sources.yaml](references/sources.yaml)

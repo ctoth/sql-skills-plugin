@@ -1,4 +1,18 @@
 # Common SQL Indexing & Sargability Mistakes
+## Contents
+
+- [1. Wrapping an indexed column in a function](#1-wrapping-an-indexed-column-in-a-function)
+- [2. Applying a date/time function to a timestamp column](#2-applying-a-datetime-function-to-a-timestamp-column)
+- [3. Arithmetic on an indexed column](#3-arithmetic-on-an-indexed-column)
+- [4. Leading-wildcard LIKE](#4-leading-wildcard-like)
+- [5. Composite index with the range column first](#5-composite-index-with-the-range-column-first)
+- [6. Expecting an index on the second column of a composite to be used alone](#6-expecting-an-index-on-the-second-column-of-a-composite-to-be-used-alone)
+- [7. The index shotgun — one single-column index per column](#7-the-index-shotgun-one-single-column-index-per-column)
+- [8. Indexing a low-selectivity column](#8-indexing-a-low-selectivity-column)
+- [9. Missing covering columns — an avoidable table fetch per row](#9-missing-covering-columns-an-avoidable-table-fetch-per-row)
+- [10. A separate sort when an index could have ordered the rows](#10-a-separate-sort-when-an-index-could-have-ordered-the-rows)
+- [11. Implicit type conversion that wraps the indexed column](#11-implicit-type-conversion-that-wraps-the-indexed-column)
+
 
 Anti-patterns in LLM-generated SQL around indexes and sargable predicates, each with wrong/right
 code and a primary-source citation. The skill (`sql-indexing-and-sargability`) states the rules;

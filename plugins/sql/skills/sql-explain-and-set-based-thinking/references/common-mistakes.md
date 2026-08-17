@@ -1,4 +1,17 @@
 # Common EXPLAIN & Set-Based-Thinking Mistakes
+## Contents
+
+- [1. The N+1 query loop (the classic RBAR)](#1-the-n1-query-loop-the-classic-rbar)
+- [2. Correlated scalar subquery as a per-row lookup](#2-correlated-scalar-subquery-as-a-per-row-lookup)
+- [3. A loop of single-row INSERTs instead of a set insert](#3-a-loop-of-single-row-inserts-instead-of-a-set-insert)
+- [4. Guessing at performance instead of reading the plan](#4-guessing-at-performance-instead-of-reading-the-plan)
+- [5. Ignoring a full scan on a large, selectively-filtered table](#5-ignoring-a-full-scan-on-a-large-selectively-filtered-table)
+- [6. Reading plain EXPLAIN as if it were measured truth](#6-reading-plain-explain-as-if-it-were-measured-truth)
+- [7. Missing the estimated-vs-actual rows gap (the bad-plan tell)](#7-missing-the-estimated-vs-actual-rows-gap-the-bad-plan-tell)
+- [8. Testing only on tiny development data](#8-testing-only-on-tiny-development-data)
+- [9. Overcorrecting into one giant Spaghetti Query](#9-overcorrecting-into-one-giant-spaghetti-query)
+- [10. Mistaking loops=N in the plan for noise](#10-mistaking-loopsn-in-the-plan-for-noise)
+
 
 Anti-patterns in LLM-generated SQL (and the application code around it) about performance —
 looping where a set operation belongs, and guessing where the plan should be read. The skill

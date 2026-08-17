@@ -1,8 +1,8 @@
 ---
 name: sql-relational-and-null-discipline
-description: Guides the core correctness floor of SQL — query results are unordered sets with no defined order unless you write ORDER BY, NULL means "unknown" and propagates UNKNOWN through every comparison and arithmetic expression, and WHERE/HAVING/ON keep only rows that evaluate to TRUE while CHECK rejects only rows that evaluate to FALSE (so UNKNOWN passes). Bans the recurring NULL traps — `x = NULL` (always UNKNOWN, use IS NULL), `col <> 'a'` silently dropping NULL rows, `NOT IN (subquery)` collapsing to zero rows on a single NULL, COUNT(col) silently undercounting versus COUNT(*), and SUM/AVG silently skipping NULL. Teaches null-safe equality IS [NOT] DISTINCT FROM and UNIQUE NULLS [NOT] DISTINCT (SQL:2023). Auto-invokes when writing or editing any WHERE/HAVING/ON/CHECK predicate, comparisons against possibly-null columns, NOT IN/`<>`/`!=`, COUNT/SUM/AVG over nullable columns, GROUP BY/ORDER BY/UNIQUE on nullable columns, or on "why does my query return no rows" / "why is my average wrong" / "handle NULL" requests. The policy root every other SQL skill routes back to.
+description: >-
+  Guides the core correctness floor of SQL — query results are unordered sets with no defined order unless you write ORDER BY, NULL means "unknown" and propagates UNKNOWN through every comparison and arithmetic expression, and WHERE/HAVING/ON keep only rows that evaluate to TRUE while CHECK rejects only rows that evaluate to FALSE (so UNKNOWN passes). Auto-invokes when writing or editing any WHERE/HAVING/ON/CHECK predicate, comparisons against possibly-null columns, NOT IN/`not equal to`/`!=`, COUNT/SUM/AVG over nullable columns, GROUP BY/ORDER BY/UNIQUE on nullable columns, or on "why does my query return no rows" / "why is my average wrong" / "handle NULL" requests. The policy root every other SQL skill routes back to.
 allowed-tools: Read, Glob, Grep
-compatibility: "Claude Code, Codex CLI, Gemini CLI"
 ---
 
 # SQL Relational and NULL Discipline
@@ -227,8 +227,8 @@ This skill is the **policy root**: every SQL skill in this plugin links back her
 
 High-frequency NULL/relational anti-patterns in LLM-generated SQL, each with wrong/right code and a primary-source citation:
 
-`${CLAUDE_SKILL_DIR}/references/common-mistakes.md`
+[references/common-mistakes.md](references/common-mistakes.md)
 
 Source provenance for every claim in this skill:
 
-`${CLAUDE_SKILL_DIR}/references/sources.yaml`
+[references/sources.yaml](references/sources.yaml)

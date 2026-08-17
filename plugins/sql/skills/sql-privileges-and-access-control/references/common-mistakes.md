@@ -1,4 +1,15 @@
 # Common SQL Privilege & Access-Control Mistakes
+## Contents
+
+- [1. The application connects as a superuser](#1-the-application-connects-as-a-superuser)
+- [2. GRANT ALL to the application role](#2-grant-all-to-the-application-role)
+- [3. The application role owns its tables](#3-the-application-role-owns-its-tables)
+- [4. Granting privileges to PUBLIC](#4-granting-privileges-to-public)
+- [5. Handing out WITH GRANT OPTION casually](#5-handing-out-with-grant-option-casually)
+- [6. Granting privileges to each user instead of a group role](#6-granting-privileges-to-each-user-instead-of-a-group-role)
+- [7. Writing GRANT/CREATE ROLE for SQLite](#7-writing-grantcreate-role-for-sqlite)
+- [8. Leaving default PUBLIC privileges in place](#8-leaving-default-public-privileges-in-place)
+
 
 Anti-patterns in LLM-generated SQL and database-setup code around `GRANT`/`REVOKE`, roles, and least
 privilege, each with wrong/right code and a primary-source citation. The policy skill

@@ -1,4 +1,14 @@
 # Common SQL Merge & Upsert Mistakes
+## Contents
+
+- [1. App-side SELECT-then-INSERT-or-UPDATE (the check-then-act race)](#1-app-side-select-then-insert-or-update-the-check-then-act-race)
+- [2. Upsert against a column with no UNIQUE / PRIMARY KEY constraint](#2-upsert-against-a-column-with-no-unique-primary-key-constraint)
+- [3. Forgetting excluded. in DO UPDATE — overwriting with the old value](#3-forgetting-excluded-in-do-update-overwriting-with-the-old-value)
+- [4. ON DUPLICATE KEY UPDATE on a table with multiple unique indexes](#4-on-duplicate-key-update-on-a-table-with-multiple-unique-indexes)
+- [5. Using the deprecated VALUES() function in MySQL upserts](#5-using-the-deprecated-values-function-in-mysql-upserts)
+- [6. Treating MERGE as a guaranteed race-free upsert](#6-treating-merge-as-a-guaranteed-race-free-upsert)
+- [7. Reaching for MERGE on MySQL or SQLite](#7-reaching-for-merge-on-mysql-or-sqlite)
+
 
 Anti-patterns in LLM-generated SQL around insert-or-update, each with wrong/right code and a
 primary-source citation. The skill (`sql-merge-and-upsert`) states the rules; this file holds the

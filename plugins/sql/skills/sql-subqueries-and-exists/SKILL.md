@@ -1,8 +1,8 @@
 ---
 name: sql-subqueries-and-exists
-description: Guides correct subquery use and owns the deep dive the foundation defers — the `NOT IN` + NULL trap, where a single NULL anywhere in the list or subquery collapses `NOT IN` to zero rows because `NOT IN` expands to a chain of `<>` comparisons AND'd together and the NULL conjunct is forever UNKNOWN, so `NOT EXISTS` is the safe portable anti-join (EXISTS never returns UNKNOWN). Covers scalar subqueries (the >1-row runtime error and the 0-rows→NULL propagation), `IN`/`EXISTS` semi-joins, correlated vs uncorrelated execution, `ANY`/`ALL` and why `= ANY` ≡ IN and `<> ALL` ≡ NOT IN (so `<> ALL` inherits the same NULL trap), and choosing a subquery vs a join for clarity and plan quality. Auto-invokes when writing or editing subqueries, `IN (SELECT ...)`, `NOT IN`, `EXISTS`/`NOT EXISTS`, correlated subqueries, `ANY`/`SOME`/`ALL`, scalar subqueries in SELECT/WHERE, or on "NOT IN returns nothing" / "my orphan/anti-join query is empty" / "subquery returned more than one row" symptoms.
+description: >-
+  Guides correct subquery use and owns the deep dive the foundation defers — the `NOT IN` + NULL trap, where a single NULL anywhere in the list or subquery collapses `NOT IN` to zero rows because `NOT IN` expands to a chain of `not equal to` comparisons AND'd together and the NULL conjunct is forever UNKNOWN, so `NOT EXISTS` is the safe portable anti-join (EXISTS never returns UNKNOWN). Auto-invokes when writing or editing subqueries, `IN (SELECT ...)`, `NOT IN`, `EXISTS`/`NOT EXISTS`, correlated subqueries, `ANY`/`SOME`/`ALL`, scalar subqueries in SELECT/WHERE, or on "NOT IN returns nothing" / "my orphan/anti-join query is empty" / "subquery returned more than one row" symptoms.
 allowed-tools: Read, Glob, Grep
-compatibility: "Claude Code, Codex CLI, Gemini CLI"
 ---
 
 # SQL Subqueries and EXISTS
@@ -177,8 +177,8 @@ Disciplined subquery code is empathy: the `NOT EXISTS` you wrote instead of `NOT
 
 High-frequency subquery anti-patterns in LLM-generated SQL, each with wrong/right code and a primary-source citation:
 
-`${CLAUDE_SKILL_DIR}/references/common-mistakes.md`
+[references/common-mistakes.md](references/common-mistakes.md)
 
 Source provenance for every claim in this skill:
 
-`${CLAUDE_SKILL_DIR}/references/sources.yaml`
+[references/sources.yaml](references/sources.yaml)

@@ -1,4 +1,16 @@
 # Common SQL Injection & Parameterization Mistakes
+## Contents
+
+- [1. f-string / template-literal query built from user input](#1-f-string-template-literal-query-built-from-user-input)
+- [2. % / .format() mistaken for a bind parameter](#2-format-mistaken-for-a-bind-parameter)
+- [3. "Escaping the quotes" instead of binding](#3-escaping-the-quotes-instead-of-binding)
+- [4. Interpolating a table or column name](#4-interpolating-a-table-or-column-name)
+- [5. Dynamic ORDER BY interpolated from input](#5-dynamic-order-by-interpolated-from-input)
+- [6. Interpolating LIMIT / OFFSET instead of binding](#6-interpolating-limit-offset-instead-of-binding)
+- [7. Building an IN (...) list by joining strings](#7-building-an-in-list-by-joining-strings)
+- [8. "Just for this example / it's internal" interpolation](#8-just-for-this-example-its-internal-interpolation)
+- [9. ORM raw-query escape hatch with interpolation](#9-orm-raw-query-escape-hatch-with-interpolation)
+
 
 Anti-patterns in LLM-generated code around combining SQL with data, each with wrong/right code and a
 primary-source citation. The skill (`sql-injection-and-parameterization`) states the rule; this file

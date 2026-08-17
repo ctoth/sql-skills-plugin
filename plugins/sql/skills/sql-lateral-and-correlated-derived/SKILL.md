@@ -2,7 +2,6 @@
 name: sql-lateral-and-correlated-derived
 description: Guides LATERAL — a derived table in FROM that may reference columns of preceding FROM items, which a plain subquery cannot. It is the clean, standard answer to top-N-per-group ("latest 3 orders per customer"), per-row set-returning-function expansion, and pulling several correlated values in one pass instead of N correlated scalar subqueries in the SELECT list. Covers the LEFT JOIN LATERAL (...) ON true recipe with ORDER BY + FETCH FIRST n ROWS, implicit LATERAL for table functions, the left-to-right visibility rule, and the SQL Server/Oracle CROSS APPLY / OUTER APPLY spelling of (CROSS/LEFT) JOIN LATERAL. Teaches when a window function top-N is the better tool instead. Auto-invokes when writing or editing LATERAL / CROSS APPLY / OUTER APPLY, top-N-per-group or "newest N per group" queries, per-row table-function expansion (unnest/json_table/string functions in FROM), or a query carrying one correlated scalar subquery per output column. Builds on the foundation sql-relational-and-null-discipline.
 allowed-tools: Read, Glob, Grep
-compatibility: "Claude Code, Codex CLI, Gemini CLI"
 ---
 
 # SQL LATERAL and Correlated Derived Tables
@@ -263,8 +262,8 @@ owned by `sql-standard-vs-dialect-map`.
 High-frequency LATERAL / correlated-derived anti-patterns in LLM-generated SQL, each with wrong/right code
 and a primary-source citation:
 
-`${CLAUDE_SKILL_DIR}/references/common-mistakes.md`
+[references/common-mistakes.md](references/common-mistakes.md)
 
 Source provenance for every claim in this skill:
 
-`${CLAUDE_SKILL_DIR}/references/sources.yaml`
+[references/sources.yaml](references/sources.yaml)

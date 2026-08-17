@@ -1,4 +1,14 @@
 # Common SQL Pattern-Matching & Collation Mistakes
+## Contents
+
+- [1. Assuming LIKE case behavior is portable](#1-assuming-like-case-behavior-is-portable)
+- [2. Unescaped % or  when matching a literal wildcard](#2-unescaped-or-when-matching-a-literal-wildcard)
+- [3. Using ILIKE for portable case-insensitive matching](#3-using-ilike-for-portable-case-insensitive-matching)
+- [4. Reaching for ~ / REGEXP / RLIKE when standard regex (or LIKE) would do](#4-reaching-for-regexp-rlike-when-standard-regex-or-like-would-do)
+- [5. Accent-sensitive collation hiding rows from search](#5-accent-sensitive-collation-hiding-rows-from-search)
+- [6. Leading-wildcard LIKE '%term%' forcing a table scan](#6-leading-wildcard-like-term-forcing-a-table-scan)
+- [7. Relying on SQLite's ASCII-only case folding](#7-relying-on-sqlites-ascii-only-case-folding)
+
 
 Anti-patterns in LLM-generated SQL around text matching and collation, each with wrong/right code
 and a primary-source citation. The skill (`sql-pattern-matching-and-collation`) states the rules;

@@ -1,4 +1,15 @@
 # Common SQL Data-Type and Numeric Mistakes
+## Contents
+
+- [1. Storing money in FLOAT/DOUBLE PRECISION](#1-storing-money-in-floatdouble-precision)
+- [2. NUMERIC(p, s) whose integer part is too small](#2-numericp-s-whose-integer-part-is-too-small)
+- [3. INTEGER surrogate key that overflows at 2.1 billion](#3-integer-surrogate-key-that-overflows-at-21-billion)
+- [4. The reflexive VARCHAR(255)](#4-the-reflexive-varchar255)
+- [5. CHAR(n) for variable-length text (surprise blank-padding)](#5-charn-for-variable-length-text-surprise-blank-padding)
+- [6. Faking a boolean as integer or char](#6-faking-a-boolean-as-integer-or-char)
+- [7. Trusting SQLite to enforce a declared type](#7-trusting-sqlite-to-enforce-a-declared-type)
+- [8. Expecting exact decimal money in SQLite](#8-expecting-exact-decimal-money-in-sqlite)
+
 
 Anti-patterns in LLM-generated SQL around type selection, each with wrong/right code and a
 primary-source citation. The skill (`sql-data-types-and-numerics`) states the rules; this file holds

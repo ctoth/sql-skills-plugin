@@ -1,8 +1,8 @@
 ---
 name: sql-datetime-and-intervals
-description: Guides standard temporal handling in SQL — the temporal types (DATE, TIME, TIMESTAMP, and crucially TIMESTAMP WITH TIME ZONE), typed literals (DATE '...', TIMESTAMP '...', INTERVAL '...'), EXTRACT, the standard CURRENT_DATE/CURRENT_TIMESTAMP keywords, and INTERVAL arithmetic — instead of jamming dates into strings or reaching for vendor functions (NOW()/GETDATE()/SYSDATE, DATEADD/DATEDIFF, STRFTIME). The centerpiece is the TIMESTAMP vs TIMESTAMP WITH TIME ZONE distinction — store an event as a UTC instant, never as a naive local timestamp that breaks across DST and zones — plus the month-length ambiguity of INTERVAL math and the high implementation divergence (SQLite has no native date type; MySQL's TIMESTAMP and DATETIME mean opposite things). Auto-invokes when writing or editing date/time columns or literals, EXTRACT, INTERVAL arithmetic, time-zone-sensitive comparisons, date truncation/bucketing, or age/duration calculations, and on "store a timestamp", "add a day/month", "why is my time off by an hour", or "yesterday's rows" requests.
+description: >-
+  Guides standard temporal handling in SQL — the temporal types (DATE, TIME, TIMESTAMP, and crucially TIMESTAMP WITH TIME ZONE), typed literals (DATE '...', TIMESTAMP '...', INTERVAL '...'), EXTRACT, the standard CURRENT_DATE/CURRENT_TIMESTAMP keywords, and INTERVAL arithmetic — instead of jamming dates into strings or reaching for vendor functions (NOW()/GETDATE()/SYSDATE, DATEADD/DATEDIFF, STRFTIME). Auto-invokes when writing or editing date/time columns or literals, EXTRACT, INTERVAL arithmetic, time-zone-sensitive comparisons, date truncation/bucketing, or age/duration calculations, and on "store a timestamp", "add a day/month", "why is my time off by an hour", or "yesterday's rows" requests.
 allowed-tools: Read, Glob, Grep
-compatibility: "Claude Code, Codex CLI, Gemini CLI"
 ---
 
 # SQL Datetime and Intervals
@@ -188,8 +188,8 @@ Using `TIMESTAMP WITH TIME ZONE` for instants, `INTERVAL` for math, and `EXTRACT
 
 High-frequency datetime/interval anti-patterns in LLM-generated SQL, each with wrong/right code and a primary-source citation:
 
-`${CLAUDE_SKILL_DIR}/references/common-mistakes.md`
+[references/common-mistakes.md](references/common-mistakes.md)
 
 Source provenance for every claim in this skill:
 
-`${CLAUDE_SKILL_DIR}/references/sources.yaml`
+[references/sources.yaml](references/sources.yaml)

@@ -1,8 +1,8 @@
 ---
 name: sql-explain-and-set-based-thinking
-description: Guides the two performance habits that matter most — think in sets, not rows, and measure the plan instead of guessing. Replaces the N+1 / RBAR ("row-by-agonizing-row") antipattern — application code looping to issue one query per row, or a correlated per-row subquery — with a single set-based query (`JOIN`/`IN`/`VALUES`/`LATERAL`). Teaches reading a query plan as a concept — the plan tree, sequential/full scan vs index access (seek), estimated cost and estimated rows — and using `EXPLAIN ANALYZE` (Postgres) / `EXPLAIN QUERY PLAN` (SQLite) to get actual rows and time, where a large gap between estimated and actual rows is the tell of a bad estimate (usually stale statistics) that drives a bad join order. Warns that a plan fine on 100 dev rows can die at 10M, so you must test at realistic scale, and that set-based does not mean one giant unreadable "Spaghetti Query." Auto-invokes when writing or editing per-row query loops in application code, a correlated per-row subquery, `EXPLAIN`/`EXPLAIN QUERY PLAN` output, or on "why is this slow" / "optimize this query" / "N+1" requests. Routes plan reading and set-thinking for the whole plugin.
+description: >-
+  Guides the two performance habits that matter most — think in sets, not rows, and measure the plan instead of guessing. Replaces the N+1 / RBAR ("row-by-agonizing-row") antipattern — application code looping to issue one query per row, or a correlated per-row subquery — with a single set-based query (`JOIN`/`IN`/`VALUES`/`LATERAL`). Auto-invokes when writing or editing per-row query loops in application code, a correlated per-row subquery, `EXPLAIN`/`EXPLAIN QUERY PLAN` output, or on "why is this slow" / "optimize this query" / "N+1" requests. Routes plan reading and set-thinking for the whole plugin.
 allowed-tools: Read, Glob, Grep
-compatibility: "Claude Code, Codex CLI, Gemini CLI"
 ---
 
 # SQL EXPLAIN and Set-Based Thinking
@@ -187,9 +187,9 @@ Reading the plan and thinking in sets is empathy in code: the one `JOIN` you wro
 
 High-frequency plan-reading and set-vs-row anti-patterns in LLM-generated SQL, each with wrong/right code and a primary-source citation:
 
-`${CLAUDE_SKILL_DIR}/references/common-mistakes.md`
+[references/common-mistakes.md](references/common-mistakes.md)
 
 Source provenance for every claim in this skill:
 
-`${CLAUDE_SKILL_DIR}/references/sources.yaml`
+[references/sources.yaml](references/sources.yaml)
 </content>

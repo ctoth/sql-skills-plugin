@@ -1,6 +1,6 @@
 # SQL Skills
 
-A [Claude Code](https://claude.com/claude-code) plugin: **32 agent skills for writing correct, portable, modern standard SQL** (ISO/IEC 9075).
+A Claude Code and Codex plugin containing **32 agent skills for writing correct, portable, modern standard SQL** (ISO/IEC 9075).
 
 The skills are vendor-neutral. They teach the *standard* spelling of each feature, name the correctness traps that LLMs reliably fall into, and map portability per feature across PostgreSQL, MySQL/MariaDB, SQLite, SQL Server, Oracle, and DuckDB — so the SQL an agent writes is right the first time and runs where you need it.
 
@@ -20,6 +20,15 @@ Add the marketplace, then install the `sql` plugin:
 ```
 
 The skills activate automatically based on what you're writing — no commands to remember. You can also browse them with `/plugin`.
+
+For Codex:
+
+```text
+codex plugin marketplace add ctoth/sql-skills-plugin
+codex plugin add sql@sql-skills-marketplace
+```
+
+Marketplace registration and plugin installation are separate operations.
 
 ## Skills
 

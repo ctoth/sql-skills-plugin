@@ -1,8 +1,8 @@
 ---
 name: sql-transactions-and-isolation
-description: Guides the SQL-statement surface of transactions — wrap any multi-statement invariant or check-then-act sequence in `START TRANSACTION`/`COMMIT`/`ROLLBACK` so it is atomic (all-or-nothing), use `SAVEPOINT`/`ROLLBACK TO` for partial rollback, set the isolation level with `SET TRANSACTION ISOLATION LEVEL`, and know the four standard level names (READ UNCOMMITTED, READ COMMITTED, REPEATABLE READ, SERIALIZABLE), autocommit, READ ONLY/DEFERRABLE, and that DDL is not transactional everywhere (MySQL implicitly commits on DDL; PostgreSQL does not). Names the standard anomaly catalog (dirty read, non-repeatable read, phantom read, serialization anomaly) in one paragraph and routes ALL isolation theory — which level permits which anomaly, snapshot isolation, serializability, write skew — to the MVCC plugin. Auto-invokes when writing or editing `BEGIN`/`START TRANSACTION`/`COMMIT`/`ROLLBACK`/`SAVEPOINT`, `SET TRANSACTION`, a multi-statement write sequence, a debit/credit or check-then-act flow, or on "should this be in a transaction" / "which isolation level" / "why did half my migration apply" requests.
+description: >-
+  Guides the SQL-statement surface of transactions — wrap any multi-statement invariant or check-then-act sequence in `START TRANSACTION`/`COMMIT`/`ROLLBACK` so it is atomic (all-or-nothing), use `SAVEPOINT`/`ROLLBACK TO` for partial rollback, set the isolation level with `SET TRANSACTION ISOLATION LEVEL`, and know the four standard level names (READ UNCOMMITTED, READ COMMITTED, REPEATABLE READ, SERIALIZABLE), autocommit, READ ONLY/DEFERRABLE, and that DDL is not transactional everywhere (MySQL. Auto-invokes when writing or editing `BEGIN`/`START TRANSACTION`/`COMMIT`/`ROLLBACK`/`SAVEPOINT`, `SET TRANSACTION`, a multi-statement write sequence, a debit/credit or check-then-act flow, or on "should this be in a transaction" / "which isolation level" / "why did half my migration apply" requests.
 allowed-tools: Read, Glob, Grep
-compatibility: "Claude Code, Codex CLI, Gemini CLI"
 ---
 
 # SQL Transactions and Isolation
@@ -198,8 +198,8 @@ This skill is a **technique** built on the foundation and routes theory outward:
 
 High-frequency transaction/isolation anti-patterns in LLM-generated SQL, each with wrong/right code and a primary-source citation:
 
-`${CLAUDE_SKILL_DIR}/references/common-mistakes.md`
+[references/common-mistakes.md](references/common-mistakes.md)
 
 Source provenance for every claim in this skill:
 
-`${CLAUDE_SKILL_DIR}/references/sources.yaml`
+[references/sources.yaml](references/sources.yaml)

@@ -1,4 +1,15 @@
 # Common SELECT & Query-Processing Mistakes
+## Contents
+
+- [1. Referencing a SELECT-list alias in WHERE](#1-referencing-a-select-list-alias-in-where)
+- [2. Putting an aggregate condition in WHERE instead of HAVING](#2-putting-an-aggregate-condition-in-where-instead-of-having)
+- [3. Assuming DISTINCT a, b deduplicates only the first column](#3-assuming-distinct-a-b-deduplicates-only-the-first-column)
+- [4. SELECT  in stored queries / INSERT ... SELECT ](#4-select-in-stored-queries-insert-select)
+- [5. Relying on alias visibility in HAVING/GROUP BY for portable code](#5-relying-on-alias-visibility-in-havinggroup-by-for-portable-code)
+- [6. Building an expression on an alias inside ORDER BY](#6-building-an-expression-on-an-alias-inside-order-by)
+- [7. Using ORDER BY ordinals in maintained queries](#7-using-order-by-ordinals-in-maintained-queries)
+- [8. Expecting ORDER BY to affect grouping, DISTINCT, or "first" selection](#8-expecting-order-by-to-affect-grouping-distinct-or-first-selection)
+
 
 Anti-patterns in LLM-generated SQL around the logical clause-evaluation order
 (FROM → WHERE → GROUP BY → HAVING → SELECT → DISTINCT → ORDER BY → LIMIT), each with

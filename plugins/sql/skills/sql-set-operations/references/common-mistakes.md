@@ -1,4 +1,17 @@
 # Common SQL Set-Operation Mistakes
+## Contents
+
+- [1. Reflexive UNION where UNION ALL was correct (the cost trap)](#1-reflexive-union-where-union-all-was-correct-the-cost-trap)
+- [2. UNION silently dropping legitimately-duplicate rows](#2-union-silently-dropping-legitimately-duplicate-rows)
+- [3. Assuming set ops treat NULLs like = does](#3-assuming-set-ops-treat-nulls-like-does)
+- [4. Reinventing INTERSECT / EXCEPT with joins or IN](#4-reinventing-intersect-except-with-joins-or-in)
+- [5. Expecting INTERSECT ALL / EXCEPT ALL everywhere](#5-expecting-intersect-all-except-all-everywhere)
+- [6. Mismatched column count or position across branches](#6-mismatched-column-count-or-position-across-branches)
+- [7. ORDER BY / LIMIT placed on a branch instead of the compound](#7-order-by-limit-placed-on-a-branch-instead-of-the-compound)
+- [8. Mixing UNION and INTERSECT without parentheses](#8-mixing-union-and-intersect-without-parentheses)
+- [9. Building a constant table with a UNION ALL chain instead of VALUES](#9-building-a-constant-table-with-a-union-all-chain-instead-of-values)
+- [10. Relying on default VALUES column names](#10-relying-on-default-values-column-names)
+
 
 Anti-patterns in LLM-generated SQL around `UNION`/`UNION ALL`/`INTERSECT`/`EXCEPT` and `VALUES`, each
 with wrong/right code and a primary-source citation. The skill (`sql-set-operations`) states the rules;

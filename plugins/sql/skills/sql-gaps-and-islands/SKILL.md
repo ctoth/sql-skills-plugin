@@ -1,8 +1,8 @@
 ---
 name: sql-gaps-and-islands
-description: Guides the canonical "gaps and islands" pattern family — detecting unbroken runs of consecutive values (islands — active streaks, sessions, contiguous date/number ranges) and the missing stretches between them (gaps) — with the portable set-based solution instead of brittle self-joins or procedural row-by-row loops. Centerpiece is the ROW_NUMBER-difference trick — `grp = value - ROW_NUMBER() OVER (ORDER BY value)` is constant within a consecutive run, so GROUP BY grp collapses each run to its MIN/MAX boundaries (DENSE_RANK variant for runs within categories). Covers gaps via `LEAD(value) <> value + 1`, merging adjacent/overlapping ranges with a running MAX(end), and sessionization with a time-gap threshold via a running SUM of a new-session flag. Points to MATCH_RECOGNIZE where window logic gets unwieldy. Auto-invokes when writing or editing queries for consecutive sequences, streaks/runs, longest-active-streak, sessionization, collapsing or merging adjacent date/number ranges, finding missing IDs/dates, or "group consecutive rows" / "find gaps" / "count consecutive days" requests.
+description: >-
+  Guides the canonical "gaps and islands" pattern family — detecting unbroken runs of consecutive values (islands — active streaks, sessions, contiguous date/number ranges) and the missing stretches between them (gaps) — with the portable set-based solution instead of brittle self-joins or procedural row-by-row loops. Auto-invokes when writing or editing queries for consecutive sequences, streaks/runs, longest-active-streak, sessionization, collapsing or merging adjacent date/number ranges, finding missing IDs/dates, or "group consecutive rows" / "find gaps" / "count consecutive days" requests.
 allowed-tools: Read, Glob, Grep
-compatibility: "Claude Code, Codex CLI, Gemini CLI"
 ---
 
 # SQL Gaps and Islands
@@ -229,8 +229,8 @@ The window query you wrote instead of the loop is a gift to whoever audits the r
 
 High-frequency gaps-and-islands anti-patterns in LLM-generated SQL, each with wrong/right code and a primary-source citation:
 
-`${CLAUDE_SKILL_DIR}/references/common-mistakes.md`
+[references/common-mistakes.md](references/common-mistakes.md)
 
 Source provenance for every claim in this skill:
 
-`${CLAUDE_SKILL_DIR}/references/sources.yaml`
+[references/sources.yaml](references/sources.yaml)

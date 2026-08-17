@@ -1,4 +1,19 @@
 # Common SQL Datetime & Interval Mistakes
+## Contents
+
+- [1. Storing an event as a naive TIMESTAMP instead of an instant](#1-storing-an-event-as-a-naive-timestamp-instead-of-an-instant)
+- [2. Bare-string date literals with ambiguous format](#2-bare-string-date-literals-with-ambiguous-format)
+- [3. String date math for "yesterday" / ranges](#3-string-date-math-for-yesterday-ranges)
+- [4. Integer arithmetic for date offsets](#4-integer-arithmetic-for-date-offsets)
+- [5. Treating a month as a fixed number of days](#5-treating-a-month-as-a-fixed-number-of-days)
+- [6. Vendor NOW()/GETDATE()/SYSDATE instead of CURRENTTIMESTAMP](#6-vendor-nowgetdatesysdate-instead-of-currenttimestamp)
+- [7. Assuming CURRENTTIMESTAMP is per-statement wall-clock time](#7-assuming-currenttimestamp-is-per-statement-wall-clock-time)
+- [8. Extracting fields by slicing the string form](#8-extracting-fields-by-slicing-the-string-form)
+- [9. Assuming datetrunc/strftime is portable standard SQL](#9-assuming-datetruncstrftime-is-portable-standard-sql)
+- [10. Porting TIMESTAMP between PostgreSQL and MySQL assuming it means the same thing](#10-porting-timestamp-between-postgresql-and-mysql-assuming-it-means-the-same-thing)
+- [11. Relying on a native date type in SQLite](#11-relying-on-a-native-date-type-in-sqlite)
+- [12. Using TIME WITH TIME ZONE for an instant](#12-using-time-with-time-zone-for-an-instant)
+
 
 Anti-patterns in LLM-generated SQL around temporal types, time zones, and date math, each with wrong/right
 code and a primary-source citation. The policy is owned by `sql-datetime-and-intervals`; this file holds the

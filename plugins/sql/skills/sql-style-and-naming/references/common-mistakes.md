@@ -1,4 +1,15 @@
 # Common SQL Style & Naming Mistakes
+## Contents
+
+- [1. Double-quoting a string literal (the correctness trap)](#1-double-quoting-a-string-literal-the-correctness-trap)
+- [2. Relying on MySQL's default double-quoted strings](#2-relying-on-mysqls-default-double-quoted-strings)
+- [3. Escaping a quote with the wrong character](#3-escaping-a-quote-with-the-wrong-character)
+- [4. CamelCase identifiers that force permanent quoting](#4-camelcase-identifiers-that-force-permanent-quoting)
+- [5. Naming a column after a reserved word](#5-naming-a-column-after-a-reserved-word)
+- [6. Lowercase keywords blurring into names](#6-lowercase-keywords-blurring-into-names)
+- [7. The single-line mega-query](#7-the-single-line-mega-query)
+- [8. Inconsistent comma placement within a list](#8-inconsistent-comma-placement-within-a-list)
+
 
 Anti-patterns in LLM-generated SQL around quoting, casing, naming, and layout, each with
 wrong/right code and a primary-source citation. The policy (`sql-style-and-naming`) states the

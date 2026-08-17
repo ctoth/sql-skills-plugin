@@ -1,8 +1,8 @@
 ---
 name: sql-constraints-and-integrity
-description: Guides database-enforced data integrity — push the rules into the schema as declarative constraints rather than re-checking them in every application that writes. Covers PRIMARY KEY (= UNIQUE + NOT NULL, one per table) vs UNIQUE (many per table, and by default permits multiple NULLs — the SQL:2023 NULLS NOT DISTINCT lever fixes the duplicate-"unique"-emails trap), CHECK constraints and the pitfall that a CHECK passes when it evaluates to UNKNOWN/NULL (so pair it with NOT NULL), NOT NULL/DEFAULT, and FOREIGN KEY referential actions — choose ON DELETE/ON UPDATE deliberately (CASCADE | RESTRICT | NO ACTION | SET NULL | SET DEFAULT; the default is NO ACTION, which errors rather than cascades). Flags the two big SQLite footguns — foreign keys are NOT enforced unless you run PRAGMA foreign_keys = ON per connection, and PRIMARY KEY does not imply NOT NULL — and DEFERRABLE INITIALLY DEFERRED for circular references. Auto-invokes when writing or editing CREATE TABLE/ALTER TABLE constraints, FOREIGN KEY/REFERENCES, CHECK/UNIQUE/NOT NULL/DEFAULT, or on "enforce this in the DB or the app" / "why are there orphaned rows" / "why did duplicate emails get in" decisions.
+description: >-
+  Guides database-enforced data integrity — push the rules into the schema as declarative constraints rather than re-checking them in every application that writes. Covers PRIMARY KEY (= UNIQUE + NOT NULL, one per table) vs UNIQUE (many per table, and by default permits multiple NULLs — the SQL:2023 NULLS NOT DISTINCT lever fixes the duplicate-"unique"-emails trap), CHECK constraints and the pitfall that a CHECK passes when it evaluates to UNKNOWN/NULL (so pair it with NOT NULL), NOT. Auto-invokes when writing or editing CREATE TABLE/ALTER TABLE constraints, FOREIGN KEY/REFERENCES, CHECK/UNIQUE/NOT NULL/DEFAULT, or on "enforce this in the DB or the app" / "why are there orphaned rows" / "why did duplicate emails get in" decisions.
 allowed-tools: Read, Glob, Grep
-compatibility: "Claude Code, Codex CLI, Gemini CLI"
 ---
 
 # SQL Constraints and Integrity
@@ -231,8 +231,8 @@ A declared, NULL-aware constraint is empathy in the schema: it fails the bad wri
 
 High-frequency constraint/integrity anti-patterns in LLM-generated SQL, each with wrong/right code and a primary-source citation:
 
-`${CLAUDE_SKILL_DIR}/references/common-mistakes.md`
+[references/common-mistakes.md](references/common-mistakes.md)
 
 Source provenance for every claim in this skill:
 
-`${CLAUDE_SKILL_DIR}/references/sources.yaml`
+[references/sources.yaml](references/sources.yaml)

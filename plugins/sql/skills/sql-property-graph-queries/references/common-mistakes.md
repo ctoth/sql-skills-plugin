@@ -1,4 +1,13 @@
 # Common SQL/PGQ & Graph-Query Mistakes
+## Contents
+
+- [1. Emitting raw Cypher into a SQL session](#1-emitting-raw-cypher-into-a-sql-session)
+- [2. Emitting Gremlin (a traversal API, not a query language)](#2-emitting-gremlin-a-traversal-api-not-a-query-language)
+- [3. Recommending SQL/PGQ on an engine that doesn't have it](#3-recommending-sqlpgq-on-an-engine-that-doesnt-have-it)
+- [4. Reaching for a separate graph database when the data is already relational](#4-reaching-for-a-separate-graph-database-when-the-data-is-already-relational)
+- [5. Confusing SQL/PGQ with GQL — using GQL/write syntax in SQL/PGQ](#5-confusing-sqlpgq-with-gql-using-gqlwrite-syntax-in-sqlpgq)
+- [6. Getting the edge direction backwards in the pattern](#6-getting-the-edge-direction-backwards-in-the-pattern)
+
 
 Anti-patterns in LLM-generated SQL around property-graph queries, each with wrong/right code and a
 primary-source citation. The skill (`sql-property-graph-queries`) states the model; this file holds

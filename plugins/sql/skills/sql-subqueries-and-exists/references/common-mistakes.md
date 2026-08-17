@@ -1,4 +1,14 @@
 # Common SQL Subquery & EXISTS Mistakes
+## Contents
+
+- [1. NOT IN (subquery) over a nullable column — collapses to zero rows](#1-not-in-subquery-over-a-nullable-column-collapses-to-zero-rows)
+- [2. <> ALL (subquery) used to "avoid NOT IN"](#2-all-subquery-used-to-avoid-not-in)
+- [3. Scalar subquery that can return more than one row](#3-scalar-subquery-that-can-return-more-than-one-row)
+- [4. Scalar subquery that returns zero rows — silent NULL](#4-scalar-subquery-that-returns-zero-rows-silent-null)
+- [5. INNER JOIN for a membership test — accidental row multiplication](#5-inner-join-for-a-membership-test-accidental-row-multiplication)
+- [6. SELECT  (or expensive columns) inside EXISTS](#6-select-or-expensive-columns-inside-exists)
+- [7. Keeping NOT IN but forgetting the NULL guard](#7-keeping-not-in-but-forgetting-the-null-guard)
+
 
 Anti-patterns in LLM-generated SQL around subqueries, `IN`/`NOT IN`, `EXISTS`, `ANY`/`ALL`, and scalar
 subqueries — each with wrong/right code and a primary-source citation. The skill

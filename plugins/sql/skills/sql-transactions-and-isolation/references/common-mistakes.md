@@ -1,4 +1,14 @@
 # Common SQL Transaction & Isolation Mistakes
+## Contents
+
+- [1. Multi-statement invariant left in autocommit](#1-multi-statement-invariant-left-in-autocommit)
+- [2. Opening a transaction with no matching COMMIT/ROLLBACK](#2-opening-a-transaction-with-no-matching-commitrollback)
+- [3. Assuming a failed migration rolls back on MySQL](#3-assuming-a-failed-migration-rolls-back-on-mysql)
+- [4. ROLLBACK (whole transaction) where ROLLBACK TO (savepoint) was meant](#4-rollback-whole-transaction-where-rollback-to-savepoint-was-meant)
+- [5. Relying on the default isolation level being the same across engines](#5-relying-on-the-default-isolation-level-being-the-same-across-engines)
+- [6. Treating READ UNCOMMITTED as a portable performance knob](#6-treating-read-uncommitted-as-a-portable-performance-knob)
+- [7. Check-then-act treated as safe just because it's in a transaction](#7-check-then-act-treated-as-safe-just-because-its-in-a-transaction)
+
 
 Anti-patterns in LLM-generated SQL around transactions, savepoints, and isolation levels, each with
 wrong/right code and a primary-source citation. The skill (`sql-transactions-and-isolation`) owns the

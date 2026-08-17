@@ -2,7 +2,6 @@
 name: sql-views-and-introspection
 description: Guides SQL views and portable schema introspection — a view is a stored query (`CREATE VIEW`), not a table, re-run on every reference; only simple single-table views are automatically updatable while joins/aggregates/DISTINCT/GROUP BY/set-operation views are read-only by default; `WITH [LOCAL|CASCADED] CHECK OPTION` rejects an INSERT/UPDATE through a filtered view whose new row would fall outside the view (so it can't silently vanish or escape a security filter); and schema discovery should query the SQL-standard `INFORMATION_SCHEMA` (portable across PostgreSQL/MySQL/MariaDB/SQL Server) rather than vendor catalogs (`pg_catalog`, `sqlite_master`, `SHOW TABLES`, `PRAGMA`). Notes that SQLite has no `INFORMATION_SCHEMA` at all. Auto-invokes when writing or editing `CREATE VIEW`, updatable/security views, `WITH CHECK OPTION`, querying catalog/metadata, `INFORMATION_SCHEMA`/`SHOW`/`PRAGMA`/`pg_catalog`/`sqlite_master`, or generating schema-discovery or migration tooling queries.
 allowed-tools: Read, Glob, Grep
-compatibility: "Claude Code, Codex CLI, Gemini CLI"
 ---
 
 # SQL Views and Introspection
@@ -179,8 +178,8 @@ Portable introspection and `WITH CHECK OPTION` are both gifts to whoever runs th
 
 High-frequency view/introspection anti-patterns in LLM-generated SQL, each with wrong/right code and a primary-source citation:
 
-`${CLAUDE_SKILL_DIR}/references/common-mistakes.md`
+[references/common-mistakes.md](references/common-mistakes.md)
 
 Source provenance for every claim in this skill:
 
-`${CLAUDE_SKILL_DIR}/references/sources.yaml`
+[references/sources.yaml](references/sources.yaml)

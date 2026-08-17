@@ -1,8 +1,8 @@
 ---
 name: sql-match-recognize
-description: Guides `MATCH_RECOGNIZE` (SQL:2016 row pattern recognition) — regex-style pattern matching across ordered rows for time-series problems (V-shapes/dip-and-recovery, trend reversals, threshold breaches, complex sessionization) — instead of convoluted self-joins or nested LAG/CASE window gymnastics. Covers the fixed clause order (PARTITION BY / ORDER BY / MEASURES / ONE ROW|ALL ROWS PER MATCH / AFTER MATCH SKIP / PATTERN / DEFINE), PATTERN regex quantifiers and greedy-vs-reluctant matching, pattern-variable conditions, MEASURES with RUNNING vs FINAL semantics, and the AFTER MATCH SKIP modes that control overlapping matches. LOW PORTABILITY — established only on Oracle, Trino, Snowflake, Flink, Vertica, and DB2; absent from deployed PostgreSQL (landed only in 18), MySQL 8, MariaDB (<12.3), and SQLite (<3.53). Auto-invokes when writing or editing time-series pattern detection, row-sequence matching, trend-reversal/dip detection, complex multi-state sessionization, or "find this shape/sequence in rows" requests. CAVEAT — confirm engine support before recommending; when the target engine lacks it, route to `sql-gaps-and-islands` for the portable window-function fallback.
+description: >-
+  Guides `MATCH_RECOGNIZE` (SQL:2016 row pattern recognition) — regex-style pattern matching across ordered rows for time-series problems (V-shapes/dip-and-recovery, trend reversals, threshold breaches, complex sessionization) — instead of convoluted self-joins or nested LAG/CASE window gymnastics. Auto-invokes when writing or editing time-series pattern detection, row-sequence matching, trend-reversal/dip detection, complex multi-state sessionization, or "find this shape/sequence in rows" requests. CAVEAT — confirm engine support before recommending; when the target engine lacks it, route to `sql-gaps-and-islands` for the portable window-function fallback.
 allowed-tools: Read, Glob, Grep
-compatibility: "Claude Code, Codex CLI, Gemini CLI"
 ---
 
 # SQL MATCH_RECOGNIZE — Row Pattern Recognition
@@ -218,8 +218,8 @@ The check you ran ("does this engine have `MATCH_RECOGNIZE`?") and the reluctant
 
 High-frequency `MATCH_RECOGNIZE` anti-patterns in LLM-generated SQL, each with wrong/right code and a primary-source citation:
 
-`${CLAUDE_SKILL_DIR}/references/common-mistakes.md`
+[references/common-mistakes.md](references/common-mistakes.md)
 
 Source provenance for every claim in this skill:
 
-`${CLAUDE_SKILL_DIR}/references/sources.yaml`
+[references/sources.yaml](references/sources.yaml)

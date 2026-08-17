@@ -1,4 +1,17 @@
 # Common SQL Constraint & Integrity Mistakes
+## Contents
+
+- [1. Trusting application code to enforce an invariant the schema doesn't](#1-trusting-application-code-to-enforce-an-invariant-the-schema-doesnt)
+- [2. Expecting CHECK to reject a NULL](#2-expecting-check-to-reject-a-null)
+- [3. Expecting a default UNIQUE column to allow at most one NULL](#3-expecting-a-default-unique-column-to-allow-at-most-one-null)
+- [4. Defining a FOREIGN KEY without choosing a referential action](#4-defining-a-foreign-key-without-choosing-a-referential-action)
+- [5. Relying on foreign keys in SQLite without PRAGMA foreignkeys = ON](#5-relying-on-foreign-keys-in-sqlite-without-pragma-foreignkeys-on)
+- [6. Assuming PRIMARY KEY implies NOT NULL in SQLite](#6-assuming-primary-key-implies-not-null-in-sqlite)
+- [7. Declaring two PRIMARY KEYs instead of PRIMARY KEY + UNIQUE](#7-declaring-two-primary-keys-instead-of-primary-key-unique)
+- [8. A circular / self foreign key with no way to insert the first row](#8-a-circular-self-foreign-key-with-no-way-to-insert-the-first-row)
+- [9. Using DEFAULT as if it also forbade NULL](#9-using-default-as-if-it-also-forbade-null)
+- [10. A sentinel DEFAULT to "avoid NULL"](#10-a-sentinel-default-to-avoid-null)
+
 
 Anti-patterns in LLM-generated DDL around constraints and referential integrity, each with wrong/right
 code and a primary-source citation. The skill (`sql-constraints-and-integrity`) states the rules; this

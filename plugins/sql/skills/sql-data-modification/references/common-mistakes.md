@@ -1,4 +1,15 @@
 # Common SQL Data-Modification (DML) Mistakes
+## Contents
+
+- [1. UPDATE / DELETE with no WHERE — the whole-table wipe](#1-update-delete-with-no-where-the-whole-table-wipe)
+- [2. A loop of single-row INSERTs instead of one set-based statement](#2-a-loop-of-single-row-inserts-instead-of-one-set-based-statement)
+- [3. Relying on non-standard UPDATE ... FROM / DELETE ... USING](#3-relying-on-non-standard-update-from-delete-using)
+- [4. Correlated-subquery UPDATE without a WHERE EXISTS guard](#4-correlated-subquery-update-without-a-where-exists-guard)
+- [5. A second SELECT to fetch the just-inserted id instead of RETURNING](#5-a-second-select-to-fetch-the-just-inserted-id-instead-of-returning)
+- [6. INSERT ... ON CONFLICT DO UPDATE reset to the old value (forgetting excluded.)](#6-insert-on-conflict-do-update-reset-to-the-old-value-forgetting-excluded)
+- [7. TRUNCATE assumed to be transactional / rollback-able everywhere](#7-truncate-assumed-to-be-transactional-rollback-able-everywhere)
+- [8. INSERT without an explicit column list](#8-insert-without-an-explicit-column-list)
+
 
 Anti-patterns in LLM-generated `INSERT`/`UPDATE`/`DELETE`/`TRUNCATE`, each with wrong/right code and a
 primary-source citation. The skill (`sql-data-modification`) states the rules; this file holds the

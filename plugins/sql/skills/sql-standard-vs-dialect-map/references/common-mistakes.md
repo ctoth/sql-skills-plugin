@@ -1,4 +1,19 @@
 # Common SQL Portability Mistakes
+## Contents
+
+- [1. Shipping LIMIT to Oracle (pre-12c) or SQL Server](#1-shipping-limit-to-oracle-pre-12c-or-sql-server)
+- [2. Double-quoted strings (the SQLite/MySQL → PostgreSQL break)](#2-double-quoted-strings-the-sqlitemysql-postgresql-break)
+- [3. Reusing one engine's upsert syntax on another](#3-reusing-one-engines-upsert-syntax-on-another)
+- [4. EXCEPT on Oracle (it is spelled MINUS)](#4-except-on-oracle-it-is-spelled-minus)
+- [5. SERIAL is not portable — and is legacy even on PostgreSQL](#5-serial-is-not-portable-and-is-legacy-even-on-postgresql)
+- [6. NOW() instead of CURRENTTIMESTAMP](#6-now-instead-of-currenttimestamp)
+- [7. Assuming BOOLEAN exists everywhere / bare-boolean WHERE](#7-assuming-boolean-exists-everywhere-bare-boolean-where)
+- [8. IS DISTINCT FROM on MySQL (use =)](#8-is-distinct-from-on-mysql-use)
+- [9. INFORMATIONSCHEMA on SQLite or Oracle](#9-informationschema-on-sqlite-or-oracle)
+- [10. -> / ->> JSON operators on Oracle (and JSONVALUE on old engines)](#10-----json-operators-on-oracle-and-jsonvalue-on-old-engines)
+- [11. Relying on the default isolation level being the same everywhere](#11-relying-on-the-default-isolation-level-being-the-same-everywhere)
+- [12. FULL JOIN on MySQL](#12-full-join-on-mysql)
+
 
 High-frequency portability failures in LLM-generated SQL — the model writes a spelling
 that parses on *one* engine and fails (or silently misbehaves) on the target. Each has

@@ -1,4 +1,16 @@
 # Common SQL Temporal-Table Mistakes
+## Contents
+
+- [1. Hand-rolling trigger history instead of system-versioning](#1-hand-rolling-trigger-history-instead-of-system-versioning)
+- [2. Querying the history table by hand instead of FOR SYSTEMTIME AS OF](#2-querying-the-history-table-by-hand-instead-of-for-systemtime-as-of)
+- [3. Confusing FROM..TO (end-exclusive) with BETWEEN (end-inclusive)](#3-confusing-fromto-end-exclusive-with-between-end-inclusive)
+- [4. Writing the period columns by hand](#4-writing-the-period-columns-by-hand)
+- [5. Using system-time when the need is real-world effective dates (valid-time)](#5-using-system-time-when-the-need-is-real-world-effective-dates-valid-time)
+- [6. Overwriting a whole valid-time row instead of FOR PORTION OF](#6-overwriting-a-whole-valid-time-row-instead-of-for-portion-of)
+- [7. Recommending temporal syntax on an engine that lacks it](#7-recommending-temporal-syntax-on-an-engine-that-lacks-it)
+- [8. Assuming one DDL spelling is portable across supporters](#8-assuming-one-ddl-spelling-is-portable-across-supporters)
+- [9. Conflating temporal-table syntax with MVCC retention / "how far back"](#9-conflating-temporal-table-syntax-with-mvcc-retention-how-far-back)
+
 
 Anti-patterns in LLM-generated SQL around SQL:2011 temporal tables, each with wrong/right
 code and a primary-source citation. The skill (`sql-temporal-tables`) states the rules; this

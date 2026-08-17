@@ -1,8 +1,8 @@
 ---
 name: sql-cte-and-recursion
-description: Guides common table expressions for readable query decomposition (`WITH`) and `WITH RECURSIVE` for hierarchies, transitive closure, and series generation — always with a termination or cycle guard so recursion cannot run away. Teaches the canonical anchor + recursive-member structure (only the recursive term may reference the CTE), the working-table/queue evaluation model (recursion is iteration, not a stack), the UNION-vs-UNION-ALL distinction in recursion, the standard `SEARCH` and `CYCLE` clauses (SQL:2023) versus the portable manual path-array guard, recursive series generation as the portable `generate_series` substitute, and the PostgreSQL CTE materialization fence (PG <=11 always materializes; >=12 inlines a single-reference CTE unless `MATERIALIZED`). Auto-invokes when writing or editing `WITH`/`WITH RECURSIVE`, hierarchy/tree/graph traversal, transitive-closure or generate-series logic, deeply nested subqueries that want flattening, or on "infinite recursion" / "query runs forever" / "tree query" / "recursive query" requests.
+description: >-
+  Guides common table expressions for readable query decomposition (`WITH`) and `WITH RECURSIVE` for hierarchies, transitive closure, and series generation — always with a termination or cycle guard so recursion cannot run away. Auto-invokes when writing or editing `WITH`/`WITH RECURSIVE`, hierarchy/tree/graph traversal, transitive-closure or generate-series logic, deeply nested subqueries that want flattening, or on "infinite recursion" / "query runs forever" / "tree query" / "recursive query" requests.
 allowed-tools: Read, Glob, Grep
-compatibility: "Claude Code, Codex CLI, Gemini CLI"
 ---
 
 # SQL CTEs and Recursion
@@ -248,8 +248,8 @@ A guard is empathy in code: the path array, the `WHERE n < 100`, and the explici
 
 High-frequency CTE and recursion anti-patterns in LLM-generated SQL, each with wrong/right code and a primary-source citation:
 
-`${CLAUDE_SKILL_DIR}/references/common-mistakes.md`
+[references/common-mistakes.md](references/common-mistakes.md)
 
 Source provenance for every claim in this skill:
 
-`${CLAUDE_SKILL_DIR}/references/sources.yaml`
+[references/sources.yaml](references/sources.yaml)

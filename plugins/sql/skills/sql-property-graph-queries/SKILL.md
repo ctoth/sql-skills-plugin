@@ -1,8 +1,8 @@
 ---
 name: sql-property-graph-queries
-description: Guides SQL:2023 SQL/PGQ (ISO/IEC 9075-16, Part 16) — define a property graph as a metadata overlay over existing relational tables with `CREATE PROPERTY GRAPH ... VERTEX TABLES (...) EDGE TABLES (...)`, then query it with `GRAPH_TABLE (graph MATCH (a)-[e]->(b) WHERE ... COLUMNS (...))` using ASCII-art vertex/edge patterns in the FROM clause — and explains its relationship to the standalone GQL language (ISO/IEC 39075:2024), with which it shares the graph-pattern sub-language (GPML). A forward-looking reference for "graph queries without a graph database." BLEEDING-EDGE, VERY LOW PORTABILITY — as of 2026 only Oracle Database 23ai ships it; PostgreSQL has out-of-tree patches only; SQLite and MySQL have nothing, so the portable way to traverse graph-shaped relational data is a recursive CTE. Auto-invokes when writing or editing graph-pattern queries over relational data, `GRAPH_TABLE`/`CREATE PROPERTY GRAPH`, friend-of-friend / reachability / recommendation traversals, or on "can I do graph / Cypher-style queries in SQL" requests. Prevents the LLM failure of hallucinating Cypher or Gremlin syntax where SQL/PGQ (or a recursive CTE) is what's meant. Confirm engine support before recommending.
+description: >-
+  Guides SQL:2023 SQL/PGQ (ISO/IEC 9075-16, Part 16) — define a property graph as a metadata overlay over existing relational tables with `CREATE PROPERTY GRAPH ... VERTEX TABLES (...) EDGE TABLES (...)`, then query it with `GRAPH_TABLE (graph MATCH (a)-[e]- greater than (b) WHERE ... COLUMNS (...))` using ASCII-art vertex/edge patterns in the FROM clause — and explains its relationship to the standalone GQL language (ISO/IEC 39075:2024), with which it shares the graph-pattern sub-language (GPML). Auto-invokes when writing or editing graph-pattern queries over relational data, `GRAPH_TABLE`/`CREATE PROPERTY GRAPH`, friend-of-friend / reachability / recommendation traversals, or on "can I do graph / Cypher-style queries in SQL" requests. Prevents the LLM failure of hallucinating Cypher or Gremlin syntax where SQL/PGQ (or a recursive CTE) is what's meant. Confirm engine support before recommending.
 allowed-tools: Read, Glob, Grep
-compatibility: "Claude Code, Codex CLI, Gemini CLI"
 ---
 
 # SQL Property Graph Queries (SQL/PGQ)
@@ -189,8 +189,8 @@ This is **bleeding-edge**. As of 2026 there is essentially one shipping implemen
 
 High-frequency SQL/PGQ and graph-query anti-patterns in LLM-generated SQL, each with wrong/right code and a primary-source citation:
 
-`${CLAUDE_SKILL_DIR}/references/common-mistakes.md`
+[references/common-mistakes.md](references/common-mistakes.md)
 
 Source provenance for every claim in this skill:
 
-`${CLAUDE_SKILL_DIR}/references/sources.yaml`
+[references/sources.yaml](references/sources.yaml)

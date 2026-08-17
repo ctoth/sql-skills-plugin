@@ -1,4 +1,14 @@
 # Common SQL Join Mistakes
+## Contents
+
+- [1. Filtering the outer table in WHERE — demoting LEFT JOIN to INNER JOIN](#1-filtering-the-outer-table-in-where-demoting-left-join-to-inner-join)
+- [2. NATURAL JOIN — joining on every same-named column](#2-natural-join-joining-on-every-same-named-column)
+- [3. Accidental cross product from a missing or typo'd predicate](#3-accidental-cross-product-from-a-missing-or-typod-predicate)
+- [4. One-to-many fan-out inflating an aggregate](#4-one-to-many-fan-out-inflating-an-aggregate)
+- [5. INNER self-join silently dropping the top of a hierarchy](#5-inner-self-join-silently-dropping-the-top-of-a-hierarchy)
+- [6. Equi-join silently excluding NULL-keyed rows](#6-equi-join-silently-excluding-null-keyed-rows)
+- [7. RIGHT JOIN where MySQL-portable FULL JOIN was meant, or FULL JOIN on MySQL](#7-right-join-where-mysql-portable-full-join-was-meant-or-full-join-on-mysql)
+
 
 Anti-patterns in LLM-generated SQL around joins, each with wrong/right code and a primary-source
 citation. The skill (`sql-joins`) states the rules; this file holds the high-frequency failure modes.

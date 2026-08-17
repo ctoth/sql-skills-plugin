@@ -1,0 +1,20 @@
+{
+  "name": "sql-skills-marketplace",
+  "interface": {
+    "displayName": "Sql Skills"
+  },
+  "plugins": [
+    {
+      "name": "sql",
+      "source": {
+        "source": "local",
+        "path": "./plugins/sql"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}

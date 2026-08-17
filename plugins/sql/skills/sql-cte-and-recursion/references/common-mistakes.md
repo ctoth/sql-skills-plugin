@@ -1,4 +1,15 @@
 # Common SQL CTE & Recursion Mistakes
+## Contents
+
+- [1. Recursive query with no cycle guard on cyclic data](#1-recursive-query-with-no-cycle-guard-on-cyclic-data)
+- [2. Believing UNION makes recursion cycle-safe once a depth/path column exists](#2-believing-union-makes-recursion-cycle-safe-once-a-depthpath-column-exists)
+- [3. Referencing the CTE from the anchor (non-recursive) term](#3-referencing-the-cte-from-the-anchor-non-recursive-term)
+- [4. Series generation with no termination predicate](#4-series-generation-with-no-termination-predicate)
+- [5. Aggregate or window function inside the recursive term](#5-aggregate-or-window-function-inside-the-recursive-term)
+- [6. Assuming recursion (or any CTE) returns rows in a defined order](#6-assuming-recursion-or-any-cte-returns-rows-in-a-defined-order)
+- [7. Treating a CTE as a guaranteed optimization fence](#7-treating-a-cte-as-a-guaranteed-optimization-fence)
+- [8. A deeply nested subquery where a WITH would be readable](#8-a-deeply-nested-subquery-where-a-with-would-be-readable)
+
 
 Anti-patterns in LLM-generated SQL around `WITH` and `WITH RECURSIVE`, each with wrong/right code
 and a primary-source citation. The skill (`sql-cte-and-recursion`) states the rules; this file holds

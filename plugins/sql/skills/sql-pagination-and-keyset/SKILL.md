@@ -1,8 +1,8 @@
 ---
 name: sql-pagination-and-keyset
-description: Guides correct, scalable pagination and the row-value machinery behind it. Prefer keyset/seek pagination — `WHERE (sort_key, id) > (:last_key, :last_id) ORDER BY sort_key, id FETCH FIRST n ROWS ONLY` — over `LIMIT n OFFSET m`, because `OFFSET` makes the server fetch-and-discard the first m rows (O(offset), so deep pages time out) and is unstable — an insert or delete between page loads shifts the window so the reader skips a row or sees one twice. Teaches the standard `OFFSET ... FETCH FIRST n ROWS ONLY [WITH TIES]` surface versus non-standard `LIMIT`, the row value constructor comparison `(a, b) > (x, y)` (lexicographic, left-to-right, with its NULL trap) as the clean replacement for the error-prone `(a > x) OR (a = x AND b > y)`, multi-row `IN ((..),(..))`, and `VALUES` row-lists for set-based bulk operations. Every correct page needs a total, stable `ORDER BY` (tie-broken on a unique column). Auto-invokes when writing or editing pagination, `LIMIT`/`OFFSET`/`FETCH` queries, infinite-scroll or cursor/keyset endpoints, multi-column `ORDER BY` with paging, row-value comparisons, or `VALUES` bulk row sets.
+description: >-
+  Guides correct, scalable pagination and the row-value machinery behind it. Prefer keyset/seek pagination — `WHERE (sort_key, id) greater than (:last_key, :last_id) ORDER BY sort_key, id FETCH FIRST n ROWS ONLY` — over `LIMIT n OFFSET m`, because `OFFSET` makes the server fetch-and-discard the first m rows (O(offset), so deep pages time out) and is unstable — an insert or delete between page loads shifts the window so the reader skips a row or sees one twice. Teaches the standard `OFFSET. Auto-invokes when writing or editing pagination, `LIMIT`/`OFFSET`/`FETCH` queries, infinite-scroll or cursor/keyset endpoints, multi-column `ORDER BY` with paging, row-value comparisons, or `VALUES` bulk row sets.
 allowed-tools: Read, Glob, Grep
-compatibility: "Claude Code, Codex CLI, Gemini CLI"
 ---
 
 # SQL Pagination and Keyset
@@ -200,8 +200,8 @@ Correct pagination is a kindness to all of them: a keyset cursor on a total orde
 
 High-frequency pagination and row-value anti-patterns in LLM-generated SQL, each with wrong/right code and a primary-source citation:
 
-`${CLAUDE_SKILL_DIR}/references/common-mistakes.md`
+[references/common-mistakes.md](references/common-mistakes.md)
 
 Source provenance for every claim in this skill:
 
-`${CLAUDE_SKILL_DIR}/references/sources.yaml`
+[references/sources.yaml](references/sources.yaml)

@@ -1,8 +1,8 @@
 ---
 name: sql-injection-and-parameterization
-description: Guides the one non-negotiable rule for combining SQL with data — pass every value through a bind parameter / prepared statement, and never build SQL by string interpolation, concatenation, f-strings, or `format`. Explains why this beats hand-escaping (OWASP ranks escaping last and "STRONGLY DISCOURAGED," and "CANNOT guarantee" it works), why identifiers (table/column names, ASC/DESC) cannot be parameterized and must be allow-listed against a fixed set, and that placeholder syntax (`?`, `$1`, `:name`, `%s`) is a driver convention, not a SQL dialect feature. Covers dynamic WHERE/ORDER BY/LIMIT done safely and the standard `PREPARE`/`EXECUTE` surface. Treats "just for this example" interpolation of user input as a defect, not a shortcut. Auto-invokes when writing or editing any query that embeds a variable or user input, string-building of SQL, dynamic `WHERE`/`ORDER BY`/table or column names, ORM raw-query escape hatches, or on "build this query from input" / "is this safe from injection" / "escape this value" requests.
+description: >-
+  Guides the one non-negotiable rule for combining SQL with data — pass every value through a bind parameter / prepared statement, and never build SQL by string interpolation, concatenation, f-strings, or `format`. Explains why this beats hand-escaping (OWASP ranks escaping last and "STRONGLY DISCOURAGED," and "CANNOT guarantee" it works), why identifiers (table/column names, ASC/DESC) cannot be parameterized and must be allow-listed against a fixed set, and that placeholder syntax (`?`, `$1`. Auto-invokes when writing or editing any query that embeds a variable or user input, string-building of SQL, dynamic `WHERE`/`ORDER BY`/table or column names, ORM raw-query escape hatches, or on "build this query from input" / "is this safe from injection" / "escape this value" requests.
 allowed-tools: Read, Glob, Grep
-compatibility: "Claude Code, Codex CLI, Gemini CLI"
 ---
 
 # SQL Injection and Parameterization
@@ -203,8 +203,8 @@ Parameterizing is empathy in code: the `?` you wrote instead of the f-string is 
 
 High-frequency injection/parameterization anti-patterns in LLM-generated code, each with wrong/right code and a primary-source citation:
 
-`${CLAUDE_SKILL_DIR}/references/common-mistakes.md`
+[references/common-mistakes.md](references/common-mistakes.md)
 
 Source provenance for every claim in this skill:
 
-`${CLAUDE_SKILL_DIR}/references/sources.yaml`
+[references/sources.yaml](references/sources.yaml)

@@ -1,8 +1,8 @@
 ---
 name: sql-indexing-and-sargability
-description: Guides portable index design and the sargability rule — an index is a sorted B-tree, so the database can use it only when the predicate leaves the indexed column bare. Bans the recurring index-killers — wrapping an indexed column in a function or expression (`WHERE LOWER(email) = …`, `WHERE DATE(ts) = …`, `WHERE col + 0 = …`) and leading-wildcard `LIKE '%term'`, both of which force a full table scan. Teaches composite-index column order (equality columns first, then the one range/sort column), the leftmost-prefix rule, covering indexes / index-only scans, how one index can serve `WHERE` + `ORDER BY` + `GROUP BY`, and the "index shotgun" antipattern weighed against the per-write maintenance cost of every index. Auto-invokes when writing or editing `CREATE INDEX`, a slow `WHERE`/`ORDER BY`/`JOIN`/`GROUP BY`, a function or arithmetic applied to a filtered column, a `LIKE` pattern, or on "why is this query slow" / "what index do I need" / "this query does a full table scan" requests. The highest-leverage performance skill, taught vendor-neutrally.
+description: >-
+  Guides portable index design and the sargability rule — an index is a sorted B-tree, so the database can use it only when the predicate leaves the indexed column bare. Bans the recurring index-killers — wrapping an indexed column in a function or expression (`WHERE LOWER(email) = …`, `WHERE DATE(ts) = …`, `WHERE col + 0 = …`) and leading-wildcard `LIKE '%term'`, both of which force a full table scan. Auto-invokes when writing or editing `CREATE INDEX`, a slow `WHERE`/`ORDER BY`/`JOIN`/`GROUP BY`, a function or arithmetic applied to a filtered column, a `LIKE` pattern, or on "why is this query slow" / "what index do I need" / "this query does a full table scan" requests. The highest-leverage performance skill, taught vendor-neutrally.
 allowed-tools: Read, Glob, Grep
-compatibility: "Claude Code, Codex CLI, Gemini CLI"
 ---
 
 # SQL Indexing and Sargability
@@ -186,8 +186,8 @@ A sargable predicate, a correctly ordered composite index, and the *restraint* n
 
 High-frequency indexing and sargability anti-patterns in LLM-generated SQL, each with wrong/right code and a primary-source citation:
 
-`${CLAUDE_SKILL_DIR}/references/common-mistakes.md`
+[references/common-mistakes.md](references/common-mistakes.md)
 
 Source provenance for every claim in this skill:
 
-`${CLAUDE_SKILL_DIR}/references/sources.yaml`
+[references/sources.yaml](references/sources.yaml)

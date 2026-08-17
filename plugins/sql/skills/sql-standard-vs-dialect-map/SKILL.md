@@ -1,8 +1,8 @@
 ---
 name: sql-standard-vs-dialect-map
-description: The portability index for SQL — maps each standard feature to whether the readable engines (PostgreSQL, SQLite, MySQL/MariaDB, plus notes on SQL Server / Oracle / DuckDB) support it and how they spell it. Covers `OFFSET … FETCH` vs `LIMIT`, `GENERATED AS IDENTITY` vs `SERIAL`/`AUTO_INCREMENT`/`IDENTITY(1,1)`, `MERGE` vs `ON CONFLICT` vs `ON DUPLICATE KEY UPDATE`, `||` vs `+` vs `CONCAT()`, `IS DISTINCT FROM` vs `<=>`, `LISTAGG`/`STRING_AGG`/`GROUP_CONCAT`, `INFORMATION_SCHEMA` vs `sqlite_master`/`PRAGMA`/`SHOW`, standard JSON functions vs `->`/`->>`, `LATERAL` vs `CROSS/OUTER APPLY`, `EXCEPT` vs `MINUS`, identifier quoting and `ANSI_QUOTES`, `BOOLEAN` vs `BIT` vs `TINYINT(1)`, `CURRENT_TIMESTAMP` vs `NOW()`/`GETDATE()`/`SYSDATE`, default isolation levels, `CAST` vs `::`, and which advanced features (temporal tables, `MATCH_RECOGNIZE`, SQL/PGQ) live where. Auto-invokes when porting SQL between engines, targeting a specific database, choosing between a standard and a vendor spelling, or on "does Postgres/MySQL/SQLite support X" / "is this portable" / "how does engine Y spell Z" questions. The index every other SQL skill's Portability section routes to.
+description: >-
+  The portability index for SQL — maps each standard feature to whether the readable engines (PostgreSQL, SQLite, MySQL/MariaDB, plus notes on SQL Server / Oracle / DuckDB) support it and how they spell it. Covers `OFFSET … FETCH` vs `LIMIT`, `GENERATED AS IDENTITY` vs `SERIAL`/`AUTO_INCREMENT`/`IDENTITY(1,1)`, `MERGE` vs `ON CONFLICT` vs `ON DUPLICATE KEY UPDATE`, `||` vs `+` vs `CONCAT()`, `IS DISTINCT FROM` vs `at most greater than `, `LISTAGG`/`STRING_AGG`/`GROUP_CONCAT`, `INFORMATION_SCHEMA`. Auto-invokes when porting SQL between engines, targeting a specific database, choosing between a standard and a vendor spelling, or on "does Postgres/MySQL/SQLite support X" / "is this portable" / "how does engine Y spell Z" questions. The index every other SQL skill's Portability section routes to.
 allowed-tools: Read, Glob, Grep
-compatibility: "Claude Code, Codex CLI, Gemini CLI"
 ---
 
 # SQL Standard vs Dialect Map
@@ -255,12 +255,12 @@ This skill is the **index every other SQL skill's Portability section links to**
 
 The exhaustive feature×engine matrix — every feature in this map plus the long tail, as full markdown tables:
 
-`${CLAUDE_SKILL_DIR}/references/dialect-matrix.md`
+[references/dialect-matrix.md](references/dialect-matrix.md)
 
 High-frequency portability mistakes in LLM-generated SQL, each with wrong/right code and a source:
 
-`${CLAUDE_SKILL_DIR}/references/common-mistakes.md`
+[references/common-mistakes.md](references/common-mistakes.md)
 
 Source provenance for every claim in this skill:
 
-`${CLAUDE_SKILL_DIR}/references/sources.yaml`
+[references/sources.yaml](references/sources.yaml)

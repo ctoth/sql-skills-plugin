@@ -1,4 +1,16 @@
 # Common SQL Window-Function Mistakes
+## Contents
+
+- [1. LASTVALUE over the default frame returns the current row, not the partition's last](#1-lastvalue-over-the-default-frame-returns-the-current-row-not-the-partitions-last)
+- [2. Filtering on a window result in WHERE/HAVING](#2-filtering-on-a-window-result-in-wherehaving)
+- [3. RANK where ROWNUMBER was meant (ties produce extra rows)](#3-rank-where-rownumber-was-meant-ties-produce-extra-rows)
+- [4. Running total that jumps on tied sort keys (RANGE vs ROWS)](#4-running-total-that-jumps-on-tied-sort-keys-range-vs-rows)
+- [5. Treating PARTITION BY like GROUP BY](#5-treating-partition-by-like-group-by)
+- [6. LAG/LEAD producing NULL at partition edges](#6-laglead-producing-null-at-partition-edges)
+- [7. Relying on a window's ORDER BY to order the final result](#7-relying-on-a-windows-order-by-to-order-the-final-result)
+- [8. Copy-pasting an identical OVER (...) instead of a named WINDOW](#8-copy-pasting-an-identical-over-instead-of-a-named-window)
+- [9. Assuming GROUPS/EXCLUDE or QUALIFY are portable](#9-assuming-groupsexclude-or-qualify-are-portable)
+
 
 Anti-patterns in LLM-generated SQL around window functions, each with wrong/right code and a
 primary-source citation. The skill (`sql-window-functions`) states the rules; this file holds the

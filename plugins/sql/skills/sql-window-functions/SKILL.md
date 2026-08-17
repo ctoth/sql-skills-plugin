@@ -2,7 +2,6 @@
 name: sql-window-functions
 description: Guides window functions — the highest-leverage modern-SQL technique and the frame-clause traps LLMs reliably botch. A window function computes across related rows without collapsing them (PARTITION BY is not GROUP BY). The centerpiece — the default frame with ORDER BY is RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW, which makes LAST_VALUE return the current row, not the partition's last, and makes running totals jump on tied sort keys; fix with an explicit ROWS frame (or MAX() OVER). Covers ROW_NUMBER/RANK/DENSE_RANK/NTILE tie behavior, LAG/LEAD offsets, FIRST_VALUE/LAST_VALUE/NTH_VALUE, ROWS vs RANGE vs GROUPS, named WINDOW reuse, EXCLUDE, and that a window result cannot be filtered in WHERE/HAVING (wrap in a CTE/subquery — the top-N-per-group pattern). Auto-invokes when writing or editing OVER (...), PARTITION BY, frame clauses (ROWS/RANGE/GROUPS), ranking/offset/value functions, running or moving totals, "top-N per group", or "filter on row_number" / "WHERE row_number() = 1" requests.
 allowed-tools: Read, Glob, Grep
-compatibility: "Claude Code, Codex CLI, Gemini CLI"
 ---
 
 # SQL Window Functions
@@ -228,8 +227,8 @@ The explicit frame, the `ROWS` you wrote instead of accepting the `RANGE` defaul
 
 High-frequency window-function anti-patterns in LLM-generated SQL, each with wrong/right code and a primary-source citation:
 
-`${CLAUDE_SKILL_DIR}/references/common-mistakes.md`
+[references/common-mistakes.md](references/common-mistakes.md)
 
 Source provenance for every claim in this skill:
 
-`${CLAUDE_SKILL_DIR}/references/sources.yaml`
+[references/sources.yaml](references/sources.yaml)

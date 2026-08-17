@@ -1,8 +1,8 @@
 ---
 name: sql-json
-description: Guides standard SQL/JSON (SQL:2016 functions, SQL:2023 type) instead of reflexive vendor operators — use the constructors (JSON_OBJECT/JSON_ARRAY/JSON_OBJECTAGG/JSON_ARRAYAGG), and the query functions JSON_VALUE (for a scalar) vs JSON_QUERY (for an object/array) vs JSON_EXISTS (for a path test) rather than `->`/`->>`/`#>>`/JSON_EXTRACT; shred documents into joinable rows with JSON_TABLE; control path mismatches with the lax-vs-strict path language and ON ERROR/ON EMPTY; validate with IS JSON; and store JSON in the SQL:2023 native JSON type where available. The centerpiece is the wrong-function trap — JSON_QUERY on a scalar returns a quoted JSON string (`"abc"`) where JSON_VALUE returns the bare scalar (`abc`). Warns against storing JSON where a normalized schema belongs (the modern EAV antipattern) and routes that judgment to schema design. Auto-invokes when writing or editing JSON columns/queries, `->`/`->>`/`#>>`/JSON_EXTRACT, JSON_VALUE/JSON_QUERY/JSON_TABLE, JSON path expressions, JSON aggregation, or on "extract from JSON" / "store JSON" / "query a JSON column" requests.
+description: >-
+  Guides standard SQL/JSON (SQL:2016 functions, SQL:2023 type) instead of reflexive vendor operators — use the constructors (JSON_OBJECT/JSON_ARRAY/JSON_OBJECTAGG/JSON_ARRAYAGG), and the query functions JSON_VALUE (for a scalar) vs JSON_QUERY (for an object/array) vs JSON_EXISTS (for a path test) rather than `- greater than `/`- greater than greater than `/`# greater than greater than `/JSON_EXTRACT; shred documents into joinable rows with JSON_TABLE. Auto-invokes when writing or editing JSON columns/queries, `- greater than `/`- greater than greater than `/`# greater than greater than `/JSON_EXTRACT, JSON_VALUE/JSON_QUERY/JSON_TABLE, JSON path expressions, JSON aggregation, or on "extract from JSON" / "store JSON" / "query a JSON column" requests.
 allowed-tools: Read, Glob, Grep
-compatibility: "Claude Code, Codex CLI, Gemini CLI"
 ---
 
 # SQL/JSON
@@ -248,8 +248,8 @@ Disciplined JSON is the same empathy as disciplined NULL: the `JSON_VALUE` you u
 
 High-frequency SQL/JSON anti-patterns in LLM-generated SQL, each with wrong/right code and a primary-source citation:
 
-`${CLAUDE_SKILL_DIR}/references/common-mistakes.md`
+[references/common-mistakes.md](references/common-mistakes.md)
 
 Source provenance for every claim in this skill:
 
-`${CLAUDE_SKILL_DIR}/references/sources.yaml`
+[references/sources.yaml](references/sources.yaml)

@@ -2,7 +2,6 @@
 name: sql-joins
 description: Guides correct join composition and the single most damaging join bug — putting a filter on the null-able side of an outer join in WHERE instead of ON, which silently demotes a LEFT JOIN to an INNER JOIN and drops the very rows you were looking for. Covers INNER/LEFT/RIGHT/FULL/CROSS semantics with wrong/right SQL, ON vs USING vs NATURAL (and why NATURAL JOIN is a schema-change landmine that joins on every same-named column), self-joins, detecting accidental cross products from a missing or typo'd predicate, one-to-many fan-out that silently inflates SUM/COUNT, and join-key nullability under three-valued logic. Auto-invokes when writing or editing JOIN clauses, ON/USING/NATURAL conditions, queries filtering an outer-joined table, multi-table FROM lists, or on "my LEFT JOIN is dropping rows" / "duplicate rows after join" / "my totals doubled" / "why did I get a cross product" symptoms. Builds on sql-relational-and-null-discipline.
 allowed-tools: Read, Glob, Grep
-compatibility: "Claude Code, Codex CLI, Gemini CLI"
 ---
 
 # SQL Joins
@@ -242,8 +241,8 @@ Disciplined joins are empathy in code: the filter in `ON` instead of `WHERE`, th
 
 High-frequency join anti-patterns in LLM-generated SQL, each with wrong/right code and a primary-source citation:
 
-`${CLAUDE_SKILL_DIR}/references/common-mistakes.md`
+[references/common-mistakes.md](references/common-mistakes.md)
 
 Source provenance for every claim in this skill:
 
-`${CLAUDE_SKILL_DIR}/references/sources.yaml`
+[references/sources.yaml](references/sources.yaml)

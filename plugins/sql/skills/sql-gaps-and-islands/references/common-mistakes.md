@@ -1,4 +1,16 @@
 # Common Gaps-and-Islands Mistakes
+## Contents
+
+- [1. A procedural loop / cursor instead of a set-based group key](#1-a-procedural-loop-cursor-instead-of-a-set-based-group-key)
+- [2. Using RANK instead of ROWNUMBER in the island difference](#2-using-rank-instead-of-rownumber-in-the-island-difference)
+- [3. Applying the integer rownumber trick directly to dates or timestamps](#3-applying-the-integer-rownumber-trick-directly-to-dates-or-timestamps)
+- [4. Single ROWNUMBER when islands must respect a category (status runs)](#4-single-rownumber-when-islands-must-respect-a-category-status-runs)
+- [5. Trying to filter a window result in WHERE (gaps via LEAD)](#5-trying-to-filter-a-window-result-in-where-gaps-via-lead)
+- [6. Sessionization / range-merge running sum on the default RANGE frame](#6-sessionization-range-merge-running-sum-on-the-default-range-frame)
+- [7. Forgetting the first-row / NULL case in LAG-based session flagging](#7-forgetting-the-first-row-null-case-in-lag-based-session-flagging)
+- [8. Merging ranges by comparing only to the immediately previous row's end](#8-merging-ranges-by-comparing-only-to-the-immediately-previous-rows-end)
+- [9. Reaching for MATCHRECOGNIZE where it isn't supported (or hand-rolling where it is)](#9-reaching-for-matchrecognize-where-it-isnt-supported-or-hand-rolling-where-it-is)
+
 
 Anti-patterns in LLM-generated SQL for consecutive-runs (islands), gaps-between-runs, range merging,
 and sessionization, each with wrong/right code and a primary-source citation. The skill

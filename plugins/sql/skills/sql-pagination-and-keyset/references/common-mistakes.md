@@ -1,4 +1,15 @@
 # Common SQL Pagination & Row-Value Mistakes
+## Contents
+
+- [1. Deep OFFSET for pagination (the scan-and-discard footgun)](#1-deep-offset-for-pagination-the-scan-and-discard-footgun)
+- [2. OFFSET paging an actively-written list (skips and duplicates)](#2-offset-paging-an-actively-written-list-skips-and-duplicates)
+- [3. Keyset (or any paging) on a non-unique ORDER BY](#3-keyset-or-any-paging-on-a-non-unique-order-by)
+- [4. Hand-rolled OR expansion of the keyset predicate (operator flipped)](#4-hand-rolled-or-expansion-of-the-keyset-predicate-operator-flipped)
+- [5. Keyset cursor on a nullable sort key (rows vanish)](#5-keyset-cursor-on-a-nullable-sort-key-rows-vanish)
+- [6. Column-wise IN where a multi-row row-value IN was meant](#6-column-wise-in-where-a-multi-row-row-value-in-was-meant)
+- [7. Row-by-row loop where a VALUES row-list is set-based](#7-row-by-row-loop-where-a-values-row-list-is-set-based)
+- [8. Assuming FETCH FIRST / WITH TIES works everywhere](#8-assuming-fetch-first-with-ties-works-everywhere)
+
 
 Anti-patterns in LLM-generated SQL around pagination, keyset/seek cursors, and row-value comparisons,
 each with wrong/right code and a primary-source citation. The skill (`sql-pagination-and-keyset`) states

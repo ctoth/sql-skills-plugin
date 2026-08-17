@@ -2,7 +2,6 @@
 name: sql-data-modification
 description: Guides the core write statements — INSERT, UPDATE, DELETE — as set-based operations the database serializes, not row-by-row loops. Teaches the INSERT forms (single-row VALUES, multi-row VALUES in ONE statement, INSERT ... SELECT for bulk copy, DEFAULT VALUES) and bans the nightly job that fires 100k single-row INSERTs instead of one. Centers the #1 catastrophe — an UPDATE or DELETE with no WHERE rewrites or wipes the WHOLE table silently, with no error — and the discipline that prevents it (run inside an explicit transaction, SELECT the predicate first, then write). Flags that `UPDATE ... FROM` and `DELETE ... USING` are NON-STANDARD join-update extensions whose portable form is a correlated subquery in SET / `WHERE EXISTS`. Teaches RETURNING (non-standard but in PostgreSQL, SQLite 3.35+, MariaDB, Oracle; SQL:2023 standardized an OLD/NEW form) to fetch generated keys without a second round-trip, and TRUNCATE vs DELETE. Auto-invokes when writing or editing any INSERT/UPDATE/DELETE/TRUNCATE, bulk-insert or batch-load code, an application loop that inserts or updates rows one at a time, RETURNING / generated-key fetches, or on "insert many rows" / "update from another table" / "delete all rows" / "get the new id" requests. Routes upsert/insert-or-update to sql-merge-and-upsert.
 allowed-tools: Read, Glob, Grep
-compatibility: "Claude Code, Codex CLI, Gemini CLI"
 ---
 
 # SQL Data Modification
@@ -194,8 +193,8 @@ The `WHERE` you checked, the transaction you opened, the multi-row `VALUES` you 
 
 High-frequency DML anti-patterns in LLM-generated SQL, each with wrong/right code and a primary-source citation:
 
-`${CLAUDE_SKILL_DIR}/references/common-mistakes.md`
+[references/common-mistakes.md](references/common-mistakes.md)
 
 Source provenance for every claim in this skill:
 
-`${CLAUDE_SKILL_DIR}/references/sources.yaml`
+[references/sources.yaml](references/sources.yaml)

@@ -1,4 +1,17 @@
 # Common LATERAL & Correlated-Derived Mistakes
+## Contents
+
+- [1. A plain derived table that tries to see a sibling column](#1-a-plain-derived-table-that-tries-to-see-a-sibling-column)
+- [2. Forgetting ON true on the lateral join](#2-forgetting-on-true-on-the-lateral-join)
+- [3. Stuffing "top N" into a scalar subquery in the SELECT list](#3-stuffing-top-n-into-a-scalar-subquery-in-the-select-list)
+- [4. N correlated scalar subqueries instead of one LATERAL](#4-n-correlated-scalar-subqueries-instead-of-one-lateral)
+- [5. Inner JOIN LATERAL silently dropping childless parents](#5-inner-join-lateral-silently-dropping-childless-parents)
+- [6. Non-deterministic "latest" from a non-total ORDER BY](#6-non-deterministic-latest-from-a-non-total-order-by)
+- [7. Writing LATERAL before a set-returning function (or a comma-join that drops empties)](#7-writing-lateral-before-a-set-returning-function-or-a-comma-join-that-drops-empties)
+- [8. Reinventing top-N-per-group with window-filter gymnastics when LATERAL is simpler](#8-reinventing-top-n-per-group-with-window-filter-gymnastics-when-lateral-is-simpler)
+- [9. Confusing OUTER APPLY with LEFT JOIN (and CROSS APPLY with INNER JOIN)](#9-confusing-outer-apply-with-left-join-and-cross-apply-with-inner-join)
+- [10. Using LATERAL / APPLY on an engine that has neither (SQLite)](#10-using-lateral-apply-on-an-engine-that-has-neither-sqlite)
+
 
 Anti-patterns in LLM-generated SQL around `LATERAL` and correlated derived tables, each with wrong/right
 code and a primary-source citation. The policy root (`sql-lateral-and-correlated-derived`) states the

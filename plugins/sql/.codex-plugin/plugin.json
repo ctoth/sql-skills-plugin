@@ -1,0 +1,29 @@
+{
+  "name": "sql",
+  "version": "0.1.0",
+  "description": "Standard-SQL code-quality skills — relational & NULL discipline, joins, aggregation, window functions, CTEs & recursion, JSON, MERGE/upsert, keyset pagination, constraints & schema design, indexing & sargability, parameterization & access control, transactions, and modern SQL:2011/2016/2023 features. Vendor-neutral; portability mapped per feature.",
+  "author": {
+    "name": "Q"
+  },
+  "repository": "https://github.com/ctoth/sql-skills-plugin",
+  "keywords": [
+    "sql",
+    "agent-skills",
+    "codex",
+    "claude-code"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "SQL",
+    "shortDescription": "Write and review portable modern SQL",
+    "longDescription": "Standard-SQL code-quality skills — relational & NULL discipline, joins, aggregation, window functions, CTEs & recursion, JSON, MERGE/upsert, keyset pagination, constraints & schema design, indexing & sargability, parameterization & access control, transactions, and modern SQL:2011/2016/2023 features. Vendor-neutral; portability mapped per feature.",
+    "developerName": "Q",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Read"
+    ],
+    "defaultPrompt": [
+      "Use SQL for this task."
+    ]
+  }
+}

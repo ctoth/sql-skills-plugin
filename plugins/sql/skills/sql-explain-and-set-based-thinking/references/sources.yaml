@@ -52,4 +52,3 @@ sources:
     sections_used:
       - "Spaghetti Query — cramming an entire problem into one giant unreadable query causes accidental cross-products and mis-planning; split into readable steps instead"
       - "Row-by-row application loops (N+1 / RBAR) are a performance antipattern; operate on sets, not one row at a time"
-</content>

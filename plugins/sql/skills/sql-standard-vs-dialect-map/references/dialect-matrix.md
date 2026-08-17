@@ -1,4 +1,22 @@
 # SQL Dialect Matrix — Exhaustive Feature × Engine Table
+## Contents
+
+- [A. Query & result shaping](#a-query-result-shaping)
+- [B. Joins & lateral](#b-joins-lateral)
+- [C. Subqueries & set operations](#c-subqueries-set-operations)
+- [D. CTE & recursion](#d-cte-recursion)
+- [E. Windowing & pattern matching](#e-windowing-pattern-matching)
+- [F. Aggregation](#f-aggregation)
+- [G. DML & upsert](#g-dml-upsert)
+- [H. DDL, keys & constraints](#h-ddl-keys-constraints)
+- [I. Data types](#i-data-types)
+- [J. Datetime](#j-datetime)
+- [K. JSON](#k-json)
+- [L. Catalog / introspection & views](#l-catalog-introspection-views)
+- [M. Identifiers, transactions, privileges](#m-identifiers-transactions-privileges)
+- [N. Advanced / low-portability (confirm before recommending)](#n-advanced-low-portability-confirm-before-recommending)
+- [Cross-cutting cautions](#cross-cutting-cautions)
+
 
 The full portability matrix the parent `SKILL.md` links to. Rows = standard feature;
 columns = **Standard spelling | PostgreSQL | SQLite | MySQL/MariaDB | Notes (SQL Server /

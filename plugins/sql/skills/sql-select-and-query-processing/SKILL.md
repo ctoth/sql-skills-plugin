@@ -2,7 +2,6 @@
 name: sql-select-and-query-processing
 description: Guides the logical clause-evaluation order of a SELECT — FROM → WHERE → GROUP BY/aggregates → HAVING → SELECT-list/window → DISTINCT → UNION → ORDER BY → OFFSET/FETCH — and why that order, not the written order, decides what each clause can reference. A SELECT-list alias is computed late, so it is illegal in WHERE/HAVING (write out the expression) but legal in ORDER BY; aggregate conditions belong in HAVING, not WHERE; DISTINCT dedups the WHOLE row, not one column; and SELECT * is the "Implicit Columns" antipattern that breaks on schema change. Auto-invokes when writing or editing SELECT statements, WHERE/GROUP BY/HAVING/DISTINCT/ORDER BY clauses, column aliases referenced in another clause, ORDER BY ordinals or NULLS FIRST/LAST, or on "column alias does not exist" / "must appear in the GROUP BY" / "why is this column not allowed here" errors. Builds on the sql-relational-and-null-discipline foundation.
 allowed-tools: Read, Glob, Grep
-compatibility: "Claude Code, Codex CLI, Gemini CLI"
 ---
 
 # SQL SELECT and Query Processing
@@ -195,8 +194,8 @@ Writing the expression out, listing columns explicitly, and putting aggregate fi
 
 High-frequency clause-order and SELECT mistakes in LLM-generated SQL, each with wrong/right code and a primary-source citation:
 
-`${CLAUDE_SKILL_DIR}/references/common-mistakes.md`
+[references/common-mistakes.md](references/common-mistakes.md)
 
 Source provenance for every claim in this skill:
 
-`${CLAUDE_SKILL_DIR}/references/sources.yaml`
+[references/sources.yaml](references/sources.yaml)

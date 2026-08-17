@@ -2,7 +2,6 @@
 name: sql-style-and-naming
 description: Guides readable, reviewable SQL and the one genuine correctness trap in formatting — `'single quotes'` are string literals and `"double quotes"` are delimited identifiers per the SQL standard, so `WHERE name = "John"` references a column named John (error on PostgreSQL, silent misbehavior on MySQL until ANSI_QUOTES flips it). Covers keyword casing (UPPER keywords, lower names), snake_case identifier naming so columns never need permanent double-quoting, why a CamelCase name forces forever-quoting via case-folding, reserved-word collisions, leading-vs-trailing comma style, and multi-line layout instead of single-line mega-queries. Auto-invokes when writing or editing SQL with string-vs-identifier quoting, choosing identifier names, formatting/laying out a query, or on "clean up / format this SQL" requests. A foundation-level style policy.
 allowed-tools: Read, Glob, Grep
-compatibility: "Claude Code, Codex CLI, Gemini CLI"
 ---
 
 # SQL Style and Naming
@@ -182,8 +181,8 @@ Consistent style is empathy in code: the `'string'` you single-quoted, the `snak
 
 High-frequency style and quoting anti-patterns in LLM-generated SQL, each with wrong/right code and a primary-source citation:
 
-`${CLAUDE_SKILL_DIR}/references/common-mistakes.md`
+[references/common-mistakes.md](references/common-mistakes.md)
 
 Source provenance for every claim in this skill:
 
-`${CLAUDE_SKILL_DIR}/references/sources.yaml`
+[references/sources.yaml](references/sources.yaml)

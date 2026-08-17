@@ -1,4 +1,18 @@
 # Common SQL Aggregation & Grouping Mistakes
+## Contents
+
+- [1. Selecting a non-grouped, non-aggregated column ("ambiguous groups")](#1-selecting-a-non-grouped-non-aggregated-column-ambiguous-groups)
+- [2. Putting an aggregate condition in WHERE instead of HAVING](#2-putting-an-aggregate-condition-in-where-instead-of-having)
+- [3. Misusing HAVING for a row-level filter](#3-misusing-having-for-a-row-level-filter)
+- [4. Hand-rolling conditional aggregation when FILTER exists](#4-hand-rolling-conditional-aggregation-when-filter-exists)
+- [5. COUNT(CASE ... THEN col END) counting the wrong thing](#5-countcase-then-col-end-counting-the-wrong-thing)
+- [6. COUNT(col) where COUNT() was meant](#6-countcol-where-count-was-meant)
+- [7. Expecting SUM of no rows to be 0](#7-expecting-sum-of-no-rows-to-be-0)
+- [8. Hand-UNION-ing subtotal levels instead of ROLLUP](#8-hand-union-ing-subtotal-levels-instead-of-rollup)
+- [9. Confusing a subtotal NULL with a data NULL in ROLLUP/CUBE output](#9-confusing-a-subtotal-null-with-a-data-null-in-rollupcube-output)
+- [10. String aggregation with no order, or the wrong dialect spelling](#10-string-aggregation-with-no-order-or-the-wrong-dialect-spelling)
+- [11. Using arrayagg and expecting NULLs to be dropped](#11-using-arrayagg-and-expecting-nulls-to-be-dropped)
+
 
 Anti-patterns in LLM-generated SQL around `GROUP BY`, aggregates, conditional aggregation, and
 multi-level subtotals, each with wrong/right code and a primary-source citation. The skill
